@@ -42,16 +42,16 @@ export const createCounterStore = (initState: CounterState = initialState) => {
     ...initState,
     updateCount: () =>
       set((state) => ({
-        ...state,
-        count: state.direction === "up" ? state.count + 1 : state.count - 1,
+        count:
+          state.direction === "up"
+            ? Math.min(state.count + 1, 99)
+            : Math.max(state.count - 1, 1),
       })),
-    updateDirection: (newDirection) =>
-      set((state) => ({ ...state, direction: newDirection })),
+    updateDirection: (newDirection) => set(() => ({ direction: newDirection })),
     createReminder: (newReminder) =>
       set((state) => ({
-        ...state,
         reminder: { ...newReminder, startRow: state.count },
       })),
-    deleteReminder: () => set((state) => ({ ...state, reminder: null })),
+    deleteReminder: () => set(() => ({ reminder: null })),
   }));
 };
