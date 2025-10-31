@@ -31,8 +31,10 @@ const needleSizes = {
 } as const;
 
 type NeedleMetrics = keyof typeof needleSizes;
+
 type NeedleSizeForMetric<T extends NeedleMetrics> =
   (typeof needleSizes)[T][number];
+
 type CurrentNeedle = {
   metric: NeedleMetrics;
   size: NeedleSizeForMetric<NeedleMetrics>;
@@ -58,10 +60,9 @@ export function NeedleSelector() {
   return (
     <>
       <Menu className="row-start-2">
-        <MenuTrigger className="pr-2">
+        <MenuTrigger className="pr-2 pl-1">
           <Needles className="size-6" />
-          <span className="w-13">{selectedNeedle}</span>
-          <ChevronDown className="size-4" />
+          <span className="w-12 -ml-1">{selectedNeedle}</span>
         </MenuTrigger>
         <MenuContent className="w-[28rem] px-3 pb-4 pt-2">
           <TabContext value={{ activeTab, setActiveTab }}>

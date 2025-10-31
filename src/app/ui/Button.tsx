@@ -7,7 +7,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          " bg-midnight-500  elevation-level-1  hover:translate-y-[0.05rem] hover:bg-midnight-400 hover:scale-[99.5%] transition-color transition-translate transition-scale ease-in duration-200",
+          " bg-midnight-500  elevation-level-1 data-[state-active=true]:translate-y-[0.05rem] data-[state-active=true]:bg-midnight-400 hover:translate-y-[0.05rem] hover:bg-midnight-400 transition-color transition-translate ease-in duration-200",
         secondary:
           "bg-midnight-800 !text-foreground elevation-level-1 hover:scale-99 transition-scale ease-in duration-200",
         ghost: "p-0",
@@ -22,7 +22,7 @@ export const buttonVariants = cva(
   },
 );
 
-type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
+export type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
   VariantProps<typeof buttonVariants>;
 
 export function Button({

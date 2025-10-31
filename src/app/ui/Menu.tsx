@@ -1,7 +1,9 @@
-import { cn } from "../lib/utils";
 import { createContext, useContext, useRef, useState } from "react";
 import { AnimatePresence, motion, type MotionProps } from "motion/react";
+import { cva, VariantProps } from "class-variance-authority";
+import { cn } from "../lib/utils";
 import { Button, ButtonProps } from "./Button";
+import { ChevronDown } from "./Icons";
 
 const MenuContext = createContext<{
   isOpen: boolean;
@@ -10,7 +12,7 @@ const MenuContext = createContext<{
   timeoutRef: React.RefObject<NodeJS.Timeout | null>;
 } | null>(null);
 
-type CommandMenuProps = {
+type MenuProps = {
   delay?: number;
 };
 
@@ -19,7 +21,7 @@ export function Menu({
   children,
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & CommandMenuProps) {
+}: React.ComponentPropsWithoutRef<"div"> & MenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -51,11 +53,12 @@ export function MenuTrigger({
   const ctx = useContext(MenuContext);
 
   if (!ctx) throw new Error("<MenuTrigger> must be used within <Menu>");
-  const { openMenu, closeMenu } = ctx;
+  const { isOpen, openMenu, closeMenu } = ctx;
 
   return (
     <Button
-      className={className}
+      className={cn("w-fit", className)}
+      data-state-active={isOpen}
       variant={variant}
       size={size}
       onMouseEnter={() => openMenu()}
@@ -63,19 +66,37 @@ export function MenuTrigger({
       {...props}
     >
       {children}
+      <ChevronDown className="size-3" strokeWidth={2} />
     </Button>
   );
 }
 
+export const MenuContentVariants = cva(
+  " absolute  left-0 w-fit ng-midnight-800 elevation-level-2 rounded",
+  {
+    variants: {
+      position: {
+        bottom: "bottom-0 translate-y-[calc(100%_+_0.75rem)]",
+        top: "top-0",
+      },
+    },
+    defaultVariants: { position: "bottom" },
+  },
+);
+
+type MenuContentProps = React.ComponentPropsWithoutRef<"div"> &
+  VariantProps<typeof MenuContentVariants> &
+  MotionProps;
+
 export function MenuContent({
   className,
+  position,
   children,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & MotionProps) {
+}: MenuContentProps) {
   const ctx = useContext(MenuContext);
 
-  if (!ctx)
-    throw new Error("<CommandMenuContent> must be used within <CommandMenu>");
+  if (!ctx) throw new Error("<MenuContent> must be used within <Menu>");
 
   const { isOpen, closeMenu, timeoutRef } = ctx;
 
@@ -85,25 +106,26 @@ export function MenuContent({
 
   return (
     <>
-      {isOpen && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
-            className={cn(
-              "absolute right-0 top-12 bg-midnight-800 elevation-level-2 rounded-lg",
-              className,
-            )}
-            key="menu"
+            className={cn(MenuContentVariants({ position }), className)}
+            onMouseEnter={() => handleHoverStart()}
+            onMouseLeave={() => closeMenu()}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onMouseLeave={() => closeMenu()}
-            onMouseEnter={() => handleHoverStart()}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, transition: { ease: "easeIn" } }}
+            transition={{
+              duration: 0.25,
+              ease: "easeOut",
+            }}
+            key="menu"
             {...props}
           >
             {children}
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </>
   );
 }
