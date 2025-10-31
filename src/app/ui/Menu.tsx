@@ -1,7 +1,7 @@
-import { cn } from "../../_lib/utils";
+import { cn } from "../lib/utils";
 import { createContext, useContext, useRef, useState } from "react";
 import { AnimatePresence, motion, type MotionProps } from "motion/react";
-import { Button } from "./Button";
+import { Button, ButtonProps } from "./Button";
 
 const MenuContext = createContext<{
   isOpen: boolean;
@@ -13,10 +13,13 @@ const MenuContext = createContext<{
 type CommandMenuProps = {
   delay?: number;
 };
+
 export function Menu({
   delay = 300,
   children,
-}: React.PropsWithChildren & CommandMenuProps) {
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & CommandMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -30,30 +33,33 @@ export function Menu({
   }
 
   return (
-    <MenuContext value={{ isOpen, openMenu, closeMenu, timeoutRef }}>
-      <div className="relative">{children}</div>
-    </MenuContext>
+    <div className={cn("relative", className)} {...props}>
+      <MenuContext value={{ isOpen, openMenu, closeMenu, timeoutRef }}>
+        {children}
+      </MenuContext>
+    </div>
   );
 }
 
 export function MenuTrigger({
   children,
   className,
+  variant,
+  size,
   ...props
-}: React.ComponentPropsWithoutRef<"button">) {
+}: ButtonProps) {
   const ctx = useContext(MenuContext);
 
-  if (!ctx)
-    throw new Error("<CommandMenuTrigger> must be used within <CommandMenu>");
+  if (!ctx) throw new Error("<MenuTrigger> must be used within <Menu>");
   const { openMenu, closeMenu } = ctx;
 
   return (
     <Button
-      className={cn(
-        "flex items-center justify-items-center h-10 rounded-sm px-1",
-        className,
-      )}
+      className={className}
+      variant={variant}
+      size={size}
       onMouseEnter={() => openMenu()}
+      onMouseLeave={() => closeMenu()}
       {...props}
     >
       {children}

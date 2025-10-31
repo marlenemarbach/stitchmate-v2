@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { Step } from "../icons";
-import { Input } from "../ui";
+"use client";
+
+import { memo, useState } from "react";
+import { Step } from "../ui/Icons";
+import { Input } from "../ui/Input";
 
 type ReminderStepsProps = {
   deleteReminder: () => void;
 };
 
-export function ReminderSteps({
+function ReminderSteps({
   deleteReminder,
   ...props
 }: Omit<React.ComponentPropsWithRef<"input">, "size"> & ReminderStepsProps) {
@@ -18,8 +20,8 @@ export function ReminderSteps({
   }
 
   return (
-    <div className="bg-midnight-500 p-1 pl-2 rounded-sm flex items-center gap-1 has-[:focus-visible]:focus">
-      <Step />
+    <div className="bg-midnight-500 p-1 rounded-sm flex items-center has-[:focus-visible]:focus">
+      <Step className="rotate-90 size-5" />
       <Input
         type="number"
         size="small"
@@ -32,3 +34,5 @@ export function ReminderSteps({
     </div>
   );
 }
+
+export default memo(ReminderSteps);

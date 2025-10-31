@@ -1,24 +1,5 @@
 import { cva, VariantProps } from "class-variance-authority";
-import { cn } from "@/_lib/utils";
-
-export function RadioGroup({
-  children,
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
-  return (
-    <div
-      role="radiogroup"
-      className={cn(
-        "flex justify-center items-center gap-1 rounded-sm",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-}
+import { cn } from "../lib/utils";
 
 const radioButtonVariants = cva(
   "flex items-center justify-center rounded-sm hover:bg-white/10 focus-visible:focus",
@@ -31,7 +12,7 @@ const radioButtonVariants = cva(
           " data-[active=true]:bg-midnight-900 data-[active=true]:elevation-level-2 ",
       },
       size: {
-        default: "size-10",
+        default: "size-8",
         small: "size-8",
       },
     },

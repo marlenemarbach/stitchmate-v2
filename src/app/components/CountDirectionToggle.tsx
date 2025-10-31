@@ -1,23 +1,22 @@
-import { UpdateDirectionAction, CountDirection } from "@/stores/counter-store";
-import { Minus, Plus } from "./icons";
-import { RadioButton, RadioGroup } from "./ui";
+"use client";
 
-type CountDirectionToggleProps = {
-  direction: CountDirection;
-  updateDirection: UpdateDirectionAction;
-};
+import { CountDirection } from "@/stores/counter-store";
+import { Minus, Plus } from "../ui/Icons";
+import { RadioButton } from "../ui/RadioButton";
+import { RadioGroup } from "../ui/RadioGroup";
+import { useCounterStore } from "@/providers/CounterStoreProvider";
 
-export function CountDirectionToggle({
-  direction,
-  updateDirection,
-}: CountDirectionToggleProps) {
+export function CountDirectionToggle({}) {
+  const direction = useCounterStore((state) => state.direction);
+  const updateDirection = useCounterStore((state) => state.updateDirection);
+
   function handleUpdateDirection(newDirection: CountDirection) {
     if (newDirection === direction) return;
     updateDirection(newDirection);
   }
 
   return (
-    <RadioGroup className="bg-midnight-500 p-1">
+    <RadioGroup className="bg-midnight-500 p-0.5 h-9">
       <RadioButton
         variant="primary"
         size="small"

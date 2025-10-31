@@ -1,4 +1,4 @@
-import { cn } from "../../_lib/utils";
+import { cn } from "../lib/utils";
 
 export function Label({
   className,
@@ -6,7 +6,7 @@ export function Label({
   ...props
 }: React.ComponentPropsWithoutRef<"label">) {
   return (
-    <label className={cn("", className)} {...props}>
+    <label className={cn("text-sm", className)} {...props}>
       {children}
     </label>
   );

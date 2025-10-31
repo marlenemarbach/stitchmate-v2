@@ -1,10 +1,11 @@
-import { RadioButton, RadioGroup } from "../ui";
-import { Decrease, Increase, ShortRows } from "../icons";
+import { Decrease, Increase, ShortRows } from "../ui/Icons";
 import {
   type CreateReminderAction,
   Reminder,
   ReminderType,
 } from "@/stores/counter-store";
+import { RadioGroup } from "../ui/RadioGroup";
+import { RadioButton } from "../ui/RadioButton";
 
 type ReminderGroupProps = {
   reminder: Reminder | null;

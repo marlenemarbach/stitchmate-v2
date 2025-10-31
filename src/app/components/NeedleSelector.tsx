@@ -1,8 +1,8 @@
 "use client";
 import { useContext, useState, createContext } from "react";
-import { Button } from "./ui";
-import { ChevronDown, Needles } from "./icons";
-import { Menu, MenuContent, MenuTrigger } from "./ui/Menu";
+import { Button } from "../ui/Button";
+import { ChevronDown, Needles } from "../ui/Icons";
+import { Menu, MenuContent, MenuTrigger } from "../ui/Menu";
 
 const needleSizes = {
   mm: [
@@ -57,7 +57,7 @@ export function NeedleSelector() {
 
   return (
     <>
-      <Menu>
+      <Menu className="row-start-2">
         <MenuTrigger className="pr-2">
           <Needles className="size-6" />
           <span className="w-13">{selectedNeedle}</span>
@@ -128,7 +128,7 @@ function NeedleSizeList({
     <ul className="grid grid-cols-7 gap-2">
       {needleSizes[activeTab].map((size) => {
         return (
-          <li key={size}>
+          <li key={size + activeTab}>
             <Button
               className="data-[active=true]:bg-midnight-300 w-full"
               data-active={size === currentNeedle}
