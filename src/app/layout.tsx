@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Source_Serif_4 } from "next/font/google";
 import "./globals.css";
-import { Header } from "./_components/Header";
 
 import { CounterStoreProvider } from "@/providers/CounterStoreProvider";
 
@@ -25,20 +24,20 @@ export default function RootLayout({
       lang="en"
       className={sourceSerif.variable + " font-serif antialiased"}
     >
-      <body className="flex flex-col h-screen w-full">
-        <Header />
+      <body className="flex flex-col h-screen p-6">
         <CounterStoreProvider>{children}</CounterStoreProvider>
-        <footer className="text-white/50 text-center">
-          <p>
-            {"created by "}
-            <a
-              href="https://www.instagram.com/crafty_stitchess/"
-              target="_blank"
-            >
-              @crafty_stitchess
-            </a>
-          </p>
-        </footer>
+        {/* <footer className="text-foreground-muted text-center text-xs"> */}
+        {/*   <p> */}
+        {/*     {"created by "} */}
+        {/*     <a */}
+        {/*       className="transition-color ease-out duration-250 cursor-pointer hover:text-foreground" */}
+        {/*       href="https://www.instagram.com/crafty_stitchess/" */}
+        {/*       target="_blank" */}
+        {/*     > */}
+        {/*       @crafty_stitchess */}
+        {/*     </a> */}
+        {/*   </p> */}
+        {/* </footer> */}
       </body>
     </html>
   );
