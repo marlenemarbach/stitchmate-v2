@@ -5,7 +5,6 @@ Stitchmate is a multitasking app for knitters and crocheters. It organises multi
 
 - **Framework**: [Next.js 15](https://nextjs.org) with App Router
 - **Runtime**: [Bun](https://bun.sh)
-- **UI**: React 19, TypeScript, Tailwind CSS 4
 - **Database**: SQLite with [libSQL](https://github.com/tursodatabase/libsql-client-ts)
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team)
 - **State Management**: [Zustand](https://github.com/pmndrs/zustand)
