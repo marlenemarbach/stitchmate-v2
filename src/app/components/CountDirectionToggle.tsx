@@ -16,7 +16,7 @@ export function CountDirectionToggle({}) {
   }
 
   return (
-    <RadioGroup className="bg-midnight-500 p-0.5 h-9">
+    <RadioGroup className="h-9 bg-midnight-500 p-1">
       <RadioButton
         variant="primary"
         size="small"

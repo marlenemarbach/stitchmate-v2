@@ -59,14 +59,15 @@ export function NeedleSelector() {
 
   return (
     <>
-      <Menu className="row-start-2">
+      <Menu className="row-start-2" position="bottomLeft">
         <MenuTrigger className="pr-2 pl-1">
           <Needles className="size-6" />
-          <span className="w-12 -ml-1">{selectedNeedle}</span>
+          <span className="w-9">{selectedNeedle}</span>
+          <ChevronDown className="size-3" strokeWidth={2} />
         </MenuTrigger>
-        <MenuContent className="w-[28rem] px-3 pb-4 pt-2">
+        <MenuContent className="w-[28rem]">
           <TabContext value={{ activeTab, setActiveTab }}>
-            <ul className="flex gap-2 mb-2">
+            <ul className="mb-2 flex gap-2">
               {Object.keys(needleSizes).map((metric) => (
                 <NeedleSelectorTab key={metric} id={metric as NeedleMetrics}>
                   {metric}
@@ -131,7 +132,7 @@ function NeedleSizeList({
         return (
           <li key={size + activeTab}>
             <Button
-              className="data-[active=true]:bg-midnight-300 w-full"
+              className="w-full data-[active=true]:bg-midnight-300"
               data-active={size === currentNeedle}
               onClick={() => setCurrentNeedle({ size, metric: activeTab })}
             >

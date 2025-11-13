@@ -24,7 +24,7 @@ export default function RootLayout({
       lang="en"
       className={sourceSerif.variable + " font-serif antialiased"}
     >
-      <body className="flex flex-col h-screen p-6">
+      <body className="flex h-screen flex-col">
         <CounterStoreProvider>{children}</CounterStoreProvider>
         {/* <footer className="text-foreground-muted text-center text-xs"> */}
         {/*   <p> */}

@@ -12,8 +12,8 @@ const radioButtonVariants = cva(
           " data-[active=true]:bg-midnight-900 data-[active=true]:elevation-level-2 ",
       },
       size: {
-        default: "size-8",
-        small: "size-8",
+        default: "size-9",
+        small: "size-7",
       },
     },
     defaultVariants: {

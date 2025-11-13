@@ -1,5 +1,6 @@
 import { Link } from "../ui/Link";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 export default function UserLayout({ children }: React.PropsWithChildren) {
   return (
@@ -7,11 +8,11 @@ export default function UserLayout({ children }: React.PropsWithChildren) {
       <Header>
         <p className="m-auto text-sm">stitchmate</p>
       </Header>
-      <main className="flex-1 flex flex-col gap-8 justify-center items-center mt-5 sm:mt-8 sm:mb-16">
+      <main className="mt-5 flex flex-1 flex-col items-center justify-center gap-8 sm:mt-8 sm:mb-16">
         {children}
       </main>
-      <footer className="text-foreground-muted text-center text-xs">
-        <div className="flex gap-8 w-fit mx-auto">
+      <Footer>
+        <div className="mx-auto flex w-fit gap-8">
           <Link variant="ghost" size="small" href="/privacy">
             Privacy
           </Link>
@@ -19,17 +20,7 @@ export default function UserLayout({ children }: React.PropsWithChildren) {
             Contact
           </Link>
         </div>
-        <p>
-          {"created by "}
-          <a
-            className="transition-color ease-out duration-250 cursor-pointer hover:text-foreground"
-            href="https://www.instagram.com/crafty_stitchess/"
-            target="_blank"
-          >
-            @crafty_stitchess
-          </a>
-        </p>
-      </footer>
+      </Footer>
     </>
   );
 }

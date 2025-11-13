@@ -2,12 +2,11 @@ import { cn } from "../lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
 const inputVariants = cva(
-  "focus-visible:focus rounded-sm text-sm placeholder:text-foreground-muted",
+  "[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [appearance:textfield]focus-visible:focus rounded-sm text-sm placeholder:text-foreground-muted",
   {
     variants: {
       variant: {
-        ghost:
-          "[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [appearance:textfield]",
+        ghost: "bg-transparent",
         default: "bg-midnight-700 px-3",
       },
       size: {
