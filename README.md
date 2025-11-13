@@ -1,4 +1,4 @@
-# StitchMate v4
+# Stitchmate v2
 Stitchmate is a multitasking app for knitters and crocheters. It organises multible row counters for each project and tracks increase, decrease and short rows automatically. 
 
 ## Tech Stack
