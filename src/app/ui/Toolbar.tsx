@@ -9,7 +9,7 @@ export function Toolbar({
     <div
       role="toolbar"
       className={cn(
-        " flex items-center gap-2 w-fit h-12 px-1 rounded-lg elevation-level-1 bg-midnight-700 ",
+        "flex w-fit items-center gap-2 rounded-xl border border-border bg-card px-2 py-1 text-card-foreground",
         className,
       )}
       {...props}

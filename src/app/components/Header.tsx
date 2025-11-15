@@ -6,7 +6,7 @@ export function Header({
 }: React.ComponentPropsWithoutRef<"header">) {
   return (
     <header
-      className={cn("grid h-14 grid-cols-3 items-center px-6", className)}
+      className={cn("flex items-center justify-between px-6 py-4", className)}
     >
       {children}
     </header>

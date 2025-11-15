@@ -9,9 +9,9 @@ import { Modal, ModalContainer, ModalTrigger } from "../ui/Modal";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
-/* -------------------------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------
  * Reminder
- * -----------------------------------------------------------------------------------------------*/
+ * ----------------------------------------------------------------------------------*/
 
 const reminderIcons = {
   Increase,
@@ -38,8 +38,7 @@ export function Reminder() {
     <AnimatePresence>
       {reminder && (
         <motion.div
-          className="flex place-content-end items-center gap-3 border-white data-[state-active=true]:border"
-          data-state-active={isActiveReminder}
+          className="flex place-content-end items-center gap-3"
           key="reminder"
           initial={{ x: "100%" }}
           animate={{ x: "0%" }}
@@ -55,7 +54,11 @@ export function Reminder() {
           <ReminderCount />
           <Modal open={modalOpen} setOpen={setModalOpen}>
             <ModalTrigger asChild>
-              <Button variant="primary" className="w-9 justify-self-end p-0">
+              <Button
+                data-state-active={isActiveReminder}
+                variant="primary"
+                className="w-9 justify-self-end p-0"
+              >
                 <Icon />
               </Button>
             </ModalTrigger>

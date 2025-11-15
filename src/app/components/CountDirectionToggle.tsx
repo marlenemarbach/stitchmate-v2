@@ -2,8 +2,7 @@
 
 import { CountDirection } from "@/stores/counter-store";
 import { Minus, Plus } from "../ui/Icons";
-import { RadioButton } from "../ui/RadioButton";
-import { RadioGroup } from "../ui/RadioGroup";
+import { ToggleButton, ToggleGroup } from "../ui/ToggleGroup";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
 
 export function CountDirectionToggle({}) {
@@ -16,23 +15,19 @@ export function CountDirectionToggle({}) {
   }
 
   return (
-    <RadioGroup className="h-9 bg-midnight-500 p-1">
-      <RadioButton
-        variant="primary"
-        size="small"
+    <ToggleGroup className="bg-midnight-500 h-9 p-1">
+      <ToggleButton
         isActive={direction === "up"}
         onClick={() => handleUpdateDirection("up")}
       >
         <Plus className="size-4" />
-      </RadioButton>
-      <RadioButton
-        variant="primary"
-        size="small"
+      </ToggleButton>
+      <ToggleButton
         isActive={direction === "down"}
         onClick={() => handleUpdateDirection("down")}
       >
         <Minus className="size-4" />
-      </RadioButton>
-    </RadioGroup>
+      </ToggleButton>
+    </ToggleGroup>
   );
 }

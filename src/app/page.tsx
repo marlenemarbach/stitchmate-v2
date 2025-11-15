@@ -2,55 +2,35 @@ import { Reminder } from "./components/Reminder";
 import { RowCounter } from "./components/RowCounter";
 import { Toolbar } from "./ui/Toolbar";
 import { CountDirectionToggle } from "./components/CountDirectionToggle";
-import { ReminderSelection } from "./components/ReminderSelection";
+import { ReminderToggleGroup } from "./components/ReminderToggleGroup";
 import { NeedleSelector } from "./components/NeedleSelector";
 import { Header } from "./components/Header";
-import { Bars, Moon, User } from "./ui/Icons";
-import { Menu, MenuContent, MenuTrigger } from "./ui/Menu";
-import { Link } from "./ui/Link";
+import { Bars } from "./ui/Icons";
+import { UserMenu } from "./components/UserMenu";
 
 export default function Home() {
   return (
     <>
-      <Header className="border-b border-foreground/15">
+      <Header>
         <Bars />
-        <p className="place-self-center text-sm">Tupa Socks</p>
-        <div className="ml-auto flex w-fit items-center gap-4">
-          <Moon />
-          <Menu position="bottomRight">
-            <MenuTrigger variant="ghost">
-              <User />
-            </MenuTrigger>
-            <MenuContent>
-              <ul>
-                <li>
-                  <Link href="/account" variant="ghost">
-                    Account
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/login" variant="ghost">
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            </MenuContent>
-          </Menu>
-        </div>
+        <h1 className="font-serif text-lg dark:text-white">Tupa Socks</h1>
+        <UserMenu />
       </Header>
-      <main className="mt-4 mb-8 grid flex-1 grid-cols-2 grid-rows-[min-content_min-content_1fr_min-content] gap-y-4 px-6">
-        <h1 className="text-2xl">Cuff</h1>
-        <NeedleSelector />
-        <Reminder />
+      <main className="mt-4 mb-8 flex flex-1 flex-col items-center justify-between gap-y-4 px-6">
+        <div className="flex w-full justify-between">
+          <h1 className="text-2xl">Cuff</h1>
+          <NeedleSelector />
+        </div>
         <div className="col-span-2 row-start-3 place-content-center">
+          <Reminder />
           <RowCounter />
         </div>
         <Toolbar
           className="col-span-2 justify-self-center pr-2"
-          aria-label="row counter toolbar"
+          aria-label="row counter settings"
         >
           <CountDirectionToggle />
-          <ReminderSelection />
+          <ReminderToggleGroup />
         </Toolbar>
       </main>
     </>
