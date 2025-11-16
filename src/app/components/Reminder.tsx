@@ -5,9 +5,9 @@ import { Button } from "../ui/Button";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
 import { useShallow } from "zustand/shallow";
 import { type Reminder as ReminderType } from "@/stores/counter-store";
-import { Modal, ModalContainer, ModalTrigger } from "../ui/Modal";
-import { AnimatePresence, motion } from "motion/react";
+import { Modal, DialogContainer, DialogTrigger } from "../ui/Modal";
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 /* ----------------------------------------------------------------------------------
  * Reminder
@@ -53,7 +53,7 @@ export function Reminder() {
         >
           <ReminderCount />
           <Modal open={modalOpen} setOpen={setModalOpen}>
-            <ModalTrigger asChild>
+            <DialogTrigger asChild>
               <Button
                 data-state-active={isActiveReminder}
                 variant="primary"
@@ -61,10 +61,10 @@ export function Reminder() {
               >
                 <Icon />
               </Button>
-            </ModalTrigger>
-            <ModalContainer className="bg-none p-0">
+            </DialogTrigger>
+            <DialogContainer className="bg-none p-0">
               <Button onClick={handleDeleteReminder}>delete reminder</Button>
-            </ModalContainer>
+            </DialogContainer>
           </Modal>
         </motion.div>
       )}

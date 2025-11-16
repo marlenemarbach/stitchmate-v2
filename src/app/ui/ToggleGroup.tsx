@@ -21,20 +21,54 @@ export function ToggleGroup({
 
 type ToggleButtonProps = {
   isActive: boolean;
+  mode?: "radio" | "toggle";
 };
 
-export function ToggleGroupButton({
+export function ToggleGroupItem({
   children,
   isActive,
   className,
+  mode = "toggle",
   ...props
 }: React.ComponentPropsWithoutRef<"button"> & ToggleButtonProps) {
+  if (mode === "toggle") {
+    return (
+      <ToggleGroupButton
+        isActive={isActive}
+        className={className}
+        aria-pressed={isActive}
+        {...props}
+      >
+        {children}
+      </ToggleGroupButton>
+    );
+  }
+  return (
+    <ToggleGroupButton
+      isActive={isActive}
+      className={className}
+      aria-checked={isActive}
+      role="radio"
+      {...props}
+    >
+      {children}
+    </ToggleGroupButton>
+  );
+}
+
+function ToggleGroupButton({
+  isActive,
+  children,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"button"> & {
+  isActive: boolean;
+}) {
   return (
     <button
-      aria-pressed={isActive}
       data-state={isActive ? "on" : "off"}
       className={cn(
-        "flex items-center justify-center rounded-md text-sm hover:bg-foreground/10 focus-visible:ring",
+        "flex items-center justify-center rounded-md px-2 py-1 text-sm hover:bg-accent focus-visible:ring data-[state=on]:bg-primary",
         className,
       )}
       {...props}
