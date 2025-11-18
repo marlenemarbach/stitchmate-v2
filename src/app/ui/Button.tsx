@@ -1,15 +1,14 @@
-import { cva, type VariantProps } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
+
 import { cn } from "../lib/utils";
 
 export const buttonVariants = cva(
-  "flex items-center gap-1 w-full px-3 py-1 rounded-sm text-sm focus-visible:focus cursor-pointer",
+  "flex items-center justify-center gap-1 w-full px-2 py-1 rounded-md text-sm hover:bg-accent focus-visible:focus cursor-pointer transition-color ease-in duration-200",
   {
     variants: {
       variant: {
-        primary:
-          "justify-center bg-midnight-500  elevation-level-1 data-[state-active=true]:translate-y-[0.05rem] data-[state-active=true]:bg-midnight-400 hover:translate-y-[0.05rem] hover:bg-midnight-400 transition-color transition-translate ease-in duration-200 w-fit",
-        secondary:
-          "bg-midnight-800 !text-foreground elevation-level-1 hover:scale-99 transition-scale ease-in duration-200",
+        primary: "bg-primary",
+        secondary: "bg-card border border-border",
         ghost: "p-0 justify-left",
       },
       size: {

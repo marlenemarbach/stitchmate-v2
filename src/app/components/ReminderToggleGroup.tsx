@@ -1,9 +1,10 @@
 "use client";
 
 import { useCounterStore } from "@/providers/CounterStoreProvider";
-import { useRef } from "react";
 import { ReminderType } from "@/stores/counter-store";
-import { ToggleGroupButton, ToggleGroup } from "../ui/ToggleGroup";
+import { useRef } from "react";
+
+import { ToggleGroup, ToggleGroupItem } from "../ui/ToggleGroup";
 import ReminderSteps from "./ReminderSteps";
 
 export function ReminderToggleGroup() {
@@ -13,9 +14,9 @@ export function ReminderToggleGroup() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const reminderSteps = Number(inputRef?.current?.dataset?.steps ?? 1);
+  const reminderSteps = Number(inputRef?.current?.dataset?.steps ?? 2);
 
-  function handleReminder(reminderType: ReminderType) {
+  function toggleReminder(reminderType: ReminderType) {
     if (reminderType === reminder?.type) {
       deleteReminder();
       return;
@@ -24,28 +25,31 @@ export function ReminderToggleGroup() {
   }
 
   return (
-    <ToggleGroup>
-      <ToggleGroupButton
-        aria-label="start short rows"
-        isActive={reminder?.type === "ShortRows"}
-        onClick={() => handleReminder("ShortRows")}
-      >
-        <span aria-hidden>SH</span>
-      </ToggleGroupButton>
-      <ToggleGroupButton
-        aria-label="start increase"
-        isActive={reminder?.type === "Increase"}
-        onClick={() => handleReminder("Increase")}
-      >
-        <span aria-hidden>Inc</span>
-      </ToggleGroupButton>
-      <ToggleGroupButton
-        aria-label="start decrease"
-        isActive={reminder?.type === "Decrease"}
-        onClick={() => handleReminder("Decrease")}
-      >
-        <span aria-hidden>Dec</span>
-      </ToggleGroupButton>
-    </ToggleGroup>
+    <>
+      <ToggleGroup>
+        <ToggleGroupItem
+          aria-label="toggle short rows"
+          isActive={reminder?.type === "Short Row"}
+          onClick={() => toggleReminder("Short Row")}
+        >
+          <span aria-hidden>SH</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          aria-label="toggle increase"
+          isActive={reminder?.type === "Increase"}
+          onClick={() => toggleReminder("Increase")}
+        >
+          <span aria-hidden>Inc</span>
+        </ToggleGroupItem>
+        <ToggleGroupItem
+          aria-label="toggle decrease"
+          isActive={reminder?.type === "Decrease"}
+          onClick={() => toggleReminder("Decrease")}
+        >
+          <span aria-hidden>Dec</span>
+        </ToggleGroupItem>
+      </ToggleGroup>
+      <ReminderSteps ref={inputRef} />
+    </>
   );
 }

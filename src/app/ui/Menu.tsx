@@ -1,18 +1,19 @@
 "use client";
 
+import { VariantProps, cva } from "class-variance-authority";
+import { AnimatePresence, type MotionProps, motion } from "motion/react";
 import {
   cloneElement,
-  isValidElement,
   createContext,
+  isValidElement,
   useContext,
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion, type MotionProps } from "motion/react";
-import { cva, VariantProps } from "class-variance-authority";
+
+import { useOutsideClick } from "../hooks/useOutsideClick";
 import { cn } from "../lib/utils";
 import { Button, ButtonProps } from "./Button";
-import { useOutsideClick } from "../hooks/useOutsideClick";
 
 /* -------------------------------------------------------------------------------------------------
  * Menu Root Element
@@ -87,7 +88,7 @@ export function MenuTrigger({
 
   const triggerProps = {
     onClick: () => toggleMenu(),
-    "data-state-active": isOpen,
+    "data-state": isOpen ? "open" : "closed",
     ...props,
   };
 
@@ -114,7 +115,7 @@ export function MenuTrigger({
  * -----------------------------------------------------------------------------------------------*/
 
 export const menuContentVariants = cva(
-  "absolute z-10 w-fit bg-midnight-800 elevation-level-2 rounded p-2",
+  "absolute z-10 w-fit bg-card dark:border border-border rounded-lg p-4",
   {
     variants: {
       position: {

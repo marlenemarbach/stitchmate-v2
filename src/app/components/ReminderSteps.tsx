@@ -1,13 +1,16 @@
 "use client";
 
 import { memo, useState } from "react";
-import { Step } from "../ui/Icons";
+
+import { ChevronDown, ChevronUp } from "../ui/Icons";
 import { Input } from "../ui/Input";
 import { Label } from "../ui/Label";
 
 function ReminderSteps({
-  ...props
-}: Omit<React.ComponentPropsWithRef<"input">, "size">) {
+  ref,
+}: {
+  ref: React.RefObject<HTMLInputElement | null>;
+}) {
   const [value, setValue] = useState<number | "">(2);
 
   function handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -17,22 +20,38 @@ function ReminderSteps({
   }
 
   return (
-    <div className="flex items-center gap-1">
-      <Step className="size-4 rotate-90" />
-      <Label htmlFor="step" className="mr-1">
-        Step
+    <div className="relative">
+      <Label htmlFor="step" className="mr-1 sr-only">
+        Reminder Interval
       </Label>
       <Input
         min={0}
         name="step"
         type="number"
         size="small"
-        className="w-10 text-center"
+        className="w-12 text-left"
         value={value}
         onChange={(e) => handleValueChange(e)}
         data-steps={value}
-        {...props}
+        ref={ref}
       />
+      <span
+        className="absolute right-0 top-0 flex flex-col pr-1 translate-y-1/16"
+        aria-hidden="true"
+      >
+        <button
+          aria-label="increase value"
+          onClick={() => setValue((prev) => Number(prev) + 1)}
+        >
+          <ChevronUp className="size-3" strokeWidth={2} />
+        </button>
+        <button
+          aria-label="increase value"
+          onClick={() => setValue((prev) => Number(prev) - 1)}
+        >
+          <ChevronDown className="size-3" strokeWidth={2} />
+        </button>
+      </span>
     </div>
   );
 }

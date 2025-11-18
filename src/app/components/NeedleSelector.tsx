@@ -1,5 +1,6 @@
 "use client";
-import { useContext, useState, createContext } from "react";
+import { createContext, useContext, useState } from "react";
+
 import { Button } from "../ui/Button";
 import { ChevronDown, Needles } from "../ui/Icons";
 import { Menu, MenuContent, MenuTrigger } from "../ui/Menu";
@@ -60,7 +61,7 @@ export function NeedleSelector() {
   return (
     <>
       <Menu className="row-start-2" position="bottomLeft">
-        <MenuTrigger className="pr-2 pl-1">
+        <MenuTrigger className="pr-2 pl-1" variant="secondary">
           <Needles className="size-6" />
           <span className="w-9">{selectedNeedle}</span>
           <ChevronDown className="size-3" strokeWidth={2} />
@@ -99,9 +100,9 @@ function NeedleSelectorTab({
     <li>
       <Button
         size="xs"
-        variant="ghost"
-        data-active={activeTab === id}
-        className="text-zinc-200/50 data-[active=true]:text-zinc-200"
+        variant="secondary"
+        data-state={activeTab === id && "selected"}
+        className="data-[state=selected]:bg-primary"
         onClick={() => {
           setActiveTab(id);
         }}
@@ -132,8 +133,10 @@ function NeedleSizeList({
         return (
           <li key={size + activeTab}>
             <Button
-              className="w-full data-[active=true]:bg-midnight-300"
-              data-active={size === currentNeedle}
+              size="xs"
+              variant="secondary"
+              className="w-full data-[state=selected]:bg-primary"
+              data-state={size === currentNeedle && "selected"}
               onClick={() => setCurrentNeedle({ size, metric: activeTab })}
             >
               {size}

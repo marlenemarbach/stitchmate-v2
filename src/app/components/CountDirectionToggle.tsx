@@ -1,9 +1,10 @@
 "use client";
 
-import { CountDirection } from "@/stores/counter-store";
-import { Minus, Plus } from "../ui/Icons";
-import { ToggleButton, ToggleGroup } from "../ui/ToggleGroup";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
+import { CountDirection } from "@/stores/counter-store";
+
+import { Minus, Plus } from "../ui/Icons";
+import { ToggleGroup, ToggleGroupItem } from "../ui/ToggleGroup";
 
 export function CountDirectionToggle({}) {
   const direction = useCounterStore((state) => state.direction);
@@ -16,18 +17,20 @@ export function CountDirectionToggle({}) {
 
   return (
     <ToggleGroup className="bg-midnight-500 h-9 p-1">
-      <ToggleButton
+      <ToggleGroupItem
+        mode="radio"
         isActive={direction === "up"}
         onClick={() => handleUpdateDirection("up")}
       >
         <Plus className="size-4" />
-      </ToggleButton>
-      <ToggleButton
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        mode="radio"
         isActive={direction === "down"}
         onClick={() => handleUpdateDirection("down")}
       >
         <Minus className="size-4" />
-      </ToggleButton>
+      </ToggleGroupItem>
     </ToggleGroup>
   );
 }

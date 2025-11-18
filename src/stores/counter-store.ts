@@ -1,6 +1,6 @@
 import { createStore } from "zustand/vanilla";
 
-export type ReminderType = "Increase" | "Decrease" | "ShortRows";
+export type ReminderType = "Increase" | "Decrease" | "Short Row";
 
 export type Reminder = {
   type: ReminderType;

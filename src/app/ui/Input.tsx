@@ -1,21 +1,18 @@
+import { VariantProps, cva } from "class-variance-authority";
+
 import { cn } from "../lib/utils";
-import { cva, VariantProps } from "class-variance-authority";
+import { ChevronDown, ChevronUp } from "./Icons";
 
 const inputVariants = cva(
-  "[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [appearance:textfield]focus-visible:focus rounded-sm text-sm placeholder:text-foreground-muted",
+  "bg-input dark:border border-border [&::-webkit-inner-spin-button]:-webkit-appearance-none [&::-webkit-outer-spin-button]:-webkit-appearance-none [-moz-appearance:textfield] focus-visible:outline-none rounded-sm text-sm placeholder:text-foreground-mute",
   {
     variants: {
-      variant: {
-        ghost: "bg-transparent",
-        default: "bg-midnight-700 px-3",
-      },
       size: {
         default: "h-9",
-        small: "h-6",
+        small: "h-7 px-2",
       },
     },
     defaultVariants: {
-      variant: "default",
       size: "default",
     },
   },
@@ -25,9 +22,11 @@ export function Input({
   className,
   size,
   ...props
-}: Omit<React.ComponentPropsWithoutRef<"input">, "size"> &
+}: Omit<React.ComponentPropsWithRef<"input">, "size"> &
   VariantProps<typeof inputVariants>) {
   return (
-    <input className={cn(inputVariants({ size }), className)} {...props} />
+    <>
+      <input className={cn(inputVariants({ size }), className)} {...props} />
+    </>
   );
 }

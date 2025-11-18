@@ -56,7 +56,7 @@ export function ToggleGroupItem({
   );
 }
 
-function ToggleGroupButton({
+export function ToggleGroupButton({
   isActive,
   children,
   className,
@@ -68,7 +68,7 @@ function ToggleGroupButton({
     <button
       data-state={isActive ? "on" : "off"}
       className={cn(
-        "flex items-center justify-center rounded-md px-2 py-1 text-sm hover:bg-accent focus-visible:ring data-[state=on]:bg-primary",
+        "dark:border border-border flex items-center justify-center rounded-md px-2 py-1 text-sm hover:bg-accent focus-visible:ring data-[state=on]:bg-primary",
         className,
       )}
       {...props}

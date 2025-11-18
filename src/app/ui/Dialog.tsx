@@ -1,28 +1,29 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { cn } from "../lib/utils";
 import { AnimatePresence, motion } from "motion/react";
+import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import { Button, ButtonProps } from "./Button";
+
 import { createSlot } from "../lib/slot";
+import { cn } from "../lib/utils";
+import { Button, ButtonProps } from "./Button";
 
 /* ---------------------------------------------------------------------------
- *  Modal Root Element
+ *  Dialog Root Element
  * -----------------------------------------------------------------------------------------------*/
 
-export type ModalProps = {
+export type DialogProps = {
   open?: boolean;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ModalContext = createContext<Required<ModalProps> | null>(null);
+const DialogContext = createContext<Required<DialogProps> | null>(null);
 
-export function Modal({
+export function Dialog({
   children,
   open,
   setOpen,
-}: React.PropsWithChildren & ModalProps) {
+}: React.PropsWithChildren & DialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
 
   const isControlled = setOpen !== undefined && open !== undefined;
@@ -33,33 +34,33 @@ export function Modal({
   };
 
   return (
-    <ModalContext.Provider value={contextValue}>
+    <DialogContext.Provider value={contextValue}>
       {children}
-    </ModalContext.Provider>
+    </DialogContext.Provider>
   );
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Modal Content Container
+ * Dialog Content Container
  * -----------------------------------------------------------------------------------------------*/
 
-export function ModalContainer({
+export function DialogContainer({
   children,
   className,
 }: React.PropsWithChildren & { className?: string }) {
-  const ctx = useContext(ModalContext);
+  const ctx = useContext(DialogContext);
 
-  if (!ctx) throw new Error("<ModalContainer> must be used within <Modal>");
+  if (!ctx) throw new Error("<DialogContainer> must be used within <Modal>");
   const { open } = ctx;
 
   return createPortal(
     <AnimatePresence>
       {open && (
         <>
-          <ModalOverlay />
+          <DialogOverlay />
           <motion.div
             className={cn(
-              "absolute top-1/2 left-1/2 -translate-1/2 rounded bg-midnight-700 p-2 elevation-level-1",
+              "bg-midnight-700 elevation-level-1 absolute top-1/2 left-1/2 -translate-1/2 rounded p-2",
               className,
             )}
             initial={{ opacity: 0, scale: 0.9 }}
@@ -85,16 +86,16 @@ export function ModalContainer({
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Modal Overlay
+ * Dialog Overlay
  * * -----------------------------------------------------------------------------------------------*/
 
-function ModalOverlay({
+function DialogOverlay({
   children,
   className,
 }: React.PropsWithChildren & { className?: string }) {
-  const ctx = useContext(ModalContext);
+  const ctx = useContext(DialogContext);
 
-  if (!ctx) throw new Error("<ModalOverlay> must be used within <Modal>");
+  if (!ctx) throw new Error("<DialogOverlay> must be used within <Modal>");
   const { setOpen } = ctx;
 
   return (
@@ -115,10 +116,10 @@ function ModalOverlay({
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Modal Trigger
+ * Dialog Trigger
  * -----------------------------------------------------------------------------------------------*/
 
-export function ModalTrigger({
+export function DialogTrigger({
   variant,
   size,
   asChild,
@@ -126,9 +127,9 @@ export function ModalTrigger({
   className,
   ...props
 }: ButtonProps & { asChild?: boolean }) {
-  const ctx = useContext(ModalContext);
+  const ctx = useContext(DialogContext);
 
-  if (!ctx) throw new Error("<ModalTrigger> must be used within <Modal>");
+  if (!ctx) throw new Error("<DialogTrigger> must be used within <Dialog>");
   const { setOpen } = ctx;
 
   const triggerProps = {

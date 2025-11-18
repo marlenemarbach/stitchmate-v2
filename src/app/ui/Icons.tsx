@@ -1,5 +1,6 @@
-import { cn } from "../lib/utils";
 import { ComponentPropsWithoutRef } from "react";
+
+import { cn } from "../lib/utils";
 
 export function Squares({ ...props }: React.ComponentPropsWithoutRef<"svg">) {
   return (
@@ -198,6 +199,30 @@ export function ChevronDown({
         strokeLinecap="round"
         strokeLinejoin="round"
         d="m19.5 8.25-7.5 7.5-7.5-7.5"
+      />
+    </svg>
+  );
+}
+
+export function ChevronUp({
+  strokeWidth,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"svg">) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke="currentColor"
+      className={cn("size-6", className)}
+      {...props}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m4.5 15.75 7.5-7.5 7.5 7.5"
       />
     </svg>
   );
