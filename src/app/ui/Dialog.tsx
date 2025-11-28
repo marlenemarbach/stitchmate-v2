@@ -3,10 +3,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-
-import { createSlot } from "../lib/slot";
 import { cn } from "../lib/utils";
 import { Button, ButtonProps } from "./Button";
+import { createSlot } from "./slot/slot";
 
 /* ---------------------------------------------------------------------------
  *  Dialog Root Element
@@ -50,7 +49,7 @@ export function DialogContainer({
 }: React.PropsWithChildren & { className?: string }) {
   const ctx = useContext(DialogContext);
 
-  if (!ctx) throw new Error("<DialogContainer> must be used within <Modal>");
+  if (!ctx) throw new Error("<DialogContainer> must be used within <Dialog>");
   const { open } = ctx;
 
   return createPortal(
@@ -60,7 +59,7 @@ export function DialogContainer({
           <DialogOverlay />
           <motion.div
             className={cn(
-              "bg-midnight-700 elevation-level-1 absolute top-1/2 left-1/2 -translate-1/2 rounded p-2",
+              "bg-card elevation-level-1 absolute top-1/2 left-1/2 -translate-1/2 rounded-lg p-6 sm:p-10 flex flex-col gap-6 dark:border border-border w-xs sm:w-md",
               className,
             )}
             initial={{ opacity: 0, scale: 0.9 }}
@@ -95,13 +94,13 @@ function DialogOverlay({
 }: React.PropsWithChildren & { className?: string }) {
   const ctx = useContext(DialogContext);
 
-  if (!ctx) throw new Error("<DialogOverlay> must be used within <Modal>");
+  if (!ctx) throw new Error("<DialogOverlay> must be used within <Dialog>");
   const { setOpen } = ctx;
 
   return (
     <motion.div
       className={cn(
-        "absolute h-screen w-full bg-black/40 backdrop-blur-xs",
+        "absolute h-screen w-screen bg-black/40 backdrop-blur-xs",
         className,
       )}
       initial={{ opacity: 0 }}
@@ -150,5 +149,17 @@ export function DialogTrigger({
     >
       {children}
     </Button>
+  );
+}
+
+export function DialogTitle({
+  children,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"h2">) {
+  return (
+    <h2 className={cn("text-2xl font-serif text-center", className)} {...props}>
+      {children}
+    </h2>
   );
 }

@@ -1,28 +1,24 @@
-import { type VariantProps } from "class-variance-authority";
 import { cn } from "@/app/lib/utils";
+import { VariantProps } from "class-variance-authority";
 import NextLink, { type LinkProps } from "next/link";
 import { buttonVariants } from "./Button";
 
 type LinkComponentProps = LinkProps &
   VariantProps<typeof buttonVariants> & {
-    children: React.ReactNode;
     className?: string;
+    children: React.ReactNode;
   };
 
 export function Link({
-  variant,
-  size,
   children,
   className,
+  variant = "ghost",
+  size,
   ...props
 }: LinkComponentProps) {
   return (
     <NextLink
-      className={cn(
-        buttonVariants({ variant, size }),
-        "text-foreground-muted hover:text-foreground transition-color duration-250 ease-out",
-        className,
-      )}
+      className={cn("", buttonVariants({ variant, size }), className)}
       {...props}
     >
       {children}

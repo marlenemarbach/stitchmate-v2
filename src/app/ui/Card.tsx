@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "grid gap-6 p-6 rounded-lg bg-midnight-800 elevation-level-1 max-w-md w-full",
+        "flex flex-col gap-6 px-6 pt-6 pb-8 rounded-xl bg-card max-w-md w-full dark:border border-border",
         className,
       )}
       {...props}

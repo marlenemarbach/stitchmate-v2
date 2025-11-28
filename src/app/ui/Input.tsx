@@ -1,14 +1,13 @@
 import { VariantProps, cva } from "class-variance-authority";
-
 import { cn } from "../lib/utils";
 import { ChevronDown, ChevronUp } from "./Icons";
 
 const inputVariants = cva(
-  "bg-input dark:border border-border [&::-webkit-inner-spin-button]:-webkit-appearance-none [&::-webkit-outer-spin-button]:-webkit-appearance-none [-moz-appearance:textfield] focus-visible:outline-none rounded-sm text-sm placeholder:text-foreground-mute",
+  "[&::-webkit-inner-spin-button]:-webkit-appearance-none text-base [&::-webkit-outer-spin-button]:-webkit-appearance-none [-moz-appearance:textfield] placeholder:text-foreground-muted selection:bg-primary selection:text-primary-foreground dark:bg-input border-border h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent  file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       size: {
-        default: "h-9",
+        default: "h-9 px-3",
         small: "h-7 px-2",
       },
     },
