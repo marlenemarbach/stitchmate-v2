@@ -1,45 +1,102 @@
-import { Label } from "../../ui/Label";
+"use client";
+
+import { type ActionResponse, signUp } from "@/app/actions/auth";
+import { FieldError, Form, FormError, FormField } from "@/app/ui/Form";
+import { useRouter } from "next/navigation";
+import { useActionState } from "react";
+import { Button } from "../../ui/Button";
 import { Card } from "../../ui/Card";
 import { Input } from "../../ui/Input";
-import { FormField } from "../../ui/Formfield";
+import { Label } from "../../ui/Label";
 import { Link } from "../../ui/Link";
-import { Button } from "../../ui/Button";
+
+const initialState: ActionResponse = {
+  success: false,
+  message: "",
+  error: undefined,
+};
 
 export default function Signup() {
+  const router = useRouter();
+
+  const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
+    async (prev: ActionResponse, formData: FormData) => {
+      try {
+        const result = await signUp(formData);
+        if (result.success) {
+          console.log("Account created successfully");
+          router.push("/");
+        }
+        return result;
+      } catch (error) {
+        console.error("Sign up error:", error);
+        return {
+          success: false,
+          message: "An error occurred while signing up",
+          error: "Failed to sign up",
+        };
+      }
+    },
+    initialState,
+  );
+
   return (
     <>
       <Card>
-        <h1 className="text-lg text-center max-w-[200px] m-auto">
-          {"Ready to cast on? We have you setup in a minute!"}
-        </h1>
-        <form className="grid gap-6 w-full">
+        <div>
+          <h2 className="text-xl text-center font-serif mb-4">
+            Ready to cast on?
+            <br />
+            We have you setup real quick!
+          </h2>
+        </div>
+        <Form action={formAction}>
           <FormField>
             <Label htmlFor="email">Enter your email</Label>
             <Input
+              id="email"
               name="email"
               type="email"
+              autoComplete="email"
               placeholder="name@email.com"
+              disabled={pending}
+              aria-describedby="email-error"
               required
             />
+            <FieldError id="email-error">{state?.errors?.email}</FieldError>
           </FormField>
           <FormField>
-            <Label htmlFor="password">Enter a Password</Label>
+            <Label htmlFor="password">Set a password</Label>
             <Input
-              placeholder="********"
+              id="password"
               name="password"
               type="password"
+              autoComplete="password"
+              placeholder="********"
               minLength={12}
+              aria-describedby="password-error"
               required
             />
+            <FieldError id="password-error">
+              {state?.errors?.password}
+            </FieldError>
           </FormField>
-          <Button type="submit" className="place-self-end">
+          <Button type="submit" className="w-full">
             Create Account
           </Button>
-        </form>
+          {state?.error && (
+            <FormError className="text-destructive text-center">
+              {state.message}
+            </FormError>
+          )}
+        </Form>
       </Card>
-      <Link variant="ghost" href="/login">
-        Back to Login
-      </Link>
+      <span className="font-serif text-muted-foreground">
+        {`Already have an account? `}
+        <Link className="text-base" size="fit" href="/login">
+          Login
+        </Link>
+      </span>
     </>
   );
 }
