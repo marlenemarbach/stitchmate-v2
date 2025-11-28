@@ -3,21 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "bun --bun next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "NODE_ENV=test bun test",
+    "migrate": "DB_FILE_NAME=file:local.db bunx drizzle-kit migrate"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@types/jest": "^30.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.44.7",
+    "jose": "^6.1.2",
     "motion": "^12.23.22",
+    "nanoid": "^5.1.6",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "server-only": "^0.0.1",
     "zod": "^4.1.11",
     "zustand": "^5.0.8"
   },
@@ -31,6 +35,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/jest": "^30.0.0",
     "drizzle-kit": "^0.31.6",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
