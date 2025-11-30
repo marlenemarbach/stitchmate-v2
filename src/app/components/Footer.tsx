@@ -1,8 +1,11 @@
+import { connection } from "next/server";
 import { cn } from "../lib/utils";
 
-export function Footer({
+export async function Footer({
   children,
 }: React.PropsWithChildren & { className?: string }) {
+  // Make this component dynamic to access current time for copyright year
+  await connection();
   const date = new Date();
 
   return (

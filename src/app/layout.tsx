@@ -1,6 +1,7 @@
 import { CounterStoreProvider } from "@/providers/CounterStoreProvider";
 import type { Metadata } from "next";
 import { Crimson_Pro, DM_Sans } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 const crimson = Crimson_Pro({
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${crimson.variable} ${dmSans.variable}`}>
       <body className="flex dark:tracking-wide h-screen w-screen tracking-normal flex-col bg-background font-display text-foreground">
-        <CounterStoreProvider>{children}</CounterStoreProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <CounterStoreProvider>{children}</CounterStoreProvider>
+        </Suspense>
       </body>
     </html>
   );
