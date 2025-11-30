@@ -11,11 +11,6 @@ export function UserMenu() {
       <MenuContent>
         <ul>
           <li>
-            <Link href="/account" variant="ghost">
-              Account
-            </Link>
-          </li>
-          <li>
             <Link href="/login" variant="ghost">
               Logout
             </Link>

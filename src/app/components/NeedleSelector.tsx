@@ -1,9 +1,8 @@
 "use client";
-import { createContext, useContext, useState } from "react";
-
-import { Button } from "../ui/Button";
-import { ChevronDown, Needles } from "../ui/Icons";
-import { Menu, MenuContent, MenuTrigger } from "../ui/Menu";
+import { useState } from "react";
+import { cn } from "../lib/utils";
+import { RadioButton, RadioGroup } from "../ui/RadioGroup";
+import { Tab, TabContent, TabList, Tabs } from "../ui/Tabs";
 
 const needleSizes = {
   mm: [
@@ -31,119 +30,67 @@ const needleSizes = {
   uk: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
 } as const;
 
-type NeedleMetrics = keyof typeof needleSizes;
+type NeedleMetric = keyof typeof needleSizes;
+//
+// type NeedleSizeForMetric<T extends NeedleMetrics> =
+//   (typeof needleSizes)[T][number];
 
-type NeedleSizeForMetric<T extends NeedleMetrics> =
-  (typeof needleSizes)[T][number];
+// type CurrentNeedle = {
+//   metric: NeedleMetrics;
+//   size: NeedleSizeForMetric<NeedleMetrics>;
+// };
 
-type CurrentNeedle = {
-  metric: NeedleMetrics;
-  size: NeedleSizeForMetric<NeedleMetrics>;
-};
-
-const TabContext = createContext<{
-  activeTab: NeedleMetrics;
-  setActiveTab: React.Dispatch<React.SetStateAction<NeedleMetrics>>;
-} | null>(null);
-
-export function NeedleSelector() {
-  const [currentNeedle, setCurrentNeedle] = useState<CurrentNeedle>({
-    metric: "mm",
-    size: "3.50",
-  });
-
-  const [activeTab, setActiveTab] = useState<NeedleMetrics>("mm");
-  const selectedNeedle =
-    currentNeedle.metric === "mm"
-      ? `${currentNeedle.size}`
-      : `${currentNeedle.metric} ${currentNeedle.size}`;
+export function NeedleSelector({
+  className,
+  disabled,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & { disabled?: boolean }) {
+  const [activeNeedleMetric, setActiveNeedleMetric] = useState("mm");
+  const [currentNeedleSize, setCurrentNeedleSize] = useState("mm 3.50");
 
   return (
-    <>
-      <Menu className="row-start-2" position="bottomLeft">
-        <MenuTrigger className="pr-2 pl-1" variant="secondary">
-          <Needles className="size-6" />
-          <span className="w-9">{selectedNeedle}</span>
-          <ChevronDown className="size-3" strokeWidth={2} />
-        </MenuTrigger>
-        <MenuContent className="w-[28rem]">
-          <TabContext value={{ activeTab, setActiveTab }}>
-            <ul className="mb-2 flex gap-2">
-              {Object.keys(needleSizes).map((metric) => (
-                <NeedleSelectorTab key={metric} id={metric as NeedleMetrics}>
-                  {metric}
-                </NeedleSelectorTab>
-              ))}
-            </ul>
-            <NeedleSizeList
-              currentNeedle={currentNeedle.size}
-              setCurrentNeedle={setCurrentNeedle}
-            />
-          </TabContext>
-        </MenuContent>
-      </Menu>
-    </>
-  );
-}
-
-function NeedleSelectorTab({
-  children,
-  id,
-}: React.PropsWithChildren & { id: NeedleMetrics }) {
-  const ctx = useContext(TabContext);
-
-  if (!ctx)
-    throw new Error("<NeedleSelectorTab> must be used withing <TabContext>");
-
-  const { activeTab, setActiveTab } = ctx;
-  return (
-    <li>
-      <Button
-        size="xs"
-        variant="secondary"
-        data-state={activeTab === id && "selected"}
-        className="data-[state=selected]:bg-primary"
-        onClick={() => {
-          setActiveTab(id);
-        }}
+    <div className={cn(className)} {...props}>
+      <Tabs
+        disabled={disabled}
+        activeTab={activeNeedleMetric}
+        setActiveTab={setActiveNeedleMetric}
       >
-        {children}
-      </Button>
-    </li>
-  );
-}
-
-function NeedleSizeList({
-  currentNeedle,
-  setCurrentNeedle,
-}: {
-  currentNeedle: NeedleSizeForMetric<NeedleMetrics>;
-  setCurrentNeedle: React.Dispatch<React.SetStateAction<CurrentNeedle>>;
-}) {
-  const ctx = useContext(TabContext);
-
-  if (!ctx)
-    throw new Error("<NeedleSelectorTab> must be used withing <TabContext>");
-
-  const { activeTab } = ctx;
-
-  return (
-    <ul className="grid grid-cols-7 gap-2">
-      {needleSizes[activeTab].map((size) => {
-        return (
-          <li key={size + activeTab}>
-            <Button
-              size="xs"
-              variant="secondary"
-              className="w-full data-[state=selected]:bg-primary"
-              data-state={size === currentNeedle && "selected"}
-              onClick={() => setCurrentNeedle({ size, metric: activeTab })}
+        <TabList>
+          {Object.keys(needleSizes).map((metric) => (
+            <Tab
+              className="data-[state=disabled]:text-lg"
+              data-state={
+                (activeNeedleMetric === metric && disabled) ?? "disabled"
+              }
+              key={metric}
+              value={metric as NeedleMetric}
             >
-              {size}
-            </Button>
-          </li>
-        );
-      })}
-    </ul>
+              {metric}
+            </Tab>
+          ))}
+        </TabList>
+        {Object.keys(needleSizes).map((metric) => {
+          return (
+            <TabContent key={metric} value={metric}>
+              <RadioGroup className="grid grid-cols-5 sm:grid-cols-6 sm:p-2 grid-rows-4">
+                {needleSizes[metric as NeedleMetric].map((size) => (
+                  <RadioButton
+                    key={`${metric} ${size}`}
+                    value={`${metric} ${size}`}
+                    checked={
+                      `${metric} ${size}` === currentNeedleSize && !disabled
+                    }
+                    onChange={(e) => setCurrentNeedleSize(e.target.value)}
+                    className="data-[state=selected]:bg-foreground/30 "
+                  >
+                    {size}
+                  </RadioButton>
+                ))}
+              </RadioGroup>
+            </TabContent>
+          );
+        })}
+      </Tabs>
+    </div>
   );
 }
