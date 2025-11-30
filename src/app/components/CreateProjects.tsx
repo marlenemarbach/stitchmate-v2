@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
+import { ActionResponse } from "../actions/auth";
 import { Button } from "../ui/Button";
 import { Checkbox } from "../ui/Checkbox";
 import {
@@ -17,13 +18,18 @@ import { NeedleSelector } from "./NeedleSelector";
 export function CreateProject() {
   const router = useRouter();
   const [isSaveNeedle, setIsSaveNeedle] = useState(false);
+  const initialState: ActionResponse = { success: false, message: "" };
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async () => {
       try {
+        // TODO: Implement form action
+        return { success: false, message: "Not implemented" };
       } catch (error) {
         console.error(error);
+        return { success: false, message: "An error occurred" };
       }
     },
+    initialState,
   );
 
   return (

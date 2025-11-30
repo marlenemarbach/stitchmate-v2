@@ -9,6 +9,12 @@ const ProjectSchema = z.object({
   needleSize: z.string().optional(),
 });
 
+// TODO: Implement this function with actual database logic
+async function createProject(name: string, needleSize?: string) {
+  // Stub implementation - replace with actual database call
+  return { id: "temp-id", name, needleSize };
+}
+
 export async function createNewProject(
   formData: FormData,
 ): Promise<ActionResponse> {
@@ -38,6 +44,11 @@ export async function createNewProject(
 
     const { name, needleSize } = validatedFields.data;
     const newProject = await createProject(name, needleSize);
+
+    return {
+      success: true,
+      message: "Project created successfully",
+    };
   } catch (error) {
     console.error("create project error:", error);
     return {

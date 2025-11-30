@@ -18,14 +18,12 @@ export function CountDirectionToggle({}) {
   return (
     <ToggleGroup className="bg-midnight-500 h-9 p-1">
       <ToggleGroupItem
-        mode="radio"
         isActive={direction === "up"}
         onClick={() => handleUpdateDirection("up")}
       >
         <Plus className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem
-        mode="radio"
         isActive={direction === "down"}
         onClick={() => handleUpdateDirection("down")}
       >

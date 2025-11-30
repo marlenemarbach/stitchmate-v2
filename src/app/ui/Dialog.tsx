@@ -52,6 +52,11 @@ export function DialogContainer({
   if (!ctx) throw new Error("<DialogContainer> must be used within <Dialog>");
   const { open } = ctx;
 
+  // Only render portal on client-side to avoid SSR errors
+  if (typeof document === "undefined") {
+    return null;
+  }
+
   return createPortal(
     <AnimatePresence>
       {open && (
