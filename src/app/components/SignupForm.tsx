@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "../actions/auth";
+import { signUp } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
 import { Form, FormError, FormField } from "./ui/Form";
@@ -15,38 +15,34 @@ const initialState: ActionResponse = {
   error: undefined,
 };
 
-export function LoginForm() {
+export function SignupForm() {
   const router = useRouter();
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (prev: ActionResponse, formData: FormData) => {
       try {
-        const result = await signIn(formData);
+        const result = await signUp(formData);
         if (result.success) {
-          console.log("Signed in successfully");
+          console.log("Account created successfully");
           router.push("/");
         }
         return result;
       } catch (error) {
-        console.error("Sign in error", error);
+        console.error("Sign up error:", error);
         return {
           success: false,
-          message: "An error occured while signin in",
-          error: "Failed to sign in",
+          message: "An error occurred while signing up",
+          error: "Failed to sign up",
         };
       }
     },
     initialState,
   );
-
   return (
     <Form action={formAction}>
       <FormField>
-        <label className="pl-1" htmlFor="email">
-          Your Email
-        </label>
+        <Label htmlFor="email">Enter your email</Label>
         <Input
-          className="h-10"
           id="email"
           name="email"
           type="email"
@@ -59,9 +55,8 @@ export function LoginForm() {
         <FormError id="email-error">{state?.errors?.email}</FormError>
       </FormField>
       <FormField>
-        <label htmlFor="password">Password</label>
+        <Label htmlFor="password">Set a password</Label>
         <Input
-          className="h-10"
           id="password"
           name="password"
           type="password"
@@ -73,8 +68,8 @@ export function LoginForm() {
         />
         <FormError id="password-error">{state?.errors?.password}</FormError>
       </FormField>
-      <Button type="submit" className="h-10 w-full">
-        Login
+      <Button type="submit" className="w-full">
+        Create Account
       </Button>
       {state?.error && (
         <FormError className="text-center text-destructive">
