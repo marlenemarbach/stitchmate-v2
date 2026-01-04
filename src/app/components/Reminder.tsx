@@ -1,13 +1,12 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useShallow } from "zustand/shallow";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
 import { type Reminder as ReminderType } from "@/stores/counter-store";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { useShallow } from "zustand/shallow";
-
-import { Button } from "../ui/Button";
-import { Dialog, DialogContainer, DialogTrigger } from "../ui/Dialog";
+import { Button } from "./ui/Button";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/Dialog";
 
 /* ---------------------------------------------------------------------------------
  * Reminder
@@ -47,15 +46,15 @@ export function Reminder() {
             <DialogTrigger asChild>
               <button
                 data-state={isActiveReminder ? "on" : "off"}
-                className="data-[state=on]:border-foreground bg-card dark:border border-border px-2 py-1 rounded-md"
+                className="rounded-md border-border bg-card px-2 py-1 data-[state=on]:border-foreground dark:border"
               >
                 {reminder.type}
                 <ReminderCount />
               </button>
             </DialogTrigger>
-            <DialogContainer className="bg-none p-0">
+            <DialogContent className="bg-none p-0">
               <Button onClick={handleDeleteReminder}>delete reminder</Button>
-            </DialogContainer>
+            </DialogContent>
           </Dialog>
         </motion.div>
       )}

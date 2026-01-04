@@ -5,15 +5,43 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1764075281733,
-      "tag": "0000_tiny_kang",
+      "when": 1764609073285,
+      "tag": "0000_blue_rattler",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "6",
-      "when": 1764097604398,
-      "tag": "0001_long_chimera",
+      "when": 1764713627305,
+      "tag": "0001_condemned_saracen",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1764715440624,
+      "tag": "0002_skinny_husk",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1766403831198,
+      "tag": "0003_productive_jocasta",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1766780834937,
+      "tag": "0004_dashing_doctor_faustus",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1767190688621,
+      "tag": "0005_eminent_thanos",
       "breakpoints": true
     }
   ]

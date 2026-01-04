@@ -1,14 +1,15 @@
 "use client";
 
-import { ActionResponse, signIn } from "@/app/actions/auth";
-import { Button } from "@/app/ui/Button";
-import { Card } from "@/app/ui/Card";
-import { FieldError, Form, FormError, FormField } from "@/app/ui/Form";
-import { Input } from "@/app/ui/Input";
-import { Label } from "@/app/ui/Label";
-import { Link } from "@/app/ui/Link";
-import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "@/app/actions/auth";
+import { type ActionResponse } from "@/app/actions/types";
+import { Button } from "@/app/components/ui/Button";
+import { Card } from "@/app/components/ui/Card";
+import { Form, FormError, FormField } from "@/app/components/ui/Form";
+import { Input } from "@/app/components/ui/Input";
+import { Label } from "@/app/components/ui/Label";
 
 const initialState: ActionResponse = {
   success: false,
@@ -42,7 +43,7 @@ export default function Login() {
 
   return (
     <Card>
-      <h2 className="text-xl text-center font-serif max-w-[200px] m-auto">
+      <h2 className="m-auto max-w-[200px] text-center font-serif text-xl">
         {"Grep your needles and start crafting!"}
       </h2>
       <Form action={formAction}>
@@ -58,7 +59,7 @@ export default function Login() {
             aria-describedby="email-error"
             required
           />
-          <FieldError id="email-error">{state?.errors?.email}</FieldError>
+          <FormError id="email-error">{state?.errors?.email}</FormError>
         </FormField>
         <FormField>
           <Label htmlFor="password">Enter your password</Label>
@@ -72,32 +73,30 @@ export default function Login() {
             aria-describedby="password-error"
             required
           />
-          <FieldError id="password-error">{state?.errors?.password}</FieldError>
+          <FormError id="password-error">{state?.errors?.password}</FormError>
         </FormField>
         <Button type="submit" className="w-full">
           Login
         </Button>
         {state?.error && (
-          <FormError className="text-destructive text-center">
+          <FormError className="text-center text-destructive">
             {state.message}
           </FormError>
         )}
       </Form>
-      <div className="border-t border-border grid grid-cols-2 gap-6 pt-6 mt-3">
-        <h2 className="text-center text-lg col-span-2 font-serif">
+      <div className="mt-3 grid grid-cols-2 gap-6 border-t border-border pt-6">
+        <h2 className="col-span-2 text-center font-serif text-lg">
           No account?
         </h2>
-        <Link variant="secondary" href="/signup">
-          Sign up
-        </Link>
-        <Link variant="secondary" className="px-0" href="/">
+        <Link href="/signup">Sign up</Link>
+        <Link className="px-0" href="/">
           Continue as guest
         </Link>
-        <p className="col-span-2 text-center text-foreground/50 text-xs max-w-3xs m-auto">
+        <p className="col-span-2 m-auto max-w-3xs text-center text-xs text-foreground/50">
           {`You can explore stitchmate as a guest, but your work cannot be saved. `}
-          <Link className="text-xs" size="fit" href="/signup">
+          <Link className="text-xs" href="/signup">
             Sign up
-          </Link>{" "}
+          </Link>
           anytime.
         </p>
       </div>

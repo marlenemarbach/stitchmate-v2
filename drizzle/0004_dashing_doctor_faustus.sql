@@ -1,0 +1,1 @@
+ALTER TABLE `reminder` ADD `active` integer DEFAULT true NOT NULL;

@@ -1,30 +1,29 @@
-import { connection } from "next/server";
-import { cn } from "../lib/utils";
+"use server";
+import { Copyright, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export async function Footer({
-  children,
-}: React.PropsWithChildren & { className?: string }) {
-  // Make this component dynamic to access current time for copyright year
-  await connection();
-  const date = new Date();
-
+export async function Footer() {
   return (
     <footer
-      className={cn(
-        "flex flex-col gap-3 pb-6 mt-6 text-center text-sm text-muted-foreground",
-      )}
+      className={cn("grid grid-cols-2 items-center p-5 text-xs sm:grid-cols-3")}
     >
-      {children}
-      <p>
-        {`stitchmate ${date.getFullYear()} by `}
-        <a
-          className="outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] transition-all rounded-md cursor-pointer duration-250 ease-out hover:text-foreground/90"
-          href="https://www.instagram.com/crafty_stitchess/"
-          target="_blank"
-        >
-          @crafty_stitchess
-        </a>
+      <p className="hidden items-center gap-1 pl-1 opacity-50 sm:flex">
+        <Copyright className="size-3" />
+        stitchmate 2026
       </p>
+      <a
+        className="w-fit cursor-pointer rounded-lg p-1 opacity-50 transition-[ring,opacity] duration-250 ease-out outline-none hover:opacity-70 focus-visible:opacity-70 focus-visible:ring-[1px] focus-visible:ring-ring sm:justify-self-center"
+        href="https://www.instagram.com/crafty_stitchess/"
+        target="_blank"
+      >
+        created by @craftystitchess
+      </a>
+      <a
+        className="cursor-pointer justify-self-end rounded-lg p-1 opacity-50 transition-[ring,opacity] duration-250 ease-out outline-none hover:opacity-70 focus-visible:opacity-70 focus-visible:ring-[1px] focus-visible:ring-ring"
+        href="mailto:stitchmate.contact@gmail.com?subject=Hello"
+      >
+        <Mail className="size-5" />
+      </a>
     </footer>
   );
 }

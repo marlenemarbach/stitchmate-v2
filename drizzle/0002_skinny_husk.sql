@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `reminder_counterId_unique` ON `reminder` (`counter_id`);

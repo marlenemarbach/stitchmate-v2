@@ -10,7 +10,8 @@ export const users = sqliteTable("users", {
     .default(sql`(current_timestamp)`),
   updatedAt: text()
     .notNull()
-    .default(sql`(current_timestamp)`),
+    .default(sql`(current_timestamp)`)
+    .$onUpdate(() => sql`(current_timestamp)`),
 });
 
 export const userRelations = relations(users, ({ many }) => ({
@@ -19,49 +20,59 @@ export const userRelations = relations(users, ({ many }) => ({
 
 export const projects = sqliteTable("projects", {
   id: integer().primaryKey({ autoIncrement: true }),
-  user_id: text()
+  userId: text()
     .notNull()
     .references(() => users.id),
   count: integer().notNull().default(1),
   direction: text({ enum: ["up", "down"] })
     .notNull()
     .default("up"),
-  name: text().notNull(),
+  name: text({ length: 30 }).notNull(),
   needleSize: text(),
   createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
   updatedAt: text()
     .notNull()
-    .default(sql`(current_timestamp)`),
+    .default(sql`(current_timestamp)`)
+    .$onUpdate(() => sql`(current_timestamp)`),
   status: text({ enum: ["wip", "finished"] })
     .notNull()
     .default("wip"),
 });
 
 export const projectRelations = relations(projects, ({ one }) => ({
-  reminder: one(reminder),
+  subCounter: one(subCounters),
   user: one(users, {
-    fields: [projects.user_id],
+    fields: [projects.userId],
     references: [users.id],
   }),
 }));
 
-export const reminder = sqliteTable("reminder", {
+export const subCounters = sqliteTable("sub_counters", {
   id: integer().primaryKey({ autoIncrement: true }),
-  counter_id: integer()
+  counterId: integer()
     .notNull()
+    .unique()
     .references(() => projects.id),
-  kind: text({ enum: ["shortRow", "increase", "decrease", "patternRepeat"] })
+  type: text({ enum: ["shortRow", "increase", "decrease", "patternRepeat"] })
     .notNull()
     .default("shortRow"),
-  count: integer().notNull().default(1),
-  step: integer().notNull().default(1),
+  interval: integer().notNull().default(1),
   createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
   updatedAt: text()
     .notNull()
-    .default(sql`(current_timestamp)`),
-  startRow: integer("start_row").notNull(),
+    .default(sql`(current_timestamp)`)
+    .$onUpdate(() => sql`(current_timestamp)`),
+  startRow: integer().notNull(),
+  active: integer({ mode: "boolean" }).notNull().default(true),
 });
+
+export const subCounterRelations = relations(subCounters, ({ one }) => ({
+  project: one(projects, {
+    fields: [subCounters.counterId],
+    references: [projects.id],
+  }),
+}));

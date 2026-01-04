@@ -1,0 +1,46 @@
+import { cn } from "@/lib/utils";
+
+export type SwitchProps = {
+  checked?: boolean;
+  onCheckedChange?: () => void;
+  name?: string;
+};
+
+export function Switch({
+  name,
+  defaultChecked = false,
+  checked,
+  onCheckedChange,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"button"> & SwitchProps) {
+  return (
+    <>
+      <input
+        type="hidden"
+        name={name}
+        value={checked ? "on" : "off"}
+        defaultChecked={defaultChecked}
+      />
+      <button
+        tabIndex={0}
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        data-state={checked ? "on" : "off"}
+        className={cn(
+          "group relative flex h-[1rem] w-[1.875rem] items-center justify-start rounded-full bg-primary/20 p-1 transition-[color,border,box-shadow] duration-200 ease-out focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none data-[state=on]:bg-accent-foreground",
+          className,
+        )}
+        onClick={() => {
+          onCheckedChange?.();
+        }}
+        {...props}
+      >
+        <svg className="absolute left-[1px] size-[0.875rem] transform-[colors,translate] text-foreground duration-200 ease-in group-data-[state=on]:translate-x-[100%]">
+          <circle cx="7" cy="7" r="7" fill="currentColor" />
+        </svg>
+      </button>
+    </>
+  );
+}
