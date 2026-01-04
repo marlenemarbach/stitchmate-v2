@@ -69,19 +69,19 @@ export function DialogContent({
           <DialogOverlay />
           <motion.div
             className={cn(
-              "bg-popup text-popup-foreground fixed top-1/2 left-1/2 z-50 flex w-[calc(100vw_-_2rem)] -translate-1/2 flex-col gap-6 rounded-xl p-6 shadow-popup sm:w-sm",
+              "fixed top-1/2 left-1/2 z-50 flex w-[calc(100vw_-_2rem)] -translate-1/2 flex-col gap-6 rounded-xl bg-popup p-6 text-popup-foreground shadow-popup sm:w-sm",
               className,
             )}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{
               opacity: 1,
               scale: 1,
-              transition: { ease: "easeOut", duration: 0.25 },
+              transition: { ease: "easeOut", duration: 0.3 },
             }}
             exit={{
               opacity: 0,
               scale: 0.9,
-              transition: { ease: "easeIn", duration: 0.25 },
+              transition: { ease: "easeIn", duration: 0.2 },
             }}
             key="dialogContent"
           >

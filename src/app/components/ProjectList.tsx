@@ -12,7 +12,6 @@ import {
 import { ProjectFilter, ProjectFilterPills } from "./ProjectFilterPills";
 import { ProjectListItem } from "./ProjectListItem";
 import { Button } from "./ui/Button";
-import { Card } from "./ui/Card";
 
 type ProjectOrder = "asc" | "desc";
 
@@ -49,13 +48,13 @@ export function ProjectList({
       <CreateProjectDialog>
         <CreateProjectDialogTrigger>
           <button className="m-auto cursor-pointer">
-            <Card className="m-auto h-[8rem] transition-[border,background] duration-200 ease-out hover:border-foreground/40 hover:bg-card/80 sm:w-sm">
+            <div className="m-auto h-[8rem] transition-[border,background] duration-200 ease-out hover:border-foreground/40 hover:bg-card/80 sm:w-sm">
               <h2 className="text-md text-center tracking-wide">
                 No projects yet.
                 <br /> Create one and start crafting
               </h2>
               <Plus className="m-auto" />
-            </Card>
+            </div>
           </button>
         </CreateProjectDialogTrigger>
       </CreateProjectDialog>

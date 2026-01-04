@@ -6,7 +6,7 @@ export function Label({
   ...props
 }: React.ComponentPropsWithoutRef<"label">) {
   return (
-    <label className={cn("text-sm", className)} {...props}>
+    <label className={cn("pl-1", className)} {...props}>
       {children}
     </label>
   );
