@@ -1,5 +1,7 @@
 "use client";
-import { AnimatePresence, motion, usePresenceData } from "motion/react";
+
+import { useState } from "react";
+import { AnimatePresence, motion, usePresenceData, wrap } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export type SlideDirection = 1 | -1;
@@ -20,9 +22,7 @@ export function Slider({ children, direction }: SliderProps) {
 export type SlideProps = {
   children: React.ReactNode;
   className?: string;
-  // order: number;
   ref?: React.Ref<HTMLDivElement>;
-  // isActive: boolean;
 };
 
 export function Slide({ children, className, ref }: SlideProps) {
@@ -36,9 +36,9 @@ export function Slide({ children, className, ref }: SlideProps) {
         x: 0,
         transition: {
           delay: 0.2,
-          type: "spring",
-          visualDuration: 0.3,
-          bounce: 0.4,
+          type: "tween",
+          ease: "easeOut",
+          duration: 0.3,
         },
       }}
       exit={{ opacity: 0, x: direction * -50 }}
@@ -49,24 +49,19 @@ export function Slide({ children, className, ref }: SlideProps) {
   );
 }
 
-// export function Slide({ children, className, order, ref }: SlideProps) {
-//   <motion.div
-//     ref={ref}
-//     key={order}
-//     layout
-//     variants={variants}
-//     initial="hidden"
-//     animate="visible"
-//     exit="exit"
-//     transition={{
-//       default: {
-//         type: "spring",
-//         duration: 0.3,
-//       },
-//       opacity: { ease: "easeInOut", duration: 0.3 },
-//     }}
-//     className={cn("", className)}
-//   >
-//     {children}
-//   </motion.div>;
-// }
+export function useSlider(
+  initialSlide: number,
+  length: number,
+  slideDirection?: SlideDirection,
+) {
+  const [activeSlide, setActiveSlide] = useState(initialSlide);
+  const [direction, setDirection] = useState(slideDirection ?? 1);
+
+  function setSlide(newDirection: SlideDirection) {
+    const nextSlide = wrap(0, length, activeSlide + newDirection);
+    setActiveSlide(nextSlide);
+    setDirection(newDirection);
+  }
+
+  return [activeSlide, direction, setSlide] as const;
+}

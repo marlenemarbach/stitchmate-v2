@@ -8,9 +8,6 @@ export default function UserLayout({ children }: React.PropsWithChildren) {
       </header>
       <main className="flex flex-1 flex-col items-center justify-center gap-6">
         {children}
-        <p className="text-center text-xs text-muted-foreground/50">
-          Privacy information
-        </p>
       </main>
     </>
   );
