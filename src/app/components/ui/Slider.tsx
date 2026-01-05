@@ -35,13 +35,22 @@ export function Slide({ children, className, ref }: SlideProps) {
         opacity: 1,
         x: 0,
         transition: {
-          delay: 0.2,
-          type: "tween",
-          ease: "easeOut",
-          duration: 0.3,
+          opacity: {
+            type: "tween",
+            ease: "easeIn",
+            duration: 0.3,
+            delay: 0.1,
+          },
         },
       }}
-      exit={{ opacity: 0, x: direction * -50 }}
+      exit={{
+        opacity: 0,
+        x: direction * -50,
+        transition: {
+          opacity: { type: "tween", ease: "easeOut", duration: 0.25 },
+          default: { type: "spring" },
+        },
+      }}
       className={cn("", className)}
     >
       {children}
