@@ -5,7 +5,7 @@ import { Minus, Plus } from "lucide-react";
 import { CountDirection, ProjectWithSubCounter } from "@/lib/types";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
 import { updateProject } from "../actions/projects";
-import { ToggleGroup, ToggleGroupItem } from "./ui/ToggleGroup";
+import { RadioGroup, RadioGroupItem } from "./ui/RadioGroup";
 
 export function CountDirectionToggle({
   project,
@@ -38,19 +38,21 @@ export function CountDirectionToggle({
   }
 
   return (
-    <ToggleGroup className="gap-0 border-r border-border">
-      <ToggleGroupItem
+    <RadioGroup className="gap-0 border-r border-border">
+      <RadioGroupItem
+        value={"up"}
         aria-pressed={optimisticDirection === "up"}
         onClick={() => handleUpdateDirection("up")}
       >
         <Plus className="size-4" />
-      </ToggleGroupItem>
-      <ToggleGroupItem
+      </RadioGroupItem>
+      <RadioGroupItem
+        value={"up"}
         aria-pressed={optimisticDirection === "down"}
         onClick={() => handleUpdateDirection("down")}
       >
         <Minus className="size-4" />
-      </ToggleGroupItem>
-    </ToggleGroup>
+      </RadioGroupItem>
+    </RadioGroup>
   );
 }

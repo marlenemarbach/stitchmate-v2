@@ -1,66 +1,59 @@
 import { useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "./Input";
 
+// needs refactor use hidden input instead?
 export function NumberInput({
+  defaultValue,
+  min = 1,
+  max = 99,
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"input">) {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState<string | number | readonly string[]>(
+    defaultValue ?? 1,
+  );
 
-  function increment() {
-    setValue((prev) => prev + 1);
-  }
-
-  function decrement() {
-    setValue((prev) => prev - 1);
+  function handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.currentTarget.value === "") {
+      setValue(event.currentTarget.value);
+    } else setValue(event.currentTarget.valueAsNumber);
   }
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
-      <UpdateNumberButton onClick={() => increment()} disabled={value === 99}>
-        <Plus className="size-3" />
-      </UpdateNumberButton>
-      <NumberField value={value} />
-      <UpdateNumberButton onClick={() => decrement()} disabled={value === 0}>
-        <Minus />
-      </UpdateNumberButton>
-      <input
-        className="hidden appearance-none"
+    <div className="relative">
+      <Input
+        min={min}
+        name="step"
         type="number"
+        className={cn("flex items-center", className)}
         value={value}
-        onChange={() => undefined}
+        onChange={(e) => handleValueChange(e)}
+        data-steps={value}
         {...props}
-      ></input>
+      />
+      <span
+        className="absolute top-0 right-0 flex translate-y-1/4 flex-col pr-2"
+        aria-hidden="true"
+      >
+        <button
+          type="button"
+          aria-label="increase by one"
+          onClick={() => setValue((prev) => Number(prev) + 1)}
+        >
+          <ChevronUp className="size-3" strokeWidth={2} />
+        </button>
+        <button
+          type="button"
+          aria-label="increase by one"
+          onClick={() =>
+            setValue((prev) => Math.max(Number(prev) - 1, Number(min)))
+          }
+        >
+          <ChevronDown className="size-3" strokeWidth={2} />
+        </button>
+      </span>
     </div>
-  );
-}
-
-type FieldProps = {
-  value: number;
-};
-
-function NumberField({ value }: React.PropsWithChildren & FieldProps) {
-  return (
-    <div className="flex w-8 flex-col items-center bg-slate-950 [mask-image:linear-gradient(to_bottom,transparent_10%,black,transparent_90%)] [clip-path:inset(10px_0)]">
-      <span>{value - 1}</span>
-      <span>{value}</span>
-      <span>{value + 1}</span>
-    </div>
-  );
-}
-
-function UpdateNumberButton({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"button">) {
-  return (
-    <button
-      className="flex size-4 items-center justify-center rounded-full bg-slate-950"
-      type="button"
-      {...props}
-    >
-      {children}
-    </button>
   );
 }

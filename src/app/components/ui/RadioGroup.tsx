@@ -1,66 +1,34 @@
-import { VariantProps, cva } from "class-variance-authority";
+"use client";
+
+import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { cn } from "@/lib/utils";
 
 export function RadioGroup({
-  children,
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
   return (
-    <div
-      role="radiogroup"
-      className={cn("flex items-center justify-center", className)}
+    <RadioGroupPrimitive.Root
+      className={cn("flex flex-wrap gap-3", className)}
+      {...props}
+    />
+  );
+}
+
+export function RadioGroupItem({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+  return (
+    <RadioGroupPrimitive.Item
+      className={cn(
+        "flex h-9 shrink-0 cursor-pointer items-center justify-center gap-1 rounded-lg border border-border p-2 text-sm font-medium transition-[color,box-shadow,background] duration-250 ease-out outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground [&_svg:not([class*='size-'])]:size-4",
+        className,
+      )}
       {...props}
     >
       {children}
-    </div>
-  );
-}
-
-const radioButtonVariants = cva(
-  "flex h-9 cursor-pointer items-center justify-center gap-1 rounded-full text-sm text-foreground transition-[color,border] duration-200 ease-out   has-[:disabled]:opacity-50 focus-visible:ring-[1.5px] focus-visible:ring-ring [&_svg:not([class*='size-'])]:size-4 px-2 hover:border-foreground/80",
-  {
-    variants: {
-      variant: {
-        default:
-          "has-[:checked]:border-accent-foreground has-[:checked]:text-accent-foreground border border-border",
-        ghost: "",
-      },
-    },
-    defaultVariants: { variant: "default" },
-  },
-);
-
-export function RadioButton({
-  children,
-  className,
-  variant,
-  ...props
-}: React.ComponentPropsWithoutRef<"input"> &
-  VariantProps<typeof radioButtonVariants>) {
-  return (
-    <label
-      tabIndex={1}
-      className={cn(radioButtonVariants({ variant }), className)}
-    >
-      <input className="peer hidden appearance-none" type="radio" {...props} />
-      {children}
-    </label>
-  );
-}
-
-export function SubCounterRadioButton({
-  children,
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"input"> &
-  VariantProps<typeof radioButtonVariants>) {
-  return (
-    <>
-      <input className="peer hidden appearance-none" type="radio" {...props} />
-      <button type="button" role="radio" className={cn(className)} tabIndex={1}>
-        {children}
-      </button>
-    </>
+    </RadioGroupPrimitive.Item>
   );
 }

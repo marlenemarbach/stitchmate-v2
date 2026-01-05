@@ -28,13 +28,13 @@ export function ProjectListItem({ project }: ProjectProps) {
             </p>
           </div>
         </Link>
-        <EditProjectDialog project={project}>
-          <EditProjectDialogTrigger>
-            <Button variant="ghost" size="icon" aria-label="edit project">
-              <EllipsisVertical />
-            </Button>
-          </EditProjectDialogTrigger>
-        </EditProjectDialog>
+        {/* <EditProjectDialog project={project}> */}
+        {/*   <EditProjectDialogTrigger> */}
+        {/*     <Button variant="ghost" size="icon" aria-label="edit project"> */}
+        {/*       <EllipsisVertical /> */}
+        {/*     </Button> */}
+        {/*   </EditProjectDialogTrigger> */}
+        {/* </EditProjectDialog> */}
       </div>
       <div className="h-1 w-full border-t border-border/70"></div>
     </div>

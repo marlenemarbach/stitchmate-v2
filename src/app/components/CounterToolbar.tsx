@@ -2,13 +2,13 @@
 
 import { use, useState } from "react";
 import { Notebook, Repeat } from "lucide-react";
-import useMeasure from "react-use-measure";
 import { ProjectWithSubCounter } from "@/lib/types";
 import { CountDirectionToggle } from "./CountDirectionToggle";
 import { CounterNotes } from "./CounterNotes";
-import { SubCounterMenu } from "./SubCounterDialog";
+import { SubCounterMenu } from "./SubCounterMenu";
 import { Button } from "./ui/Button";
-import { Toolbar, ToolbarMenu, ToolbarMenuContent } from "./ui/Toolbar";
+import { Toolbar } from "./ui/Toolbar";
+import { ToolbarMenu, ToolbarMenuContent } from "./ui/ToolbarMenu";
 
 type MenuContent = "subcounter" | "notes";
 
@@ -18,10 +18,8 @@ export function CounterToolbar({
   project: Promise<ProjectWithSubCounter>;
 }) {
   const currentProject = use(project);
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   const [menuContent, setMenuContent] = useState<MenuContent>("subcounter");
-
-  const [ref, bounds] = useMeasure({ offsetSize: true });
 
   function handleMenu(content: MenuContent) {
     if (showMenu && content === menuContent) setShowMenu(false);
@@ -33,25 +31,41 @@ export function CounterToolbar({
     <Toolbar className="mt-auto w-max pr-2" aria-label="row counter settings">
       <CountDirectionToggle project={currentProject} />
       <div className="flex">
-        <Button onClick={() => handleMenu("subcounter")}>
+        <Button
+          onClick={() => handleMenu("subcounter")}
+          variant="ghost"
+          size="icon"
+          className="data-[state=open]:bg-foreground/10"
+          data-state={menuContent === "subcounter" ? "open" : "closed"}
+          aria-haspopup
+          aria-expanded={menuContent === "subcounter" ? "true" : "false"}
+        >
+          <span className="sr-only">Subcounter</span>
           <Repeat />
         </Button>
-        <Button onClick={() => handleMenu("notes")}>
+        <Button
+          onClick={() => handleMenu("notes")}
+          variant="ghost"
+          size="icon"
+          className="data-[state=open]:bg-foreground/10"
+          data-state={menuContent === "notes" ? "open" : "closed"}
+          aria-haspopup
+          aria-expanded={menuContent === "notes" ? "true" : "false"}
+        >
+          <span className="sr-only">Notes</span>
           <Notebook />
         </Button>
       </div>
-      <ToolbarMenu open={showMenu} boundingHeight={bounds.height}>
-        <div ref={ref}>
-          {menuContent === "subcounter" ? (
-            <ToolbarMenuContent key="subcounter">
-              <SubCounterMenu project={currentProject} />
-            </ToolbarMenuContent>
-          ) : (
-            <ToolbarMenuContent key="notes">
-              <CounterNotes />
-            </ToolbarMenuContent>
-          )}
-        </div>
+      <ToolbarMenu open={showMenu}>
+        {menuContent === "subcounter" ? (
+          <ToolbarMenuContent key="subcounter">
+            <SubCounterMenu project={currentProject} />
+          </ToolbarMenuContent>
+        ) : (
+          <ToolbarMenuContent key="notes">
+            <CounterNotes />
+          </ToolbarMenuContent>
+        )}
       </ToolbarMenu>
     </Toolbar>
   );
