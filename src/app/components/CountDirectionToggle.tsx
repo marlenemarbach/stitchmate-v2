@@ -10,10 +10,9 @@ import { RadioGroup, RadioGroupItem } from "./ui/RadioGroup";
 export function CountDirectionToggle({
   project,
 }: {
-  project: ProjectWithSubCounter;
+  project: Promise<ProjectWithSubCounter>;
 }) {
-  const currentProject = project;
-  // const currentProject = use(project);
+  const currentProject = use(project);
 
   const direction = useCounterStore((state) => state.direction);
   const updateDirection = useCounterStore((state) => state.updateDirection);

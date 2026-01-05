@@ -3,33 +3,31 @@
 import { use, useState } from "react";
 import { Notebook, Repeat } from "lucide-react";
 import { ProjectWithSubCounter } from "@/lib/types";
-import { CountDirectionToggle } from "./CountDirectionToggle";
 import { CounterNotes } from "./CounterNotes";
 import { SubCounterMenu } from "./SubCounterMenu";
 import { Button } from "./ui/Button";
-import { Toolbar } from "./ui/Toolbar";
 import { ToolbarMenu, ToolbarMenuContent } from "./ui/ToolbarMenu";
 
 type MenuContent = "subcounter" | "notes";
 
-export function CounterToolbar({
+export function CounterToolbarMenuBar({
   project,
 }: {
   project: Promise<ProjectWithSubCounter>;
 }) {
   const currentProject = use(project);
+
   const [showMenu, setShowMenu] = useState(false);
   const [menuContent, setMenuContent] = useState<MenuContent>("subcounter");
 
-  function handleMenu(content: MenuContent) {
-    if (showMenu && content === menuContent) setShowMenu(false);
+  function handleMenu(contentId: MenuContent) {
+    if (showMenu && contentId === menuContent) setShowMenu(false);
     if (!showMenu) setShowMenu(true);
-    if (menuContent !== content) setMenuContent(content);
+    if (menuContent !== contentId) setMenuContent(contentId);
   }
 
   return (
-    <Toolbar className="mt-auto w-max pr-2" aria-label="row counter settings">
-      <CountDirectionToggle project={currentProject} />
+    <>
       <div className="flex">
         <Button
           onClick={() => handleMenu("subcounter")}
@@ -67,6 +65,6 @@ export function CounterToolbar({
           </ToolbarMenuContent>
         )}
       </ToolbarMenu>
-    </Toolbar>
+    </>
   );
 }

@@ -2,9 +2,8 @@ import Link from "next/link";
 import { List } from "lucide-react";
 import { getProject } from "@/app/actions/projects";
 import { CountDirectionToggle } from "@/app/components/CountDirectionToggle";
-import { CounterNotes } from "@/app/components/CounterNotes";
 import { CounterPageTitle } from "@/app/components/CounterPageTitle";
-import { CounterToolbar } from "@/app/components/CounterToolbar";
+import { CounterToolbarMenuBar } from "@/app/components/CounterToolbarMenuBar";
 import { Header } from "@/app/components/Header";
 import { Reminder } from "@/app/components/Reminder";
 import { SignOutButton } from "@/app/components/SignOutButton";
@@ -37,7 +36,10 @@ export default async function Project({
           <Reminder />
           <RowCounter project={project} />
         </div>
-        <CounterToolbar project={project} />
+        <Toolbar aria-label="counter settings">
+          <CountDirectionToggle project={project} />
+          <CounterToolbarMenuBar project={project} />
+        </Toolbar>
       </main>
     </>
   );
