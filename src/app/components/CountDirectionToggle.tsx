@@ -2,6 +2,7 @@
 
 import { startTransition, use, useOptimistic } from "react";
 import { Minus, Plus } from "lucide-react";
+import { toast } from "sonner";
 import { CountDirection, ProjectWithSubCounter } from "@/lib/types";
 import { useCounterStore } from "@/providers/CounterStoreProvider";
 import { updateProject } from "../actions/projects";
@@ -28,7 +29,9 @@ export function CountDirectionToggle({
         currentProject.id,
       );
       if (!result.project) {
-        // add toast and error handling later
+        toast.error("Count direction could not be updated", {
+          description: "Direction has been reset.",
+        });
         console.error("Failed to update direction");
         return;
       }
@@ -37,8 +40,12 @@ export function CountDirectionToggle({
   }
 
   return (
-    <RadioGroup className="gap-0 border-r border-border">
+    <RadioGroup
+      className="gap-0 rounded-full bg-neutral-800 p-1"
+      defaultValue={currentProject.direction}
+    >
       <RadioGroupItem
+        className="size-8 rounded-full border-none"
         value={"up"}
         aria-pressed={optimisticDirection === "up"}
         onClick={() => handleUpdateDirection("up")}
@@ -46,7 +53,8 @@ export function CountDirectionToggle({
         <Plus className="size-4" />
       </RadioGroupItem>
       <RadioGroupItem
-        value={"up"}
+        className="size-8 rounded-full border-none"
+        value={"down"}
         aria-pressed={optimisticDirection === "down"}
         onClick={() => handleUpdateDirection("down")}
       >
