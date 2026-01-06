@@ -7,7 +7,7 @@ import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../app/actions/projects";
 import { getSession } from "./auth";
-import { SubCounter } from "./types";
+import { ProjectWithSubCounter, SubCounter } from "./types";
 import { mockDelay } from "./utils";
 
 /* --------------------------------------------------------------------------
@@ -57,23 +57,45 @@ export async function getProjectById(id: number, userId: string) {
   return project || null;
 }
 
-export async function createProjectByUserId(userId: string, name: string) {
-  const newProject = await db
-    .insert(projects)
-    .values({
-      userId,
-      name,
-    })
-    .returning();
-  return newProject[0];
+export async function createProjectByUserId(
+  userId: string,
+  name: string,
+): Promise<ProjectWithSubCounter> {
+  const result = await db.transaction(async (tx) => {
+    const newProject = await tx
+      .insert(projects)
+      .values({
+        userId,
+        name,
+      })
+      .returning();
+
+    const newSubCounter = await tx
+      .insert(subCounters)
+      .values({ projectId: newProject[0].id })
+      .returning();
+
+    const newProjectWithSubCounter = {
+      ...newProject[0],
+      subCounter: { ...newSubCounter[0] },
+    };
+
+    return newProjectWithSubCounter;
+  });
+
+  return result;
 }
 
 export async function deleteProjectById(projectId: number, userId: string) {
-  const result = await db
-    .delete(projects)
-    .where(and(eq(projects.id, projectId), eq(projects.userId, userId)))
-    .returning();
-  return result[0];
+  return await db.transaction(async (tx) => {
+    await tx
+      .delete(projects)
+      .where(and(eq(projects.id, projectId), eq(projects.userId, userId)));
+
+    await tx.delete(subCounters).where(eq(subCounters.projectId, projectId));
+
+    return true;
+  });
 }
 
 export async function updateProjectById(
@@ -93,22 +115,6 @@ export async function updateProjectById(
  * Subcounter
  * ------------------------------------------------------------------------*/
 
-export async function createSubCounterByProjectId(
-  projectId: number,
-  newSubCounter: Pick<SubCounter, "type" | "interval" | "startRow">,
-) {
-  const result = await db
-    .insert(subCounters)
-    .values({
-      counterId: projectId,
-      type: newSubCounter.type,
-      interval: newSubCounter.interval,
-      startRow: newSubCounter.startRow,
-    })
-    .returning();
-  return result[0];
-}
-
 export async function updateSubCounterById(
   projectId: number,
   data: Partial<SubCounter>,
@@ -116,7 +122,7 @@ export async function updateSubCounterById(
   const result = await db
     .update(subCounters)
     .set(data)
-    .where(and(eq(subCounters.counterId, projectId)))
+    .where(and(eq(subCounters.projectId, projectId)))
     .returning();
   return result[0];
 }

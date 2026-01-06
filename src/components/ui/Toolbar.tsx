@@ -11,7 +11,7 @@ export function Toolbar({
     <div
       role="toolbar"
       className={cn(
-        "relative flex w-fit items-center gap-2 rounded-full border border-border bg-card text-card-foreground",
+        "tems-center relative flex w-fit gap-2 rounded-full border border-border bg-popup p-1 text-popup-foreground",
         className,
       )}
       {...props}

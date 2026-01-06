@@ -10,7 +10,7 @@ import {
 import { Bell } from "lucide-react";
 import { SubCounterType } from "@/lib/types";
 import { type ProjectWithSubCounter } from "@/lib/types";
-import { createReminder, updateReminder } from "../actions/subCounter";
+import { updateSubCounter } from "../actions/subCounter";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
 import { Form, FormError, FormField } from "./ui/Form";

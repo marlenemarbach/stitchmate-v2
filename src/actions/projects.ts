@@ -3,9 +3,10 @@
 import { refresh, revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import z from "zod";
-import { Project } from "@/lib/types";
+import { Project, ProjectWithSubCounter } from "@/lib/types";
 import {
   createProjectByUserId,
+  createSubCounterByProjectId,
   deleteProjectById,
   getAllProjectsByUserId,
   getCurrentUser,
@@ -31,7 +32,7 @@ export type ProjectData = z.infer<typeof ProjectSchema>;
 
 export async function createProject(data: {
   name: string;
-}): Promise<ActionResponse & { projectId?: number }> {
+}): Promise<ActionResponse & { project?: ProjectWithSubCounter }> {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
@@ -59,7 +60,7 @@ export async function createProject(data: {
   return {
     success: true,
     message: "Project created successfully",
-    projectId: newProject.id,
+    project: newProject,
   };
 }
 

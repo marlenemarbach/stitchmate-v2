@@ -8,6 +8,7 @@ import { Header } from "@/app/components/Header";
 import { Reminder } from "@/app/components/Reminder";
 import { SignOutButton } from "@/app/components/SignOutButton";
 import { Toolbar } from "@/app/components/ui/Toolbar";
+import { CounterStoreProvider } from "@/providers/CounterStoreProvider";
 import { RowCounter } from "../../components/RowCounter";
 
 export default async function Project({
@@ -29,18 +30,19 @@ export default async function Project({
         <CounterPageTitle project={project} />
         <SignOutButton className="col-start-3 justify-self-end" />
       </Header>
-
-      <main className="relative mt-4 mb-8 flex flex-1 flex-col items-center justify-center gap-y-4 px-6">
-        <div className="flex w-full flex-row justify-between gap-4 sm:flex-col"></div>
-        <div className="flex flex-col gap-6">
-          <Reminder />
-          <RowCounter project={project} />
-        </div>
-        <Toolbar aria-label="counter settings">
-          <CountDirectionToggle project={project} />
-          <CounterToolbarMenuBar project={project} />
-        </Toolbar>
-      </main>
+      <CounterStoreProvider>
+        <main className="relative mt-4 mb-8 flex flex-1 flex-col items-center justify-center gap-y-4 px-6">
+          <div className="flex w-full flex-row justify-between gap-4 sm:flex-col"></div>
+          <div className="flex flex-col gap-6">
+            <Reminder />
+            <RowCounter project={project} />
+          </div>
+          <Toolbar aria-label="counter settings">
+            <CountDirectionToggle project={project} />
+            <CounterToolbarMenuBar project={project} />
+          </Toolbar>
+        </main>
+      </CounterStoreProvider>
     </>
   );
 }

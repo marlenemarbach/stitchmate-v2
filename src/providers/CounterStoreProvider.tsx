@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, useRef, useContext } from "react";
+import { createContext, useContext, useRef } from "react";
 import { useStore } from "zustand";
-
+import { ProjectWithSubCounter } from "@/lib/types";
 import { type CounterStore, createCounterStore } from "@/stores/counter-store";
 
 export type CounterStoreApi = ReturnType<typeof createCounterStore>;

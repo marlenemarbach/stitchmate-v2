@@ -6,7 +6,7 @@ import { ProjectWithSubCounter } from "@/lib/types";
 import { CounterNotes } from "./CounterNotes";
 import { SubCounterMenu } from "./SubCounterMenu";
 import { Button } from "./ui/Button";
-import { ToolbarMenu, ToolbarMenuContent } from "./ui/ToolbarMenu";
+import { ToolbarMenu } from "./ui/ToolbarMenu";
 
 type MenuContent = "subcounter" | "notes";
 
@@ -56,13 +56,9 @@ export function CounterToolbarMenuBar({
       </div>
       <ToolbarMenu open={showMenu}>
         {menuContent === "subcounter" ? (
-          <ToolbarMenuContent key="subcounter">
-            <SubCounterMenu project={currentProject} />
-          </ToolbarMenuContent>
+          <SubCounterMenu key="subcounter" project={currentProject} />
         ) : (
-          <ToolbarMenuContent key="notes">
-            <CounterNotes />
-          </ToolbarMenuContent>
+          <CounterNotes key="notes" />
         )}
       </ToolbarMenu>
     </>

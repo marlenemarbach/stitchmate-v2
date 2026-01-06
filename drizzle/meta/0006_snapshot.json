@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "b0b08759-68a2-46dd-abd0-989adf6d2940",
-  "prevId": "964712cd-17a5-4181-9fa5-a12ec12e41cf",
+  "id": "c33b66b9-beb6-438e-8fd4-c0e27d51d0bc",
+  "prevId": "6b5155c1-cbfb-453b-b5a8-1bde94d38b1d",
   "tables": {
     "projects": {
       "name": "projects",
@@ -76,15 +76,7 @@
           "default": "'wip'"
         }
       },
-      "indexes": {
-        "projects_name_unique": {
-          "name": "projects_name_unique",
-          "columns": [
-            "name"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
         "projects_user_id_users_id_fk": {
           "name": "projects_user_id_users_id_fk",
@@ -114,8 +106,8 @@
           "notNull": true,
           "autoincrement": true
         },
-        "counter_id": {
-          "name": "counter_id",
+        "project_id": {
+          "name": "project_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -127,7 +119,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'shortRow'"
+          "default": "'increase'"
         },
         "interval": {
           "name": "interval",
@@ -135,7 +127,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": 1
+          "default": 2
         },
         "created_at": {
           "name": "created_at",
@@ -158,7 +150,8 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": 1
         },
         "active": {
           "name": "active",
@@ -166,25 +159,25 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
         }
       },
       "indexes": {
-        "sub_counters_counterId_unique": {
-          "name": "sub_counters_counterId_unique",
+        "sub_counters_projectId_unique": {
+          "name": "sub_counters_projectId_unique",
           "columns": [
-            "counter_id"
+            "project_id"
           ],
           "isUnique": true
         }
       },
       "foreignKeys": {
-        "sub_counters_counter_id_projects_id_fk": {
-          "name": "sub_counters_counter_id_projects_id_fk",
+        "sub_counters_project_id_projects_id_fk": {
+          "name": "sub_counters_project_id_projects_id_fk",
           "tableFrom": "sub_counters",
           "tableTo": "projects",
           "columnsFrom": [
-            "counter_id"
+            "project_id"
           ],
           "columnsTo": [
             "id"
@@ -258,7 +251,9 @@
   "_meta": {
     "schemas": {},
     "tables": {},
-    "columns": {}
+    "columns": {
+      "\"sub_counters\".\"counter_id\"": "\"sub_counters\".\"project_id\""
+    }
   },
   "internal": {
     "indexes": {}

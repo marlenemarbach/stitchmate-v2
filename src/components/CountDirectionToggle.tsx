@@ -24,18 +24,25 @@ export function CountDirectionToggle({
   async function handleUpdateDirection(newDirection: CountDirection) {
     startTransition(async () => {
       setOptimisticDirection(newDirection);
-      const result = await updateProject(
-        { direction: newDirection },
-        currentProject.id,
-      );
-      if (!result.project) {
+      try {
+        const result = await updateProject(
+          { direction: newDirection },
+          currentProject.id,
+        );
+        if (!result.project) {
+          toast.error("Count direction could not be updated", {
+            description: "Direction has been reset.",
+          });
+          return;
+        }
+
+        updateDirection(result.project.direction);
+      } catch (e) {
         toast.error("Count direction could not be updated", {
           description: "Direction has been reset.",
         });
         console.error("Failed to update direction");
-        return;
       }
-      updateDirection(result.project.direction);
     });
   }
 

@@ -51,14 +51,14 @@ export const projectRelations = relations(projects, ({ one }) => ({
 
 export const subCounters = sqliteTable("sub_counters", {
   id: integer().primaryKey({ autoIncrement: true }),
-  counterId: integer()
+  projectId: integer()
     .notNull()
     .unique()
     .references(() => projects.id),
   type: text({ enum: ["shortRow", "increase", "decrease", "patternRepeat"] })
     .notNull()
-    .default("shortRow"),
-  interval: integer().notNull().default(1),
+    .default("increase"),
+  interval: integer().notNull().default(2),
   createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
@@ -66,13 +66,13 @@ export const subCounters = sqliteTable("sub_counters", {
     .notNull()
     .default(sql`(current_timestamp)`)
     .$onUpdate(() => sql`(current_timestamp)`),
-  startRow: integer().notNull(),
-  active: integer({ mode: "boolean" }).notNull().default(true),
+  startRow: integer().notNull().default(1),
+  active: integer({ mode: "boolean" }).notNull().default(false),
 });
 
 export const subCounterRelations = relations(subCounters, ({ one }) => ({
   project: one(projects, {
-    fields: [subCounters.counterId],
+    fields: [subCounters.projectId],
     references: [projects.id],
   }),
 }));
