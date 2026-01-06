@@ -1,5 +1,6 @@
 import { DM_Sans } from "next/font/google";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Footer } from "./components/Footer";
 import "./globals.css";
 
@@ -23,6 +24,15 @@ export default function RootLayout({
       <body className="flex h-screen w-screen flex-col bg-background font-display tracking-normal text-foreground dark:tracking-wide">
         {children}
         <Footer />
+        <Toaster
+          toastOptions={{
+            style: {
+              background: "var(--popup)",
+              color: "var(--foreground)",
+              borderColor: "var(--border)",
+            },
+          }}
+        />
       </body>
     </html>
   );
