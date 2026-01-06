@@ -1,47 +1,34 @@
 "use client";
 
-import { startTransition, use, useOptimistic } from "react";
+import { startTransition, use } from "react";
 import { Minus, Plus } from "lucide-react";
-import { toast } from "sonner";
-import { CountDirection, ProjectWithSubCounter } from "@/lib/types";
-import { useCounterStore } from "@/providers/CounterStoreProvider";
+import { CountDirectionContext } from "@/contexts/CountDirectionContext";
+import { CountDirection } from "@/lib/types";
 import { updateProject } from "../actions/projects";
 import { RadioGroup, RadioGroupItem } from "./ui/RadioGroup";
 
-export function CountDirectionToggle({
-  project,
-}: {
-  project: Promise<ProjectWithSubCounter>;
-}) {
-  const currentProject = use(project);
+export function CountDirectionToggle({ projectId }: { projectId: number }) {
+  const directionContext = use(CountDirectionContext);
 
-  const direction = useCounterStore((state) => state.direction);
-  const updateDirection = useCounterStore((state) => state.updateDirection);
+  if (!directionContext)
+    throw new Error(
+      "CountDirectionToggle must be used within CountDirectionContext",
+    );
 
-  const [optimisticDirection, setOptimisticDirection] =
-    useOptimistic(direction);
+  const { direction, updateDirection } = directionContext;
 
-  async function handleUpdateDirection(newDirection: CountDirection) {
+  function handleUpdateDirection(newDirection: CountDirection) {
+    if (newDirection === direction) return;
+    // optimistic update via client side context. In this case we don't want to revert to the previous value if the operation fails.
+    updateDirection(newDirection);
+
     startTransition(async () => {
-      setOptimisticDirection(newDirection);
       try {
-        const result = await updateProject(
-          { direction: newDirection },
-          currentProject.id,
-        );
-        if (!result.project) {
-          toast.error("Count direction could not be updated", {
-            description: "Direction has been reset.",
-          });
-          return;
-        }
-
-        updateDirection(result.project.direction);
+        console.log("transition params", direction, projectId);
+        await updateProject({ direction: newDirection }, projectId);
       } catch (e) {
-        toast.error("Count direction could not be updated", {
-          description: "Direction has been reset.",
-        });
-        console.error("Failed to update direction");
+        // ignore this error since it's not critical if the newDirection isn't actually saved
+        console.error("UpdateProject error:", e);
       }
     });
   }
@@ -49,12 +36,12 @@ export function CountDirectionToggle({
   return (
     <RadioGroup
       className="gap-0 rounded-full bg-neutral-800 p-1"
-      defaultValue={currentProject.direction}
+      defaultValue={direction}
     >
       <RadioGroupItem
         className="size-8 rounded-full border-none"
         value={"up"}
-        aria-pressed={optimisticDirection === "up"}
+        aria-pressed={direction === "up"}
         onClick={() => handleUpdateDirection("up")}
       >
         <Plus className="size-4" />
@@ -62,7 +49,7 @@ export function CountDirectionToggle({
       <RadioGroupItem
         className="size-8 rounded-full border-none"
         value={"down"}
-        aria-pressed={optimisticDirection === "down"}
+        aria-pressed={direction === "down"}
         onClick={() => handleUpdateDirection("down")}
       >
         <Minus className="size-4" />
