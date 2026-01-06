@@ -3,17 +3,16 @@
 import { refresh, revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import z from "zod";
-import { Project, ProjectWithSubCounter } from "@/lib/types";
 import {
   createProjectByUserId,
-  createSubCounterByProjectId,
   deleteProjectById,
   getAllProjectsByUserId,
   getCurrentUser,
   getProjectById,
   updateProjectById,
-} from "../../lib/dal";
-import { mockDelay } from "../../lib/utils";
+} from "@/lib/dal";
+import { Project, ProjectWithSubCounter } from "@/lib/types";
+import { mockDelay } from "@/lib/utils";
 import { ActionResponse } from "./types";
 
 const ProjectSchema = z.object({

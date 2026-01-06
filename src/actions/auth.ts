@@ -8,8 +8,8 @@ import {
   deleteSession,
   hashPassword,
   verifyPassword,
-} from "../../lib/auth";
-import { getUserByEmail } from "../../lib/dal";
+} from "@/lib/auth";
+import { getUserByEmail } from "@/lib/dal";
 import { type ActionResponse } from "./types";
 
 const AuthSchema = z.object({
