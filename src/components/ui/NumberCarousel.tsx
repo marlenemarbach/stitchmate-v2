@@ -7,16 +7,19 @@ export function NumberCarousel() {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
 
+  function increment() {
+    setNumbers((prev) => getNextNumbers(prev));
+    setDirection(1);
+  }
+
+  function decrement() {
+    setNumbers((prev) => getPreviousNumbers(prev));
+    setDirection(-1);
+  }
+
   return (
     <div className="flex items-center gap-3">
-      <button
-        onClick={() => {
-          setNumbers((prev) => getNextNumbers(prev));
-          setDirection(1);
-        }}
-      >
-        +
-      </button>
+      <button onClick={() => increment()}>+</button>
       <div className="flex h-26 flex-col items-center justify-center gap-2 overflow-hidden mask-y-from-70% mask-y-to-90%">
         {numbers.map((number) => (
           <motion.span
@@ -36,14 +39,7 @@ export function NumberCarousel() {
           </motion.span>
         ))}
       </div>
-      <button
-        onClick={() => {
-          setNumbers((prev) => getPreviousNumbers(prev));
-          setDirection(-1);
-        }}
-      >
-        -
-      </button>
+      <button onClick={() => decrement()}>-</button>
     </div>
   );
 }
