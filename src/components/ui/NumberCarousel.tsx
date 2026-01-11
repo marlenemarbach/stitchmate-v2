@@ -27,8 +27,8 @@ export function NumberCarousel({ min = 1, max = 99 }: NumberCarouselProps) {
   }
 
   function handleWheel(e: React.WheelEvent) {
-    if (e.deltaY > 0) decrement();
-    else if (e.deltaY < 0) increment();
+    if (e.deltaY > 0) increment();
+    else if (e.deltaY < 0) decrement();
   }
 
   return (
