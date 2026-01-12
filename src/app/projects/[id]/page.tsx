@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { List } from "lucide-react";
-import { getProject } from "@/app/actions/projects";
-import { CountDirectionToggle } from "@/app/components/CountDirectionToggle";
-import { CounterPageTitle } from "@/app/components/CounterPageTitle";
-import { CounterToolbarMenuBar } from "@/app/components/CounterToolbarMenuBar";
-import { Header } from "@/app/components/Header";
-import { Reminder } from "@/app/components/Reminder";
-import { SignOutButton } from "@/app/components/SignOutButton";
-import { Toolbar } from "@/app/components/ui/Toolbar";
-import { CounterStoreProvider } from "@/providers/CounterStoreProvider";
-import { RowCounter } from "../../components/RowCounter";
+import { getProject } from "@/actions/projects";
+import { CounterPageTitle } from "@/components/CounterPageTitle";
+import { CounterWithToolbar } from "@/components/CounterWithToolbar";
+import { Header } from "@/components/Header";
+import { SignOutButton } from "@/components/SignOutButton";
 
 export default async function Project({
   params,
@@ -20,7 +15,7 @@ export default async function Project({
 
   return (
     <>
-      <Header className="top-0 border-b border-border">
+      <Header className="items-baseline">
         <Link
           href="/projects"
           className="flex size-9 items-center justify-center rounded-full hover:bg-foreground/5"
@@ -30,19 +25,9 @@ export default async function Project({
         <CounterPageTitle project={project} />
         <SignOutButton className="col-start-3 justify-self-end" />
       </Header>
-      <CounterStoreProvider>
-        <main className="relative mt-4 mb-8 flex flex-1 flex-col items-center justify-center gap-y-4 px-6">
-          <div className="flex w-full flex-row justify-between gap-4 sm:flex-col"></div>
-          <div className="flex flex-col gap-6">
-            <Reminder />
-            <RowCounter project={project} />
-          </div>
-          <Toolbar aria-label="counter settings">
-            <CountDirectionToggle project={project} />
-            <CounterToolbarMenuBar project={project} />
-          </Toolbar>
-        </main>
-      </CounterStoreProvider>
+      <main className="relative grid flex-1 grid-rows-[auto_1fr_auto] place-content-center justify-center gap-y-4 px-6 pt-4">
+        <CounterWithToolbar project={project} />
+      </main>
     </>
   );
 }
