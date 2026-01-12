@@ -1,30 +1,23 @@
 "use client";
 
-import { startTransition, use } from "react";
+import { startTransition } from "react";
 import { Minus, Plus } from "lucide-react";
-import { CountDirectionContext } from "@/contexts/CountDirectionContext";
-import { CountDirection } from "@/lib/types";
+import { ToolbarToggleGroup, ToolbarToggleItem } from "@/components/ui/Toolbar";
+import { useCountDirection } from "@/contexts/CountDirectionContext";
+import { type CountDirection } from "@/lib/types";
 import { updateProject } from "../actions/projects";
-import { RadioGroup, RadioGroupItem } from "./ui/RadioGroup";
 
 export function CountDirectionToggle({ projectId }: { projectId: number }) {
-  const directionContext = use(CountDirectionContext);
-
-  if (!directionContext)
-    throw new Error(
-      "CountDirectionToggle must be used within CountDirectionContext",
-    );
-
-  const { direction, updateDirection } = directionContext;
+  const [direction, toggleDirection] = useCountDirection();
 
   function handleUpdateDirection(newDirection: CountDirection) {
     if (newDirection === direction) return;
-    // optimistic update via client side context. In this case we don't want to revert to the previous value if the operation fails.
-    updateDirection(newDirection);
+
+    // optimistic update via context. In this case we don't want to revert to the previous value if the operation fails.
+    toggleDirection();
 
     startTransition(async () => {
       try {
-        console.log("transition params", direction, projectId);
         await updateProject({ direction: newDirection }, projectId);
       } catch (e) {
         // ignore this error since it's not critical if the newDirection isn't actually saved
@@ -34,26 +27,51 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
   }
 
   return (
-    <RadioGroup
-      className="gap-0 rounded-full bg-neutral-800 p-1"
-      defaultValue={direction}
+    <>
+      <ToolbarToggleGroup
+        className="relative items-center gap-0 rounded-full bg-neutral-800 px-1"
+        type="single"
+        defaultValue={direction}
+        onValueChange={(value) =>
+          handleUpdateDirection(value as CountDirection)
+        }
+        aria-label="Counting direction setting"
+      >
+        <ToolbarToggleItem
+          className="hover-instant size-8 rounded-full border-none hover:bg-primary/5"
+          value={"up"}
+          aria-label="Up"
+        >
+          <Plus className="size-4" />
+        </ToolbarToggleItem>
+        <ToolbarToggleItem
+          className="hover-instant size-8 rounded-full border-none hover:bg-primary/5"
+          value={"down"}
+          aria-label="Down"
+        >
+          <Minus className="size-4" />
+        </ToolbarToggleItem>
+        <ClipPathContainer data-direction={direction} />
+      </ToolbarToggleGroup>
+    </>
+  );
+}
+
+function ClipPathContainer({
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      aria-hidden
+      className="absolute inset-0 z-10 flex w-full items-center overflow-hidden bg-primary px-1 text-primary-foreground transition-[clip-path] duration-150 ease-out data-[direction=down]:[clip-path:_circle(1rem_at_calc(100%-1.25rem)_50%)] data-[direction=up]:[clip-path:_circle(1rem_at_1.25rem_50%)]"
+      {...props}
     >
-      <RadioGroupItem
-        className="size-8 rounded-full border-none"
-        value={"up"}
-        aria-pressed={direction === "up"}
-        onClick={() => handleUpdateDirection("up")}
-      >
+      <span className="flex size-8 items-center justify-center">
         <Plus className="size-4" />
-      </RadioGroupItem>
-      <RadioGroupItem
-        className="size-8 rounded-full border-none"
-        value={"down"}
-        aria-pressed={direction === "down"}
-        onClick={() => handleUpdateDirection("down")}
-      >
+      </span>
+      <span className="flex size-8 items-center justify-center">
         <Minus className="size-4" />
-      </RadioGroupItem>
-    </RadioGroup>
+      </span>
+    </div>
   );
 }
