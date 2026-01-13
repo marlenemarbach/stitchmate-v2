@@ -4,21 +4,21 @@ import { startTransition } from "react";
 import { Minus, Plus } from "lucide-react";
 import { ToolbarToggleGroup, ToolbarToggleItem } from "@/components/ui/Toolbar";
 import { useCountDirection } from "@/contexts/CountDirectionContext";
-import { type CountDirection } from "@/lib/types";
 import { updateProject } from "../actions/projects";
 
 export function CountDirectionToggle({ projectId }: { projectId: number }) {
   const [direction, toggleDirection] = useCountDirection();
 
-  function handleUpdateDirection(newDirection: CountDirection) {
-    if (newDirection === direction) return;
+  function handleUpdateDirection(newDirection: string) {
+    const numDirection = newDirection === "up" ? 1 : -1;
+    if (direction === numDirection) return;
 
     // optimistic update via context. In this case we don't want to revert to the previous value if the operation fails.
     toggleDirection();
 
     startTransition(async () => {
       try {
-        await updateProject({ direction: newDirection }, projectId);
+        await updateProject({ direction: numDirection }, projectId);
       } catch (e) {
         // ignore this error since it's not critical if the newDirection isn't actually saved
         console.error("UpdateProject error:", e);
@@ -31,10 +31,8 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
       <ToolbarToggleGroup
         className="relative items-center gap-0 rounded-full bg-neutral-800 px-1"
         type="single"
-        defaultValue={direction}
-        onValueChange={(value) =>
-          handleUpdateDirection(value as CountDirection)
-        }
+        defaultValue={direction === 1 ? "up" : "down"}
+        onValueChange={(value) => handleUpdateDirection(value)}
         aria-label="Counting direction setting"
       >
         <ToolbarToggleItem

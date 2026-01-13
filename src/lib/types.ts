@@ -6,8 +6,8 @@ export type Project = InferSelectModel<typeof projects>;
 export type ProjectStatus = Project["status"];
 export type SubCounterType = SubCounter["type"];
 
-export type CountDirection = "up" | "down";
+export type CountDirection = 1 | -1;
 
 export type ProjectWithSubCounter = Project & {
-  subCounter: SubCounter | null;
+  subCounter: SubCounter;
 };

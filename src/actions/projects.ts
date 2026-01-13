@@ -23,7 +23,7 @@ const ProjectSchema = z.object({
     .max(30, "Project name cannot be longer than 30 characters"),
   needleSize: z.string().nullable(),
   count: z.number().gte(1),
-  direction: z.enum(["up", "down"]),
+  direction: z.union([z.literal(1), z.literal(-1)]),
   status: z.enum(["wip", "finished"]),
 });
 
@@ -70,7 +70,7 @@ export async function updateProject(
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  await mockDelay(1000);
+  // await mockDelay(1000);
 
   const project = await getProjectById(projectId, user.id);
   if (!project) notFound();

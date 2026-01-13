@@ -24,9 +24,7 @@ export const projects = sqliteTable("projects", {
     .notNull()
     .references(() => users.id),
   count: integer().notNull().default(1),
-  direction: text({ enum: ["up", "down"] })
-    .notNull()
-    .default("up"),
+  direction: integer().notNull().default(1),
   name: text({ length: 30 }).notNull(),
   needleSize: text(),
   createdAt: text()

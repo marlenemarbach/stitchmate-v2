@@ -16,11 +16,7 @@ export function CountDirectionProvider({
 
   const contextValue = useMemo(() => {
     const toggleDirection = () => {
-      if (direction === "up") {
-        setDirection("down");
-        return;
-      }
-      setDirection("up");
+      setDirection((prev) => (prev * -1) as CountDirection);
     };
     return { direction, toggleDirection };
   }, [direction, setDirection]);
