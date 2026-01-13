@@ -2,7 +2,7 @@
 
 import { use } from "react";
 import { CountDirectionProvider } from "@/contexts/CountDirectionContext";
-import { CounterContextProvider } from "@/contexts/SubCounterContext";
+import { SubCounterProvider } from "@/contexts/SubCounterContext";
 import { ProjectWithSubCounter } from "@/lib/types";
 import { CountDirectionToggle } from "./CountDirectionToggle";
 import { Counter } from "./Counter";
@@ -19,11 +19,10 @@ export function CounterWithToolbar({
 
   return (
     <>
-      <CounterContextProvider
+      <SubCounterProvider
         initialState={{
-          countDirection: currentProject.direction,
           count: currentProject.count,
-          subCounterActive: currentProject.subCounter.active,
+          state: currentProject.subCounter.active ? "on" : "off",
         }}
       >
         <CountDirectionProvider initialDirection={currentProject.direction}>
@@ -31,7 +30,7 @@ export function CounterWithToolbar({
             <SubCounter subCounter={currentProject.subCounter} />
           </div>
           <div className="flex flex-col gap-6">
-            <Counter project={project} />
+            <Counter project={currentProject} />
           </div>
           <Toolbar
             className="place-self-center"
@@ -42,7 +41,7 @@ export function CounterWithToolbar({
             <CounterToolbarMenuBar project={currentProject} />
           </Toolbar>
         </CountDirectionProvider>
-      </CounterContextProvider>
+      </SubCounterProvider>
     </>
   );
 }
