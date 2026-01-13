@@ -4,20 +4,19 @@ import {
   getCurrentUser,
   getProjectById,
   updateSubCounterById,
-} from "../../lib/dal";
-import { SubCounter } from "../../lib/types";
+} from "../lib/dal";
+import { SubCounter } from "../lib/types";
 import { ActionResponse } from "./types";
 
-const SubCounterSchema = z.object({
-  type: z.enum(["increase", "decrease", "shortRow", "patternRepeat"]),
-  interval: z.coerce.number().gte(1),
+export const SubCounterSchema = z.object({
+  interval: z.coerce.number().gte(1).lte(99),
   startRow: z.coerce.number().gte(1),
   active: z.boolean(),
 });
 
 export async function updateSubCounter(
   projectId: number,
-  formData: FormData,
+  data: Partial<SubCounter>,
 ): Promise<ActionResponse & { subCounter?: SubCounter }> {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
@@ -26,10 +25,9 @@ export async function updateSubCounter(
   if (!project || !project.subCounter) notFound();
 
   const validationResult = SubCounterSchema.partial().safeParse({
-    type: formData.get("type"),
-    interval: formData.get("interval"),
+    interval: data.interval,
     startRow: project.count,
-    active: !formData.get("isDisabled"),
+    active: data.active,
   });
 
   if (!validationResult.success) {
@@ -48,14 +46,14 @@ export async function updateSubCounter(
   if (!updatedSubCounter) {
     return {
       success: false,
-      message: "Failed to update reminder",
+      message: "Failed to update subcounter",
       error: "failed",
     };
   }
 
   return {
     success: true,
-    message: "Updated reminder successfully",
+    message: "Updated subcounter successfully",
     subCounter: updatedSubCounter,
   };
 }

@@ -53,9 +53,6 @@ export const subCounters = sqliteTable("sub_counters", {
     .notNull()
     .unique()
     .references(() => projects.id),
-  type: text({ enum: ["shortRow", "increase", "decrease", "patternRepeat"] })
-    .notNull()
-    .default("increase"),
   interval: integer().notNull().default(2),
   createdAt: text()
     .notNull()
