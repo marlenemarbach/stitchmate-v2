@@ -5,7 +5,7 @@ import { connection } from "next/server";
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
-import { ProjectData } from "../app/actions/projects";
+import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
 import { ProjectWithSubCounter, SubCounter } from "./types";
 import { mockDelay } from "./utils";
@@ -54,7 +54,7 @@ export async function getProjectById(id: number, userId: string) {
       subCounter: true,
     },
   });
-  return project || null;
+  return (project as ProjectWithSubCounter) || null;
 }
 
 export async function createProjectByUserId(
