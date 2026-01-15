@@ -39,10 +39,11 @@ export function SignupForm() {
     initialState,
   );
   return (
-    <Form action={formAction}>
+    <form className="grid w-full gap-3" action={formAction}>
       <FormField>
-        <Label htmlFor="email">Enter your email</Label>
+        <label htmlFor="email">Enter your email</label>
         <Input
+          className="h-11"
           id="email"
           name="email"
           type="email"
@@ -55,8 +56,9 @@ export function SignupForm() {
         <FormError id="email-error">{state?.errors?.email}</FormError>
       </FormField>
       <FormField>
-        <Label htmlFor="password">Set a password</Label>
+        <label htmlFor="password">Set a password</label>
         <Input
+          className="h-11"
           id="password"
           name="password"
           type="password"
@@ -68,7 +70,7 @@ export function SignupForm() {
         />
         <FormError id="password-error">{state?.errors?.password}</FormError>
       </FormField>
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="mt-3 h-10 w-full">
         Create Account
       </Button>
       {state?.error && (
@@ -76,6 +78,6 @@ export function SignupForm() {
           {state.message}
         </FormError>
       )}
-    </Form>
+    </form>
   );
 }

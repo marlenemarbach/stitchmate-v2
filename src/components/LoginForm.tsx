@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import { signIn } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
-import { Form, FormError, FormField } from "./ui/Form";
+import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
-import { Label } from "./ui/Label";
 
 const initialState: ActionResponse = {
   success: false,
@@ -40,28 +39,26 @@ export function LoginForm() {
   );
 
   return (
-    <Form action={formAction}>
+    <form className="grid w-full gap-3" action={formAction}>
       <FormField>
-        <label className="pl-1" htmlFor="email">
-          Your Email
-        </label>
+        <label htmlFor="email">Email</label>
         <Input
-          className="h-10"
+          className="h-11"
           id="email"
           name="email"
           type="email"
           autoComplete="email"
           placeholder="name@email.com"
-          disabled={pending}
           aria-describedby="email-error"
           required
+          disabled={pending}
         />
         <FormError id="email-error">{state?.errors?.email}</FormError>
       </FormField>
       <FormField>
         <label htmlFor="password">Password</label>
         <Input
-          className="h-10"
+          className="h-11"
           id="password"
           name="password"
           type="password"
@@ -70,17 +67,18 @@ export function LoginForm() {
           minLength={12}
           aria-describedby="password-error"
           required
+          disabled={pending}
         />
         <FormError id="password-error">{state?.errors?.password}</FormError>
       </FormField>
-      <Button type="submit" className="h-10 w-full">
+      <Button className="mt-3 h-10 w-full" disabled={pending} type="submit">
         Login
       </Button>
       {state?.error && (
-        <FormError className="text-center text-destructive">
+        <FormError className="text-center text-sm text-destructive">
           {state.message}
         </FormError>
       )}
-    </Form>
+    </form>
   );
 }

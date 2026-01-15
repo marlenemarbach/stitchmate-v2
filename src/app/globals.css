@@ -2,7 +2,7 @@
 
 :root {
   --background: oklch(17.5% 0 0);
-  --foreground: oklch(96% 0 0);
+  --foreground: oklch(90% 0 0);
   --popup: oklch(19.5% 0 0);
   --popup-foreground: oklch(97% 0 0);
   --muted: oklch(97% 0 0 / 14%);
@@ -11,11 +11,15 @@
   --accent-foreground: oklch(82.3% 0.12 346.018);
   --primary: oklch(92.8% 0.006 264.531);
   --primary-foreground: oklch(13% 0.028 261.692);
+  --secondary: oklch(0.313 0.088 276.9);
+  --secondary-foreground: oklch(0.664 0.082 276.9);
   --destructive-foreground: oklch(64.5% 0.246 16.439);
   --destructive: oklch(81% 0.117 11.638);
   --border: oklch(97% 0 0/ 16%);
   --input: oklch(1 0 0 / 8%);
-  --ring: oklch(97% 0 0);
+  --ring: oklch(97% 0 0 / 50%);
+  --counter: oklch(0.254 0.058 277.9);
+  --counter-foreground: oklch(0.568 0.113 277.3);
 }
 
 @theme inline {
@@ -23,10 +27,10 @@
   --color-foreground: var(--foreground);
   --color-popup: var(--popup);
   --color-popup-foreground: var(--popup-foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -36,63 +40,16 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-counter: var(--counter);
+  --color-counter-foreground: var(--counter-foreground);
+
+  --color-ultramarine-200: oklch(0.664 0.082 276.9);
+  --color-ultramarine-300: oklch(0.576 0.106 276.9);
+  --color-ultramarine-500: oklch(0.401 0.112 276.9);
 }
 
 @theme {
   --font-display: "DM Sans", sans-serif;
-  --animate-fade-in: fadeIn 250ms ease-out forwards;
-  --animate-fade-out: fadeOut 250ms ease-in forwards;
-
-  @keyframes enter {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes exit {
-    from {
-      opacity: 1;
-      transform: scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-  }
-
-  @keyframes spinSlow {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spinSlowReverse {
-    to {
-      transform: rotate(-360deg);
-    }
-  }
-
-  @keyframes switchSlideLeft {
-    from {
-      transform: translateX(-50%);
-    }
-    to {
-      transform: translateX(50%);
-    }
-  }
-}
-
-@utility animate-popup-in {
-  animation: 150ms ease-out enter;
-}
-
-@utility animate-popup-out {
-  animation: 150ms ease-in exit;
 }
 
 @utility shadow-popup {
@@ -106,12 +63,6 @@
   &::-webkit-scrollbar {
     display: none;
   }
-}
-
-@utility counter-clip {
-  clip-path: path(
-    "M55.542 0C72.9841 5.12656 95.6085 8.22167 120.33 8.22168C144.839 8.22164 167.287 5.17967 184.667 0.131836C217.946 21.3426 240 58.4451 240 100.67C240 166.574 186.274 220 120 220C53.7259 220 1.65901e-05 166.574 0 100.67C4.67485e-05 58.3571 22.1471 21.1885 55.542 0ZM156 96C148.268 96 142 102.268 142 110C142 117.732 148.268 124 156 124C163.732 124 170 117.732 170 110C170 102.268 163.732 96 156 96ZM84 96C76.268 96 70 102.268 70 110C70 117.732 76.268 124 84 124C91.732 124 98 117.732 98 110C98 102.268 91.732 96 84 96Z"
-  );
 }
 
 * {
