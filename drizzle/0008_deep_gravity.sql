@@ -1,0 +1,1 @@
+ALTER TABLE `sub_counters` DROP COLUMN `type`;
