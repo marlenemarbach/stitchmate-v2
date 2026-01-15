@@ -1,22 +1,16 @@
 "use client";
 
-import { use, useState } from "react";
-import { Notebook, Repeat } from "lucide-react";
+import { useState } from "react";
+import { Asterisk, NotepadText } from "lucide-react";
 import { ProjectWithSubCounter } from "@/lib/types";
 import { CounterNotes } from "./CounterNotes";
 import { SubCounterMenu } from "./SubCounterMenu";
-import { Button } from "./ui/Button";
+import { ToolbarButton } from "./ui/Toolbar";
 import { ToolbarMenu } from "./ui/ToolbarMenu";
 
 type MenuContent = "subcounter" | "notes";
 
-export function CounterToolbarMenuBar({
-  project,
-}: {
-  project: Promise<ProjectWithSubCounter>;
-}) {
-  const currentProject = use(project);
-
+export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
   const [showMenu, setShowMenu] = useState(false);
   const [menuContent, setMenuContent] = useState<MenuContent>("subcounter");
 
@@ -28,35 +22,31 @@ export function CounterToolbarMenuBar({
 
   return (
     <>
-      <div className="flex">
-        <Button
+      <div className="flex gap-1 pr-1">
+        <ToolbarButton
           onClick={() => handleMenu("subcounter")}
-          variant="ghost"
-          size="icon"
-          className="data-[state=open]:bg-foreground/10"
+          className="size-10 data-[state=open]:bg-foreground/10"
           data-state={menuContent === "subcounter" ? "open" : "closed"}
           aria-haspopup
           aria-expanded={menuContent === "subcounter" ? "true" : "false"}
         >
           <span className="sr-only">Subcounter</span>
-          <Repeat />
-        </Button>
-        <Button
+          <Asterisk />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => handleMenu("notes")}
-          variant="ghost"
-          size="icon"
-          className="data-[state=open]:bg-foreground/10"
+          className="size-10 data-[state=open]:bg-foreground/10"
           data-state={menuContent === "notes" ? "open" : "closed"}
           aria-haspopup
           aria-expanded={menuContent === "notes" ? "true" : "false"}
         >
           <span className="sr-only">Notes</span>
-          <Notebook />
-        </Button>
+          <NotepadText />
+        </ToolbarButton>
       </div>
       <ToolbarMenu open={showMenu}>
         {menuContent === "subcounter" ? (
-          <SubCounterMenu key="subcounter" project={currentProject} />
+          <SubCounterMenu key="subcounter" project={project} />
         ) : (
           <CounterNotes key="notes" />
         )}

@@ -2,7 +2,7 @@
 
 import { createContext, use, useMemo, useState } from "react";
 
-type SubCounterState = "on" | "off" | "pending";
+export type SubCounterState = "on" | "off" | "pending";
 
 type InitialState = {
   count: number;
