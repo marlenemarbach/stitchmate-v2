@@ -20,25 +20,34 @@ export function Toolbar({
   );
 }
 
-export function ToolbarToogleGroup({
+export function ToolbarToggleGroup({
   className,
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof ToolbarPrimitive.ToolbarToggleGroup>) {
   return (
-    <ToolbarPrimitive.ToolbarToggleGroup className={cn(className)} {...props}>
+    <ToolbarPrimitive.ToolbarToggleGroup
+      className={cn("flex items-center", className)}
+      {...props}
+    >
       {children}
     </ToolbarPrimitive.ToolbarToggleGroup>
   );
 }
 
-export function ToolbarToogleItem({
+export function ToolbarToggleItem({
   className,
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof ToolbarPrimitive.ToolbarToggleItem>) {
   return (
-    <ToolbarPrimitive.ToolbarToggleItem className={cn(className)} {...props}>
+    <ToolbarPrimitive.ToolbarToggleItem
+      className={cn(
+        "flex items-center justify-center focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </ToolbarPrimitive.ToolbarToggleItem>
   );
@@ -50,7 +59,13 @@ export function ToolbarButton({
   ...props
 }: React.ComponentPropsWithoutRef<typeof ToolbarPrimitive.ToolbarButton>) {
   return (
-    <ToolbarPrimitive.ToolbarButton className={cn(className)} {...props}>
+    <ToolbarPrimitive.ToolbarButton
+      className={cn(
+        "duration-default flex hover-btn-default items-center justify-center rounded-full transition-[background,transform] ease-out hover:transition-none active:scale-97 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </ToolbarPrimitive.ToolbarButton>
   );
