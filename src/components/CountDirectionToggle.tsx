@@ -37,19 +37,19 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
       >
         <ToolbarToggleItem
           className="hover-instant size-8 rounded-full border-none hover:bg-primary/5"
-          value={"up"}
+          value="up"
           aria-label="Up"
         >
           <Plus className="size-4" />
         </ToolbarToggleItem>
         <ToolbarToggleItem
           className="hover-instant size-8 rounded-full border-none hover:bg-primary/5"
-          value={"down"}
+          value="down"
           aria-label="Down"
         >
           <Minus className="size-4" />
         </ToolbarToggleItem>
-        <ClipPathContainer data-direction={direction} />
+        <ClipPathContainer data-direction={direction === 1 ? "up" : "down"} />
       </ToolbarToggleGroup>
     </>
   );
