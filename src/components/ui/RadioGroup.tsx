@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function RadioGroup({
   className,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+}: React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>) {
   return (
     <RadioGroupPrimitive.Root
       className={cn("flex flex-wrap gap-3", className)}
@@ -19,7 +19,7 @@ export function RadioGroupItem({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+}: React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>) {
   return (
     <RadioGroupPrimitive.Item
       className={cn(
