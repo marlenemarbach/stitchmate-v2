@@ -26,7 +26,6 @@ export const projects = sqliteTable("projects", {
   count: integer().notNull().default(1),
   direction: integer().notNull().default(1),
   name: text({ length: 30 }).notNull(),
-  needleSize: text(),
   createdAt: text()
     .notNull()
     .default(sql`(current_timestamp)`),
