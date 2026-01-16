@@ -2,13 +2,17 @@
 
 import { cache } from "react";
 import { connection } from "next/server";
-import { and, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
-import { ProjectWithSubCounter, SubCounter } from "./types";
-import { mockDelay } from "./utils";
+import {
+  ProjectOrder,
+  ProjectStatus,
+  ProjectWithSubCounter,
+  SubCounter,
+} from "./types";
 
 /* --------------------------------------------------------------------------
  *  User
@@ -39,10 +43,22 @@ export async function getUserByEmail(email: string) {
  *  Projects
  * ------------------------------------------------------------------------*/
 
-export async function getAllProjectsByUserId(userId: string) {
+export async function getProjectsByUserId(
+  userId: string,
+  order: ProjectOrder = "desc",
+  filter?: ProjectStatus,
+) {
+  const orderByClause =
+    order === "asc" ? asc(projects["createdAt"]) : desc(projects["createdAt"]);
+
+  const whereClause = filter
+    ? and(eq(projects.userId, userId), eq(projects.status, filter))
+    : eq(projects.userId, userId);
+
   const result = await db.query.projects.findMany({
-    where: eq(projects.userId, userId),
-    orderBy: [desc(projects.createdAt)],
+    where: whereClause,
+    orderBy: orderByClause,
+    limit: 20,
   });
   return result;
 }
