@@ -3,6 +3,7 @@
 import { cache } from "react";
 import { connection } from "next/server";
 import { and, asc, desc, eq } from "drizzle-orm";
+import z from "zod";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
@@ -45,7 +46,7 @@ export async function getUserByEmail(email: string) {
 
 export async function getProjectsByUserId(
   userId: string,
-  order: ProjectOrder = "desc",
+  order: "desc" | "asc",
   filter?: ProjectStatus,
 ) {
   const orderByClause =

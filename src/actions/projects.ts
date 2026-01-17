@@ -6,12 +6,17 @@ import z from "zod";
 import {
   createProjectByUserId,
   deleteProjectById,
-  getAllProjectsByUserId,
   getCurrentUser,
   getProjectById,
+  getProjectsByUserId,
   updateProjectById,
 } from "@/lib/dal";
-import { Project, ProjectWithSubCounter } from "@/lib/types";
+import {
+  Project,
+  ProjectOrder,
+  ProjectStatus,
+  ProjectWithSubCounter,
+} from "@/lib/types";
 import { mockDelay } from "@/lib/utils";
 import { ActionResponse } from "./types";
 
@@ -139,12 +144,4 @@ export async function getProject(params: Promise<{ id: string }>) {
   if (!project) notFound();
 
   return project;
-}
-
-export async function getAllProjects() {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
-
-  const projects = await getAllProjectsByUserId(user.id);
-  return projects;
 }
