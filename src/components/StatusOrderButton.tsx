@@ -1,11 +1,14 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CalendarArrowDown, CalendarArrowUp } from "lucide-react";
-import { ProjectOrder } from "@/lib/types";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { Button } from "./ui/Button";
 
-export function ProjectOrderToggle({ order }: { order: string }) {
+export function StatusOrderButton({
+  statusOrder,
+}: {
+  statusOrder?: "asc" | "desc";
+}) {
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const { replace } = useRouter();
@@ -13,10 +16,10 @@ export function ProjectOrderToggle({ order }: { order: string }) {
   function toggleOrder() {
     const params = new URLSearchParams(searchParams);
 
-    if (!order || order === "desc") {
-      params.set("order", "asc");
+    if (!statusOrder || statusOrder === "desc") {
+      params.set("statusOrder", "asc");
     } else {
-      params.set("order", "desc");
+      params.set("statusOrder", "desc");
     }
 
     replace(`${pathName}?${params.toString()}`);
@@ -24,15 +27,16 @@ export function ProjectOrderToggle({ order }: { order: string }) {
 
   return (
     <Button
-      className="row-start-2 sm:row-start-1"
+      className="w-fit -translate-x-2 rounded-lg px-2 py-1 text-sm hover:text-foreground"
+      size="small"
       variant="ghost"
-      size="icon"
       onClick={() => toggleOrder()}
     >
-      {order === "desc" ? (
-        <CalendarArrowDown className="size-4" />
+      Status
+      {statusOrder === "desc" ? (
+        <ArrowDown className="size-4" />
       ) : (
-        <CalendarArrowUp className="size-4" />
+        <ArrowUp className="size-4" />
       )}
     </Button>
   );

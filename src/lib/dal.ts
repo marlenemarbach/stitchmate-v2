@@ -46,18 +46,26 @@ export async function getUserByEmail(email: string) {
 
 export async function getProjectsByUserId(
   userId: string,
-  order: "desc" | "asc",
-  filter?: ProjectStatus,
+  order: { updatedAt?: "desc" | "asc"; status?: "desc" | "asc" },
 ) {
-  const orderByClause =
-    order === "asc" ? asc(projects["createdAt"]) : desc(projects["createdAt"]);
+  const orderByClause = [];
 
-  const whereClause = filter
-    ? and(eq(projects.userId, userId), eq(projects.status, filter))
-    : eq(projects.userId, userId);
+  if (order.status) {
+    const statusOrder =
+      order.status === "asc"
+        ? asc(projects["status"])
+        : desc(projects["status"]);
+    orderByClause.push(statusOrder);
+  }
+
+  const updatedAtOrder =
+    order.updatedAt === "asc"
+      ? asc(projects["updatedAt"])
+      : desc(projects["updatedAt"]);
+  orderByClause.push(updatedAtOrder);
 
   const result = await db.query.projects.findMany({
-    where: whereClause,
+    where: eq(projects.userId, userId),
     orderBy: orderByClause,
     limit: 20,
   });
