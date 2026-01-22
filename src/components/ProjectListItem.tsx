@@ -1,10 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Pencil, Trash } from "lucide-react";
 import { type Project } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
 import { Button } from "./ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/DropdownMenu";
 
 export function ProjectListItem({ project }: { project: Project }) {
   return (
@@ -19,9 +29,31 @@ export function ProjectListItem({ project }: { project: Project }) {
           {calculateTimeSince(project.updatedAt)}
         </p>
       </Link>
-      <Button variant="ghost" size="icon" className="place-self-end">
-        <Ellipsis />
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="ghost" size="icon" className="place-self-end">
+            <Ellipsis />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <Pencil />
+            Edit...
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuRadioGroup value="wip">
+            <DropdownMenuLabel>Status</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="wip">wip</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="finished">
+              finished
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Trash className="text-destructive" /> Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }
