@@ -97,6 +97,7 @@ export function CreateProjectDialog() {
             <Button
               className="col-span-3 col-start-6 w-fit place-self-end"
               variant="secondary"
+              onClick={() => setOpen(false)}
             >
               cancel
             </Button>
