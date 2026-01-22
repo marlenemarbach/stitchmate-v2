@@ -113,7 +113,7 @@ export function DialogClose({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>) {
   return (
     <DialogPrimitive.Close
-      className="150ms absolute top-5 right-5 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 text-muted-foreground transition-colors ease-out focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none"
+      className="150ms absolute top-6 right-6 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 text-muted-foreground transition-colors ease-out focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none"
       {...props}
     >
       <X className="size-4" />
