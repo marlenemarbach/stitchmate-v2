@@ -3,37 +3,44 @@
 import { redirect } from "next/navigation";
 import z from "zod";
 import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
+import { CreateProjectDialog } from "./CreateProjectDialog";
 import { NoProjects } from "./NoProjects";
 import { ProjectListItem } from "./ProjectListItem";
 
 export async function ProjectList({
   searchParams,
 }: {
-  searchParams?: { order?: string; filter?: string };
+  searchParams?: {
+    statusOrder?: string;
+    updatedOrder?: string;
+  };
 }) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
   const ProjectListSchema = z.object({
-    order: z.enum(["desc", "asc"]).catch("desc"),
-    filter: z.enum(["wip", "finished"]).optional(),
+    statusOrder: z.enum(["desc", "asc"]).optional(),
+    updatedOrder: z.enum(["desc", "asc"]).catch("desc"),
   });
 
   const validatedParams = ProjectListSchema.parse({
-    order: searchParams?.order,
-    filter: searchParams?.filter,
+    statusOrder: searchParams?.statusOrder,
+    updatedOrder: searchParams?.updatedOrder,
   });
 
-  const { order, filter } = validatedParams;
+  const order = {
+    status: validatedParams.statusOrder,
+    updatedAt: validatedParams.updatedOrder,
+  };
 
-  const projects = await getProjectsByUserId(user.id, order, filter);
+  const projects = await getProjectsByUserId(user.id, order);
 
   if (!projects.length) {
     return <NoProjects />;
   }
 
   return (
-    <div className="grid gap-3 px-2">
+    <div className="mt-12 grid w-full gap-3">
       {projects.map((project) => {
         return <ProjectListItem key={project.id} project={project} />;
       })}

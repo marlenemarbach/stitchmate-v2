@@ -38,10 +38,10 @@ export function ProjectSort({
   }
 
   return (
-    <div className="grid w-full grid-cols-8 items-center px-4 pb-10 text-muted-foreground">
-      <span className="col-span-5 text-sm">Name</span>
+    <div className="mb-1 grid w-full grid-cols-12 items-center gap-2 text-muted-foreground">
+      <span className="col-span-7 text-sm">Name</span>
       <Button
-        className="w-fit -translate-x-4 hover:text-foreground"
+        className="col-span-2 w-fit -translate-x-4 hover:text-foreground"
         size="small"
         variant="ghost"
         onClick={() => toggleOrder("statusOrder")}
@@ -55,7 +55,7 @@ export function ProjectSort({
       </Button>
 
       <Button
-        className="w-fit -translate-x-4 hover:text-foreground"
+        className="w-fit -translate-x-3 hover:text-foreground"
         size="small"
         variant="ghost"
         onClick={() => toggleOrder("updatedOrder")}

@@ -1,42 +1,27 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowUpRight, BadgeCheck, EllipsisVertical } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import { type Project } from "@/lib/types";
-import {
-  EditProjectDialog,
-  EditProjectDialogTrigger,
-} from "./EditProjectDialog";
+import { StatusBadge } from "./StatusBadge";
 import { Button } from "./ui/Button";
 
-type ProjectProps = {
-  project: Project;
-};
-
-export function ProjectListItem({ project }: ProjectProps) {
+export function ProjectListItem({ project }: { project: Project }) {
   return (
-    <div>
-      <div className="flex items-center pb-4 transition-opacity duration-300 ease-out group-hover/list:opacity-50 hover:opacity-100">
-        <Link href={`/projects/${project.id}`} className="flex-1">
-          <h3>{project.name}</h3>
-          <div className="mt-1 flex items-center gap-1">
-            {project.status === "wip" ? (
-              <ArrowUpRight className="size-4 text-amber-100" />
-            ) : (
-              <BadgeCheck className="size-4 text-emerald-200" />
-            )}
-            <p className="text-sm text-muted-foreground">
-              knit {calculateTimeSince(project.updatedAt)}
-            </p>
-          </div>
-        </Link>
-        {/* <EditProjectDialog project={project}> */}
-        {/*   <EditProjectDialogTrigger> */}
-        {/*     <Button variant="ghost" size="icon" aria-label="edit project"> */}
-        {/*       <EllipsisVertical /> */}
-        {/*     </Button> */}
-        {/*   </EditProjectDialogTrigger> */}
-        {/* </EditProjectDialog> */}
-      </div>
-      <div className="h-1 w-full border-t border-border/70"></div>
+    <div className="grid grid-cols-12 items-center gap-2 rounded-xl py-2 pr-2 pl-4 hover:bg-foreground/5">
+      <Link
+        href={`/projects/${project.id}`}
+        className="col-span-11 grid grid-cols-subgrid"
+      >
+        <h3 className="col-span-7">{project.name}</h3>
+        <StatusBadge status={project.status} />
+        <p className="col-span-2 col-start-10 text-sm text-muted-foreground">
+          {calculateTimeSince(project.updatedAt)}
+        </p>
+      </Link>
+      <Button variant="ghost" size="icon" className="place-self-end">
+        <Ellipsis />
+      </Button>
     </div>
   );
 }
