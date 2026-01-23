@@ -16,7 +16,7 @@ export const buttonVariants = cva(
           "bg-destructive/60 border border-destructive hover:bg-destructive/70",
       },
       size: {
-        default: "h-9 px-4 py-2",
+        default: "h-9 px-4 py-2 text-sm",
         small: "h-8 py-1 px-3 gap-1 text-sm",
         large: "h-11 text-base",
         icon: "w-8 h-8 p-2",

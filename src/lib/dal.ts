@@ -113,11 +113,11 @@ export async function createProjectByUserId(
 
 export async function deleteProjectById(projectId: number, userId: string) {
   return await db.transaction(async (tx) => {
+    await tx.delete(subCounters).where(eq(subCounters.projectId, projectId));
+
     await tx
       .delete(projects)
       .where(and(eq(projects.id, projectId), eq(projects.userId, userId)));
-
-    await tx.delete(subCounters).where(eq(subCounters.projectId, projectId));
 
     return true;
   });

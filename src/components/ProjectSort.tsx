@@ -47,10 +47,10 @@ export function ProjectSort({
         onClick={() => toggleOrder("statusOrder")}
       >
         Status
-        {statusOrder === "desc" ? (
-          <ArrowDown className="size-4" />
-        ) : (
+        {statusOrder !== "desc" ? (
           <ArrowUp className="size-4" />
+        ) : (
+          <ArrowDown className="size-4" />
         )}
       </Button>
 
@@ -61,10 +61,10 @@ export function ProjectSort({
         onClick={() => toggleOrder("updatedOrder")}
       >
         Last knit
-        {updatedOrder === "desc" ? (
-          <ArrowDown className="size-4" />
-        ) : (
+        {updatedOrder !== "desc" ? (
           <ArrowUp className="size-4" />
+        ) : (
+          <ArrowDown className="size-4" />
         )}
       </Button>
     </div>

@@ -38,10 +38,10 @@ export function DialogContent({
               exit={{ opacity: 0 }}
             />
           </DialogPrimitive.Overlay>
-          <DialogPrimitive.Content {...props} asChild>
+          <DialogPrimitive.Content forceMount {...props} asChild>
             <motion.div
               className={cn(
-                "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw_-_2rem)] -translate-1/2 gap-3 rounded-xl bg-background px-6 pt-6 shadow-popup sm:w-sm",
+                "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw_-_2rem)] -translate-1/2 gap-3 rounded-xl bg-background px-6 pt-6 shadow-popup sm:w-lg",
                 className,
               )}
               initial={{ opacity: 0, scale: 0.9 }}

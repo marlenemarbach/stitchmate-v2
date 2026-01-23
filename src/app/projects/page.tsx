@@ -1,7 +1,7 @@
 "use server";
 
 import { Suspense } from "react";
-import { Menu, PanelLeft, Sun } from "lucide-react";
+import { Sun } from "lucide-react";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
 import { ProjectListHeader } from "@/components/ProjectListHeader";

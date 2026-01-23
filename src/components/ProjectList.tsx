@@ -3,7 +3,6 @@
 import { redirect } from "next/navigation";
 import z from "zod";
 import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
-import { CreateProjectDialog } from "./CreateProjectDialog";
 import { NoProjects } from "./NoProjects";
 import { ProjectListItem } from "./ProjectListItem";
 

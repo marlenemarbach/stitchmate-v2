@@ -40,7 +40,7 @@ export function DropdownMenuContent({
     <DropdownMenuPortal>
       <DropdownMenuPrimitive.Content
         className={cn(
-          "grid min-w-40 -translate-x-[calc(50%-1rem)] gap-1 rounded-xl bg-zinc-800 p-2 text-sm drop-shadow drop-shadow-background",
+          "grid min-w-40 gap-1 rounded-xl bg-zinc-800 p-2 text-sm drop-shadow drop-shadow-background",
           className,
         )}
         {...props}

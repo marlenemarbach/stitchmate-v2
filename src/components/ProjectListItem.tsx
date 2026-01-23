@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
-import { type Project } from "@/lib/types";
+import { Ellipsis, Trash } from "lucide-react";
+import { updateProject } from "@/actions/projects";
+import { type Project, ProjectStatus } from "@/lib/types";
+import { DeleteProjectDialog } from "./DeleteProjectDialog";
+import { EditProjectDialog } from "./EditProjectDialog";
 import { StatusBadge } from "./StatusBadge";
 import { Button } from "./ui/Button";
 import {
@@ -17,44 +21,75 @@ import {
 } from "./ui/DropdownMenu";
 
 export function ProjectListItem({ project }: { project: Project }) {
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  function handleStatusChange(newStatus: ProjectStatus) {
+    updateProject({ status: newStatus }, project.id);
+  }
+
   return (
-    <div className="grid grid-cols-12 items-center gap-2 rounded-xl py-2 pr-2 pl-4 hover:bg-foreground/5">
-      <Link
-        href={`/projects/${project.id}`}
-        className="col-span-11 grid grid-cols-subgrid"
-      >
-        <h3 className="col-span-7">{project.name}</h3>
-        <StatusBadge status={project.status} />
-        <p className="col-span-2 col-start-10 text-sm text-muted-foreground">
-          {calculateTimeSince(project.updatedAt)}
-        </p>
-      </Link>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="ghost" size="icon" className="place-self-end">
-            <Ellipsis />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>
-            <Pencil />
-            Edit...
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value="wip">
-            <DropdownMenuLabel>Status</DropdownMenuLabel>
-            <DropdownMenuRadioItem value="wip">wip</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="finished">
-              finished
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Trash className="text-destructive" /> Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <>
+      <div className="grid grid-cols-12 items-center gap-2 rounded-xl py-2 pr-2 pl-4 hover:bg-foreground/5">
+        <Link
+          href={`/projects/${project.id}`}
+          className="col-span-11 grid grid-cols-subgrid"
+        >
+          <h3 className="col-span-7">{project.name}</h3>
+          <StatusBadge status={project.status} />
+          <p className="col-span-2 col-start-10 text-sm text-muted-foreground">
+            {calculateTimeSince(project.updatedAt)}
+          </p>
+        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" size="icon" className="place-self-end">
+              <Ellipsis />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onSelect={() => setShowEditDialog(true)}>
+              Edit...
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup
+              value={project.status}
+              onValueChange={(value) =>
+                handleStatusChange(value as ProjectStatus)
+              }
+            >
+              <DropdownMenuLabel>Status</DropdownMenuLabel>
+              <DropdownMenuRadioItem
+                value="wip"
+                onSelect={(e) => e.preventDefault()}
+              >
+                wip
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem
+                value="finished"
+                onSelect={(e) => e.preventDefault()}
+              >
+                finished
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onSelect={() => setShowDeleteDialog(true)}>
+              <Trash className="text-destructive" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <EditProjectDialog
+        project={project}
+        open={showEditDialog}
+        setOpen={setShowEditDialog}
+      />
+      <DeleteProjectDialog
+        project={project}
+        open={showDeleteDialog}
+        setOpen={setShowDeleteDialog}
+      />
+    </>
   );
 }
 

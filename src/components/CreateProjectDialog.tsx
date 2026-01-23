@@ -27,8 +27,6 @@ export function CreateProjectDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const autoFocus = (el: HTMLInputElement) => el?.focus();
-
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (prev: ActionResponse, formData: FormData) => {
       try {
@@ -70,7 +68,7 @@ export function CreateProjectDialog() {
       <DialogContent open={open} className="top-[28%] sm:top-[30%] sm:w-lg">
         <DialogClose />
         <DialogTitle>New Project:</DialogTitle>
-        <Form action={formAction} autoComplete="off" className="gap-3">
+        <form action={formAction} autoComplete="off" className="gap-3">
           <FormField>
             <label htmlFor="title" className="sr-only">
               Title:
@@ -85,7 +83,7 @@ export function CreateProjectDialog() {
               aria-describedby="title-error"
               max={30}
               required
-              ref={autoFocus}
+              autoFocus
             />
             {(state.error || state?.errors) && (
               <FormError id="name-error">
@@ -105,7 +103,7 @@ export function CreateProjectDialog() {
               save
             </Button>
           </DialogFooter>
-        </Form>
+        </form>
       </DialogContent>
     </Dialog>
   );

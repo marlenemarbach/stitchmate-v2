@@ -8,15 +8,9 @@ import {
   deleteProjectById,
   getCurrentUser,
   getProjectById,
-  getProjectsByUserId,
   updateProjectById,
 } from "@/lib/dal";
-import {
-  Project,
-  ProjectOrder,
-  ProjectStatus,
-  ProjectWithSubCounter,
-} from "@/lib/types";
+import { Project, ProjectWithSubCounter } from "@/lib/types";
 import { mockDelay } from "@/lib/utils";
 import { ActionResponse } from "./types";
 
@@ -127,7 +121,7 @@ export async function deleteProject(
       error: "failed",
     };
   }
-  refresh();
+  revalidatePath("projects");
   return {
     success: true,
     message: "Project deleted successfully",

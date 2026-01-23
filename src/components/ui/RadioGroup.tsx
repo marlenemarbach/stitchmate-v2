@@ -9,13 +9,13 @@ export function RadioGroup({
 }: React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>) {
   return (
     <RadioGroupPrimitive.Root
-      className={cn("flex flex-wrap gap-3", className)}
+      className={cn("grid gap-3", className)}
       {...props}
     />
   );
 }
 
-export function RadioGroupItem({
+export function RadioItem({
   className,
   children,
   ...props
@@ -23,7 +23,7 @@ export function RadioGroupItem({
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        "flex h-9 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg border border-border p-2 text-sm font-medium transition-[color,box-shadow,background] duration-250 ease-out outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground [&_svg:not([class*='size-'])]:size-4",
+        "flex h-8 items-center gap-2 rounded-full p-2 px-3 text-sm opacity-70 transition-all duration-250 ease-out outline-none hover:bg-foreground/10 hover:opacity-100 focus-visible:ring-[1.5px] focus-visible:ring-ring disabled:opacity-50 data-[state=checked]:bg-foreground/10 data-[state=checked]:opacity-100 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
