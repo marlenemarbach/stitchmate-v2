@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable}`}>
-      <body className="flex h-screen w-screen flex-col bg-background font-display tracking-normal text-foreground dark:tracking-wide">
+      <body className="flex w-screen flex-col bg-background font-display tracking-normal text-foreground dark:tracking-wide">
         {children}
         <Footer />
         <Toaster
