@@ -39,7 +39,7 @@ export async function ProjectList({
   }
 
   return (
-    <div className="mt-12 grid w-full gap-3">
+    <div className="my-12 grid w-full gap-3">
       {projects.map((project) => {
         return <ProjectListItem key={project.id} project={project} />;
       })}
