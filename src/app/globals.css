@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(17.5% 0 0);
+  --background: oklch(20% 0 0);
   --foreground: oklch(90% 0 0);
   --popup: oklch(19.5% 0 0);
   --popup-foreground: oklch(97% 0 0);
@@ -59,12 +59,11 @@
     0px 2px 4px 0px rgba(255, 255, 255, 0.06);
 }
 
-@utility scrollbar-thin {
-  &::-webkit-scrollbar {
-    display: none;
-  }
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-* {
-  scrollbar-width: thin;
+*::-webkit-scrollbar {
+  display: none;
 }
