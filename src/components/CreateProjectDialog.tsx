@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { Form, FormError, FormField } from "./ui/Form";
+import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
 
 const initialState: ActionResponse = {
@@ -57,12 +57,11 @@ export function CreateProjectDialog() {
     <Dialog open={open} onOpenChange={setOpen} modal>
       <DialogTrigger>
         <Button
-          size="icon"
           className="ml-auto bg-indigo-400/90 text-foreground hover:bg-indigo-400"
           onClick={() => setOpen(true)}
         >
-          <span className="sr-only">New Project</span>
           <Plus className="stroke-3" />
+          <span className="">Add Project</span>
         </Button>
       </DialogTrigger>
       <DialogContent open={open} className="top-[28%] sm:top-[30%] sm:w-lg">
