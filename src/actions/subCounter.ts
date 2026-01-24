@@ -1,3 +1,6 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import z from "zod";
 import {
@@ -8,7 +11,7 @@ import {
 import { SubCounter } from "../lib/types";
 import { ActionResponse } from "./types";
 
-export const SubCounterSchema = z.object({
+const SubCounterSchema = z.object({
   interval: z.coerce.number().gte(1).lte(99),
   startRow: z.coerce.number().gte(1),
   active: z.boolean(),
@@ -26,7 +29,7 @@ export async function updateSubCounter(
 
   const validationResult = SubCounterSchema.partial().safeParse({
     interval: data.interval,
-    startRow: project.count,
+    startRow: data.startRow,
     active: data.active,
   });
 
@@ -50,6 +53,8 @@ export async function updateSubCounter(
       error: "failed",
     };
   }
+
+  revalidatePath("projects");
 
   return {
     success: true,
