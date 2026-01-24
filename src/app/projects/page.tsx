@@ -27,9 +27,9 @@ export default async function ProjectsPage(props: {
           <SignOutButton className="justify-self-end" />
         </div>
       </Header>
-      <main className="flex w-[calc(100vw-2rem)] max-w-3xl flex-1 flex-col items-center place-self-center bg-background">
+      <main className="flex min-h-screen w-[calc(100vw-2rem)] max-w-3xl flex-1 flex-col items-center place-self-center bg-background">
         <Suspense fallback={<Spinner />}>
-          <div className="sticky top-16 z-1 grid gap-8 bg-background mask-b-from-70% mask-b-to-90% pt-10 pr-2 pb-8 pl-4">
+          <div className="sticky top-16 z-1 grid gap-12 bg-background mask-b-from-80% mask-b-to-95% pt-10 pr-2 pb-6 pl-4">
             <ProjectListHeader />
             <ProjectSort
               updatedOrder={searchParams?.updatedOrder}
