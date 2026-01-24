@@ -19,7 +19,7 @@ export function SlidingNumber({
   return (
     <div
       className={cn(
-        "pointer-events-none relative h-9 overflow-hidden bg-black/10 mask-y-from-80% mask-y-to-100%",
+        "pointer-events-none relative h-9 overflow-hidden bg-zinc-800 mask-y-from-80% mask-y-to-100%",
         className,
       )}
       {...props}
