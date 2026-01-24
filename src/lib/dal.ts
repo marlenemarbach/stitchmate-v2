@@ -3,17 +3,11 @@
 import { cache } from "react";
 import { connection } from "next/server";
 import { and, asc, desc, eq } from "drizzle-orm";
-import z from "zod";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
-import {
-  ProjectOrder,
-  ProjectStatus,
-  ProjectWithSubCounter,
-  SubCounter,
-} from "./types";
+import { ProjectWithSubCounter, SubCounter } from "./types";
 
 /* --------------------------------------------------------------------------
  *  User
