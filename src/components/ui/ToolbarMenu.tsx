@@ -18,7 +18,7 @@ export function ToolbarMenu({ children, open, className }: ToolbarMenuProps) {
       {open && (
         <motion.div
           className={cn(
-            "absolute bottom-12 left-1/2 z-100 w-[calc(100vw_-_2rem)] max-w-sm origin-bottom -translate-x-1/2 overflow-hidden rounded-lg bg-popup shadow-popup will-change-transform",
+            "absolute bottom-14 left-1/2 z-100 w-[calc(100vw_-_2rem)] max-w-[22rem] origin-bottom -translate-x-1/2 overflow-hidden rounded-xl bg-popup shadow-popup will-change-transform",
             className,
           )}
           initial={{ opacity: 0, height: 0 }}
@@ -27,20 +27,18 @@ export function ToolbarMenu({ children, open, className }: ToolbarMenuProps) {
             height: bounds.height,
             transition: {
               type: "spring",
-              bounce: 0,
-              visualDuration: 0.3,
+              stiffness: 2000,
+              damping: 160,
+              mass: 2,
             },
           }}
           exit={{
-            height: 0,
             opacity: 0,
-            transition: {
-              duration: 0.25,
-              ease: "easeIn",
-            },
+            scaleY: 0.97,
+            transition: { ease: "easeOut", duration: 0.15 },
           }}
         >
-          <div ref={ref} className="p-6">
+          <div ref={ref} className="px-6 pt-6 pb-5">
             {children}
           </div>
         </motion.div>
