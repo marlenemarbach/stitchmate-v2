@@ -10,7 +10,7 @@ export function Toolbar({
   return (
     <ToolbarPrimitive.Root
       className={cn(
-        "tems-center relative flex w-fit gap-2 rounded-full border border-border bg-popup p-1 text-popup-foreground",
+        "relative flex w-fit items-center gap-2 rounded-full border border-border bg-popup p-1 text-popup-foreground",
         className,
       )}
       {...props}
@@ -27,7 +27,10 @@ export function ToolbarToggleGroup({
 }: React.ComponentPropsWithoutRef<typeof ToolbarPrimitive.ToolbarToggleGroup>) {
   return (
     <ToolbarPrimitive.ToolbarToggleGroup
-      className={cn("flex items-center", className)}
+      className={cn(
+        "flex items-center gap-1 rounded-full bg-zinc-800 p-1 has-[:focus-visible]:ring-[1.5px] has-[:focus-visible]:ring-ring has-[:focus-visible]:outline-none",
+        className,
+      )}
       {...props}
     >
       {children}
@@ -43,7 +46,7 @@ export function ToolbarToggleItem({
   return (
     <ToolbarPrimitive.ToolbarToggleItem
       className={cn(
-        "flex items-center justify-center focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none",
+        "flex size-8 items-center justify-center rounded-full border-none transition-colors duration-150 ease-out hover:bg-primary/5 focus-visible:outline-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -61,7 +64,7 @@ export function ToolbarButton({
   return (
     <ToolbarPrimitive.ToolbarButton
       className={cn(
-        "duration-default flex hover-btn-default items-center justify-center rounded-full transition-[background,transform] ease-out hover:transition-none active:scale-97 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        "duration-default hover-btn-default flex items-center justify-center rounded-full transition-[background,transform] ease-out hover:transition-none active:scale-97 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
         className,
       )}
       {...props}

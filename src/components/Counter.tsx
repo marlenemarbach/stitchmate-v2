@@ -42,7 +42,7 @@ export function Counter({ project }: { project: Project }) {
   return (
     <button
       onClick={() => handleCount()}
-      className="relative mt-10 h-fit w-fit cursor-pointer flex-col items-center justify-center"
+      className="relative mt-10 h-fit w-fit cursor-pointer"
     >
       <RowCounterInner className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 fill-white opacity-20" />
       <RowCounterSpring
