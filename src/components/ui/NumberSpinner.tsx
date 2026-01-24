@@ -162,7 +162,10 @@ function NumberSpinnerInput({
           setInputValue(e.currentTarget.value);
         }}
         onClick={() => setMode("input")}
-        onBlur={() => validateInputValue()}
+        onBlur={() => {
+          validateInputValue();
+          setMode("spinner");
+        }}
         type="number"
         autoComplete="off"
         role="spinbutton"
