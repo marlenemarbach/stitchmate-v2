@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, use, useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { SlidingNumber } from "./SlidingNumber";
@@ -32,6 +30,7 @@ type NumberSpinnerProps = {
   children: React.ReactNode;
   className?: string;
   onValidate?: (value: number) => void;
+  accessibleName?: string;
 };
 
 export function NumberSpinner({
@@ -74,11 +73,10 @@ export function NumberSpinner({
   return (
     <div
       className={cn(
-        "group data-[mode=input]:focus-within:ring-ring] flex items-center rounded pr-1 focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none data-[mode=input]:focus-within:ring-[1.5px]",
+        "group flex items-center rounded-lg border border-border/50 bg-zinc-800 data-[mode=input]:focus-within:ring-[1.5px] data-[mode=input]:focus-within:ring-ring data-[mode=input]:focus-within:outline-none",
         className,
       )}
       data-mode={mode}
-      tabIndex={0}
     >
       <NumberSpinnerContext value={contextValue}>
         {children}
@@ -89,6 +87,7 @@ export function NumberSpinner({
 
 export function NumberSpinnerInput({
   className,
+  name,
   id,
 }: React.ComponentPropsWithoutRef<"input">) {
   const { min, max, value, direction, setValue, mode, setMode } =
@@ -102,8 +101,6 @@ export function NumberSpinnerInput({
 
   function validateInputValue() {
     const parsedValue = parseInt(inputValue);
-    console.log("parsedValue", parsedValue);
-
     if (isNaN(parsedValue)) return;
 
     setValue(parsedValue);
@@ -115,6 +112,7 @@ export function NumberSpinnerInput({
         className="[&::-webkit-outer-spin-button]:appearance-none] [&::-webkit-inner-spin-button]:appearance-none] absolute top-1/2 left-1/2 h-4 w-[80%] -translate-1/2 text-center text-foreground opacity-100 [-moz-appearance:textfield] focus-visible:outline-none data-[state=hidden]:opacity-0"
         data-state={mode === "input" ? "visible" : "hidden"}
         id={id}
+        name={name}
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.currentTarget.value);
@@ -123,7 +121,6 @@ export function NumberSpinnerInput({
         onBlur={() => validateInputValue()}
         type="number"
         autoComplete="off"
-        tabIndex={-1}
         role="spinbutton"
         aria-valuemin={min}
         aria-valuemax={max}
@@ -157,7 +154,7 @@ export function NumberSpinnerButton({
   return (
     <button
       className={cn(
-        "hover-btn-default rounded p-[2px] text-muted-foreground hover:text-foreground [&_svg:not([class*='size-'])]:size-3",
+        "h-full rounded pr-2 pl-1 text-muted-foreground transition-[color,transform] duration-150 ease-out hover:text-foreground active:scale-98 [&_svg:not([class*='size-'])]:size-3",
         className,
       )}
       tabIndex={-1}
