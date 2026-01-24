@@ -20,11 +20,17 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
     if (menuContent !== contentId) setMenuContent(contentId);
   }
 
+  function handleOnCloseAutoFocus() {
+    const currentTrigger = document.getElementById(menuContent);
+    currentTrigger?.focus();
+  }
+
   return (
     <>
       <ToolbarButton
+        id={"subcounter"}
         onClick={() => handleMenu("subcounter")}
-        className="data-[state=open]:bg-foreground/10"
+        className="ml-1 data-[state=open]:bg-foreground/10"
         data-state={
           showMenu && menuContent === "subcounter" ? "open" : "closed"
         }
@@ -35,6 +41,7 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
         <Asterisk />
       </ToolbarButton>
       <ToolbarButton
+        id={"notes"}
         onClick={() => handleMenu("notes")}
         className="data-[state=open]:bg-foreground/10"
         data-state={showMenu && menuContent === "notes" ? "open" : "closed"}
@@ -45,7 +52,7 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
         <NotepadText />
       </ToolbarButton>
       <ToolbarButton
-        // onClick={() => handleMenu("notes")}
+        id={"settings"}
         className="mr-1 data-[state=open]:bg-foreground/10"
         // data-state={showMenu && menuContent === "notes" ? "open" : "closed"}
         aria-haspopup
@@ -54,9 +61,20 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
         <span className="sr-only">Rowcounter settings</span>
         <Wrench />
       </ToolbarButton>
-      <ToolbarMenu open={showMenu}>
+      <ToolbarMenu
+        open={showMenu}
+        onOpenChange={setShowMenu}
+        onCloseAutoFocus={(e) => {
+          e.preventDefault;
+          handleOnCloseAutoFocus();
+        }}
+      >
         {menuContent === "subcounter" ? (
-          <SubCounterMenu key="subcounter" project={project} />
+          <SubCounterMenu
+            key="subcounter"
+            project={project}
+            setShowMenu={setShowMenu}
+          />
         ) : (
           <CounterNotes key="notes" />
         )}

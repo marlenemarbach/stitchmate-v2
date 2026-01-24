@@ -64,7 +64,7 @@ export function ToolbarButton({
   return (
     <ToolbarPrimitive.ToolbarButton
       className={cn(
-        "flex size-9 items-center justify-center rounded-full transition-colors duration-150 ease-out hover:bg-foreground/10 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        "flex size-9 items-center justify-center rounded-full transition-colors duration-150 ease-out hover:bg-foreground/10 focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
         className,
       )}
       {...props}

@@ -1,5 +1,4 @@
-"use client";
-
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "motion/react";
 import useMeasure from "react-use-measure";
 import { cn } from "@/lib/utils";
@@ -7,10 +6,18 @@ import { cn } from "@/lib/utils";
 type ToolbarMenuProps = {
   children: React.ReactNode;
   open: boolean;
+  onOpenChange: (open: boolean) => void;
   className?: string;
 };
 
-export function ToolbarMenu({ children, open, className }: ToolbarMenuProps) {
+export function ToolbarMenu({
+  className,
+  open,
+  onOpenChange,
+  children,
+  ...props
+}: ToolbarMenuProps &
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
   const [ref, bounds] = useMeasure({ offsetSize: true });
 
   return (
@@ -38,11 +45,33 @@ export function ToolbarMenu({ children, open, className }: ToolbarMenuProps) {
             transition: { ease: "easeOut", duration: 0.15 },
           }}
         >
-          <div ref={ref} className="px-6 pt-6 pb-5">
-            {children}
-          </div>
+          <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+            <DialogPrimitive.Content
+              forceMount
+              ref={ref}
+              className="px-6 pt-6 pb-5"
+              {...props}
+            >
+              {children}
+            </DialogPrimitive.Content>
+          </DialogPrimitive.Root>
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+export function ToolbarMenuTitle({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
+  return (
+    <DialogPrimitive.Title
+      className={cn("text-large font-medium", className)}
+      {...props}
+    >
+      {children}
+    </DialogPrimitive.Title>
   );
 }

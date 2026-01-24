@@ -1,4 +1,11 @@
-import { createContext, use, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  use,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SlidingNumber } from "./SlidingNumber";
@@ -139,6 +146,8 @@ function NumberSpinnerInput({
   const { min, max, value, direction, setValue, mode, setMode } =
     useNumberSpinner();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [inputValue, setInputValue] = useState<string>(value.toString());
 
   useEffect(() => {
@@ -153,7 +162,19 @@ function NumberSpinnerInput({
   }
 
   return (
-    <div className={cn("relative ml-1 h-9 min-w-10 flex-1", className)}>
+    <div
+      className={cn(
+        "relative ml-1 h-9 min-w-10 flex-1 focus-visible:outline-none",
+        className,
+      )}
+      tabIndex={0}
+      onFocus={(e) => {
+        if (e.target === e.currentTarget) {
+          setMode("input");
+          inputRef?.current?.focus();
+        }
+      }}
+    >
       <input
         className="[&::-webkit-outer-spin-button]:appearance-none] [&::-webkit-inner-spin-button]:appearance-none] absolute top-1/2 left-1/2 h-4 w-[80%] -translate-1/2 text-center text-foreground opacity-100 [-moz-appearance:textfield] focus-visible:outline-none data-[state=hidden]:opacity-0"
         data-state={mode === "input" ? "visible" : "hidden"}
@@ -164,7 +185,6 @@ function NumberSpinnerInput({
         onClick={() => setMode("input")}
         onBlur={() => {
           validateInputValue();
-          setMode("spinner");
         }}
         type="number"
         autoComplete="off"
@@ -172,6 +192,8 @@ function NumberSpinnerInput({
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
+        ref={inputRef}
+        tabIndex={-1}
         {...props}
       />
       <SlidingNumber
