@@ -10,7 +10,7 @@ export function Toolbar({
   return (
     <ToolbarPrimitive.Root
       className={cn(
-        "relative flex w-fit items-center gap-2 rounded-full border border-border bg-popup p-1 text-popup-foreground",
+        "relative flex w-fit items-center gap-1 rounded-full border border-border bg-popup p-1 text-popup-foreground",
         className,
       )}
       {...props}
@@ -46,7 +46,7 @@ export function ToolbarToggleItem({
   return (
     <ToolbarPrimitive.ToolbarToggleItem
       className={cn(
-        "flex size-8 items-center justify-center rounded-full border-none transition-colors duration-150 ease-out hover:bg-primary/5 focus-visible:outline-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "flex size-7 items-center justify-center rounded-full border-none transition-colors duration-150 ease-out hover:bg-primary/5 focus-visible:outline-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -64,7 +64,7 @@ export function ToolbarButton({
   return (
     <ToolbarPrimitive.ToolbarButton
       className={cn(
-        "duration-default hover-btn-default flex items-center justify-center rounded-full transition-[background,transform] ease-out hover:transition-none active:scale-97 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        "flex size-9 items-center justify-center rounded-full transition-colors duration-150 ease-out hover:bg-foreground/10 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
         className,
       )}
       {...props}
