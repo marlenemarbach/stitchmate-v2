@@ -1,6 +1,49 @@
 import { createContext, use, useEffect, useMemo, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SlidingNumber } from "./SlidingNumber";
+
+type NumberSpinnerProps = {
+  min: number;
+  max: number;
+  defaultValue: number;
+  accessibleName: string;
+};
+
+export function NumberSpinner({
+  className,
+  min,
+  max,
+  defaultValue,
+  accessibleName,
+  ...props
+}: Omit<
+  React.ComponentPropsWithoutRef<"input">,
+  "min" | "max" | "defaultValue"
+> &
+  NumberSpinnerProps) {
+  return (
+    <NumberSpinnerRoot min={min} max={max} defaultValue={defaultValue}>
+      <NumberSpinnerContainer className={className}>
+        <NumberSpinnerInput {...props} />
+        <div className="grid h-full py-1">
+          <NumberSpinnerButton
+            direction={1}
+            title={`Increment ${accessibleName}`}
+          >
+            <ChevronUp strokeWidth={3} />
+          </NumberSpinnerButton>
+          <NumberSpinnerButton
+            direction={-1}
+            title={`Decrement ${accessibleName}`}
+          >
+            <ChevronDown strokeWidth={3} />
+          </NumberSpinnerButton>
+        </div>
+      </NumberSpinnerContainer>
+    </NumberSpinnerRoot>
+  );
+}
 
 type NumberSpinnerMode = "spinner" | "input";
 
@@ -23,23 +66,19 @@ function useNumberSpinner() {
   return ctx;
 }
 
-type NumberSpinnerProps = {
+type NumberSpinnerRootProps = {
   min?: number;
   max?: number;
   defaultValue?: number;
   children: React.ReactNode;
-  className?: string;
-  onValidate?: (value: number) => void;
-  accessibleName?: string;
 };
 
-export function NumberSpinner({
-  className,
+function NumberSpinnerRoot({
   min = 1,
   max = 99,
   defaultValue,
   children,
-}: NumberSpinnerProps) {
+}: NumberSpinnerRootProps) {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [value, setValue] = useState(defaultValue ?? min ?? 0);
   const [mode, setMode] = useState<"spinner" | "input">("input");
@@ -71,6 +110,16 @@ export function NumberSpinner({
   }, [min, max, value, direction, mode]);
 
   return (
+    <NumberSpinnerContext value={contextValue}>{children}</NumberSpinnerContext>
+  );
+}
+
+function NumberSpinnerContainer({
+  className,
+  children,
+}: React.ComponentPropsWithoutRef<"div">) {
+  const { mode } = useNumberSpinner();
+  return (
     <div
       className={cn(
         "group flex items-center rounded-lg border border-border/50 bg-zinc-800 data-[mode=input]:focus-within:ring-[1.5px] data-[mode=input]:focus-within:ring-ring data-[mode=input]:focus-within:outline-none",
@@ -78,17 +127,14 @@ export function NumberSpinner({
       )}
       data-mode={mode}
     >
-      <NumberSpinnerContext value={contextValue}>
-        {children}
-      </NumberSpinnerContext>
+      {children}
     </div>
   );
 }
 
-export function NumberSpinnerInput({
+function NumberSpinnerInput({
   className,
-  name,
-  id,
+  ...props
 }: React.ComponentPropsWithoutRef<"input">) {
   const { min, max, value, direction, setValue, mode, setMode } =
     useNumberSpinner();
@@ -111,8 +157,6 @@ export function NumberSpinnerInput({
       <input
         className="[&::-webkit-outer-spin-button]:appearance-none] [&::-webkit-inner-spin-button]:appearance-none] absolute top-1/2 left-1/2 h-4 w-[80%] -translate-1/2 text-center text-foreground opacity-100 [-moz-appearance:textfield] focus-visible:outline-none data-[state=hidden]:opacity-0"
         data-state={mode === "input" ? "visible" : "hidden"}
-        id={id}
-        name={name}
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.currentTarget.value);
@@ -125,6 +169,7 @@ export function NumberSpinnerInput({
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
+        {...props}
       />
       <SlidingNumber
         className="hidden data-[state=visible]:flex"
@@ -137,7 +182,7 @@ export function NumberSpinnerInput({
   );
 }
 
-export function NumberSpinnerButton({
+function NumberSpinnerButton({
   className,
   title,
   direction,

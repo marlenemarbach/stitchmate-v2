@@ -1,21 +1,14 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { ChevronDown, ChevronUp, IterationCw } from "lucide-react";
+import { IterationCw } from "lucide-react";
 import { ActionResponse } from "@/actions/types";
 import { type ProjectWithSubCounter } from "@/lib/types";
 import { updateSubCounter } from "../actions/subCounter";
 import { Button } from "./ui/Button";
 import { FormError } from "./ui/Form";
-import {
-  NumberSpinner,
-  NumberSpinnerButton,
-  NumberSpinnerInput,
-} from "./ui/NumberSpinner";
+import { NumberSpinner } from "./ui/NumberSpinner";
 import { Switch } from "./ui/Switch";
-
-// TODO:
-// - provide visual feedback for pending state
 
 const initalState: ActionResponse = {
   success: false,
@@ -74,29 +67,25 @@ export function SubCounterMenu({
           Row interval:
         </label>
 
-        <NumberSpinner min={1} max={99} defaultValue={project.count}>
-          <NumberSpinnerInput id="startRow" name="startRow" />
-          <div className="grid h-full py-1">
-            <NumberSpinnerButton direction={1} title="Increment start row">
-              <ChevronUp strokeWidth={3} />
-            </NumberSpinnerButton>
-            <NumberSpinnerButton direction={-1} title="Decrement start row">
-              <ChevronDown strokeWidth={3} />
-            </NumberSpinnerButton>
-          </div>
-        </NumberSpinner>
+        <NumberSpinner
+          min={1}
+          max={99}
+          defaultValue={project.count}
+          id="startRow"
+          name="startRow"
+          accessibleName="start row"
+          required
+        />
 
-        <NumberSpinner min={1} max={99} defaultValue={1}>
-          <NumberSpinnerInput id="interval" name="interval" />
-          <div className="grid h-full py-1">
-            <NumberSpinnerButton direction={1} title="Increment row interval">
-              <ChevronUp strokeWidth={3} />
-            </NumberSpinnerButton>
-            <NumberSpinnerButton direction={-1} title="Decrement row interval">
-              <ChevronDown strokeWidth={3} />
-            </NumberSpinnerButton>
-          </div>
-        </NumberSpinner>
+        <NumberSpinner
+          min={1}
+          max={99}
+          defaultValue={1}
+          id="interval"
+          name="interval"
+          accessibleName="row interval"
+          required
+        />
 
         <Button
           type="button"
