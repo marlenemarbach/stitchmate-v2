@@ -1,13 +1,11 @@
 "use server";
 
-import { Suspense } from "react";
 import { Sun } from "lucide-react";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
 import { ProjectListHeader } from "@/components/ProjectListHeader";
 import { ProjectSort } from "@/components/ProjectSort";
 import { SignOutButton } from "@/components/SignOutButton";
-import { Spinner } from "@/components/ui/Spinner";
 
 export default async function ProjectsPage(props: {
   searchParams?: Promise<{
@@ -28,16 +26,14 @@ export default async function ProjectsPage(props: {
         </div>
       </Header>
       <main className="flex min-h-screen w-[calc(100vw-2rem)] max-w-3xl flex-1 flex-col items-center place-self-center bg-background">
-        <Suspense fallback={<Spinner />}>
-          <div className="sticky top-16 z-1 grid gap-12 bg-background mask-b-from-80% mask-b-to-95% pt-10 pr-2 pb-6 pl-4">
-            <ProjectListHeader />
-            <ProjectSort
-              updatedOrder={searchParams?.updatedOrder}
-              statusOrder={searchParams?.statusOrder}
-            />
-          </div>
-          <ProjectList searchParams={searchParams} />
-        </Suspense>
+        <div className="sticky top-16 z-1 grid gap-12 bg-background mask-b-from-80% mask-b-to-95% pt-10 pr-2 pb-6 pl-4">
+          <ProjectListHeader />
+          <ProjectSort
+            updatedOrder={searchParams?.updatedOrder}
+            statusOrder={searchParams?.statusOrder}
+          />
+        </div>
+        <ProjectList searchParams={searchParams} />
       </main>
     </>
   );
