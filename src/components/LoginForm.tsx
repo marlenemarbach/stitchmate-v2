@@ -1,9 +1,9 @@
 "use client";
 
 import { useActionState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
+import { Link } from "@/components/ui/Link";
 import { signIn } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
@@ -18,14 +18,12 @@ const initialState: ActionResponse = {
 
 export function LoginForm() {
   const router = useRouter();
-
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (prev: ActionResponse, formData: FormData) => {
       try {
         const result = await signIn(formData);
         if (result.success) {
-          console.log("Signed in successfully");
-          router.push("/");
+          router.push("/projects");
         }
         return result;
       } catch (error) {
@@ -46,11 +44,12 @@ export function LoginForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <h1 className="mb-4 text-center text-xl font-medium tracking-wide">
+      <p className="text-2xl font-black text-orange-400/90">S</p>
+      <h1 className="mb-4 text-center text-xl font-medium">
         Log in to Stitchmate
       </h1>
 
-      <form className="grid w-full gap-4" action={formAction}>
+      <form className="grid w-full gap-3" action={formAction}>
         <FormField>
           <label htmlFor="email">Email</label>
           <Input
@@ -96,22 +95,11 @@ export function LoginForm() {
           </FormError>
         )}
       </form>
-      <p className="grid text-center leading-8 text-muted-foreground">
+      <p className="grid text-center text-muted-foreground">
         <span>No account?</span>
         <span>
-          <Link
-            className="cursor-default rounded text-pink-300/80 hover:text-pink-300 focus-visible:text-pink-300 focus-visible:outline-none"
-            href="/signup"
-          >
-            Sign up{" "}
-          </Link>
-          or{" "}
-          <Link
-            className="focus-visible:text-pink-30 cursor-default rounded text-pink-300/80 hover:text-pink-300 focus-visible:text-pink-300 focus-visible:outline-none"
-            href="/signup"
-          >
-            explore as a guest
-          </Link>{" "}
+          <Link href="/signup">Sign up</Link> or{" "}
+          <Link href="/signup">explore as a guest</Link>{" "}
         </span>
       </p>
     </motion.div>

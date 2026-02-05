@@ -97,10 +97,15 @@ export async function signIn(formData: FormData): Promise<ActionResponse> {
     };
   }
 
-  await createSession(user.id);
+  const success = await createSession(user.id);
+  if (success) {
+    return { success: true, message: "signed in successfully" };
+  }
+
   return {
-    success: true,
-    message: "Signed in successfully",
+    success: false,
+    message: "Failed to login",
+    error: "failed",
   };
 }
 

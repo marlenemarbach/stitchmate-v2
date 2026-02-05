@@ -1,9 +1,9 @@
 "use client";
 
 import { useActionState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
+import { Link } from "@/components/ui/Link";
 import { signUp } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
@@ -45,9 +45,7 @@ export function SignupForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <h2 className="mb-4 text-center text-xl font-medium tracking-wide">
-        Create Account
-      </h2>
+      <h2 className="mb-4 text-center text-xl font-medium">Create Account</h2>
 
       <form className="grid w-full gap-4" action={formAction}>
         <FormField>
@@ -80,7 +78,7 @@ export function SignupForm() {
           />
           <FormError id="password-error">{state?.errors?.password}</FormError>
         </FormField>
-        <Button type="submit" size="large" className="mt-3w-full">
+        <Button type="submit" size="large" className="mt-3 w-full">
           Create Account
         </Button>
         {state?.error && (
@@ -89,14 +87,9 @@ export function SignupForm() {
           </FormError>
         )}
       </form>
-      <div className="flex items-center justify-center gap-2 text-foreground/90">
+      <div className="flex items-center justify-center gap-2 text-muted-foreground">
         Have an account?
-        <Link
-          href="/login"
-          className="cursor-default text-pink-300/80 outline-none hover:text-pink-300 focus-visible:text-pink-300"
-        >
-          Login Here
-        </Link>
+        <Link href="/login">Login here</Link>
       </div>
     </motion.div>
   );

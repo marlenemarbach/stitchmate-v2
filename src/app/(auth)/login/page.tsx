@@ -1,5 +1,7 @@
 import { LoginForm } from "@/components/LoginForm";
+import { mockDelay } from "@/lib/utils";
 
-export default function Login() {
+export default async function Login() {
+  await mockDelay(1000);
   return <LoginForm />;
 }
