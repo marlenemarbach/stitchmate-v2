@@ -1,62 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(20% 0 0);
-  --foreground: oklch(90% 0 0);
-  --popup: oklch(19.5% 0 0);
-  --popup-foreground: oklch(97% 0 0);
+  --background: oklch(98% 0 0);
+  --foreground: oklch(30% 0 0);
+  --popup: oklch(98.5% 0 0);
   --muted: oklch(97% 0 0 / 14%);
-  --muted-foreground: oklch(70.8% 0 0);
-  --accent: oklch(82.3% 0.12 346.018);
-  --accent-foreground: oklch(82.3% 0.12 346.018);
-  --primary: oklch(92.8% 0.006 264.531);
-  --primary-foreground: oklch(13% 0.028 261.692);
-  --secondary: oklch(0.313 0.088 276.9);
-  --secondary-foreground: oklch(0.664 0.082 276.9);
-  --destructive-foreground: oklch(64.5% 0.246 16.439);
-  --destructive: oklch(81% 0.117 11.638);
-  --border: oklch(97% 0 0/ 16%);
+  --muted-foreground: oklch(66% 0 0);
+  --destructive: oklch(57.7% 0.245 27.325);
+  --border: oklch(92.2% 0 0);
   --input: oklch(1 0 0 / 8%);
-  --ring: oklch(97% 0 0 / 50%);
+  --ring: oklch(66.15% 0.166 270.91);
   --counter: oklch(0.254 0.058 277.9);
   --counter-foreground: oklch(0.568 0.113 277.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(16.5% 0 0);
+    --foreground: oklch(92.2% 0 0);
+    --popup: oklch(24.5% 0 0);
+    --muted: oklch(97% 0 0 / 14%);
+    --muted-foreground: oklch(70.8% 0 0);
+    --destructive: oklch(70.4% 0.191 22.216);
+    --border: oklch(34.4% 0.006 286.033);
+    --input: oklch(1 0 0 / 8%);
+    --ring: oklch(87% 0 0);
+    --counter: oklch(0.254 0.058 277.9);
+    --counter-foreground: oklch(0.568 0.113 277.3);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-popup: var(--popup);
-  --color-popup-foreground: var(--popup-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-counter: var(--counter);
   --color-counter-foreground: var(--counter-foreground);
 
-  --color-ultramarine-200: oklch(0.664 0.082 276.9);
-  --color-ultramarine-300: oklch(0.576 0.106 276.9);
-  --color-ultramarine-500: oklch(0.401 0.112 276.9);
+  --color-ultramarine-50: oklch(94.27% 0.026 276.4);
+  --color-ultramarine-100: oklch(88.68% 0.051 274.26);
+  --color-ultramarine-200: oklch(77.16% 0.108 273.15);
+  --color-ultramarine-300: oklch(66.15% 0.166 270.91);
+  --color-ultramarine-400: oklch(56.07% 0.223 267.56);
+  --color-ultramarine-500: oklch(48.15% 0.269 264.64);
+  --color-ultramarine-600: oklch(41.06% 0.226 264.74);
+  --color-ultramarine-700: oklch(33.55% 0.18 265.04);
+  --color-ultramarine-800: oklch(0.2573 0.0911 265.29);
+  --color-ultramarine-900: oklch(17.51% 0.074 265.45);
+  --color-ultramarine-950: oklch(14.77% 0.057 264.8);
 }
 
 @theme {
   --font-display: "DM Sans", sans-serif;
-}
-
-@utility shadow-popup {
-  box-shadow:
-    0px 0px 0px 1px rgba(255, 255, 255, 0.08),
-    0px 1px 2px -1px rgba(255, 255, 255, 0.08),
-    0px 2px 4px 0px rgba(255, 255, 255, 0.06);
 }
 
 * {
