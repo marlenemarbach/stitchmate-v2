@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 
 export default async function Home() {
-  const session = getSession();
-  if (!session) redirect("/auth");
+  const session = await getSession();
+  if (!session) redirect("/login");
   redirect("/projects");
 }
