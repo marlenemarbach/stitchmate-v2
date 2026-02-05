@@ -6,7 +6,7 @@ import { ProjectWithSubCounter } from "@/lib/types";
 import { Notes } from "./Notes";
 import { SubCounterMenu } from "./SubCounterMenu";
 import { ToolbarButton } from "./ui/Toolbar";
-import { ToolbarMenu, ToolbarMenuContent } from "./ui/ToolbarMenu";
+import { ToolbarMenu } from "./ui/ToolbarMenu";
 
 type MenuContent = "subcounter" | "notes";
 
@@ -20,54 +20,42 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
     if (menuContent !== contentId) setMenuContent(contentId);
   }
 
-  function handleOnCloseAutoFocus() {
-    const currentTrigger = document.getElementById(menuContent);
-    currentTrigger?.focus();
-  }
-
   return (
     <>
-      <ToolbarMenu open={showMenu} onOpenChange={setShowMenu}>
-        <ToolbarButton
-          id={"subcounter"}
-          onClick={() => handleMenu("subcounter")}
-          className="ml-1 data-[state=open]:bg-foreground/5 data-[state=open]:text-foreground"
-          data-state={
-            showMenu && menuContent === "subcounter" ? "open" : "closed"
-          }
-          aria-haspopup
-          aria-expanded={menuContent === "subcounter" ? "true" : "false"}
-        >
-          <span className="sr-only">Subcounter</span>
-          <Asterisk />
-        </ToolbarButton>
-        <ToolbarButton
-          id={"notes"}
-          onClick={() => handleMenu("notes")}
-          className="data-[state=open]:bg-foreground/5 data-[state=open]:text-foreground"
-          data-state={showMenu && menuContent === "notes" ? "open" : "closed"}
-          aria-haspopup
-          aria-expanded={menuContent === "notes" ? "true" : "false"}
-        >
-          <span className="sr-only">Notes</span>
-          <NotepadText />
-        </ToolbarButton>
-        <ToolbarMenuContent
-          onCloseAutoFocus={(e) => {
-            e.preventDefault;
-            handleOnCloseAutoFocus();
-          }}
-        >
-          {menuContent === "subcounter" ? (
-            <SubCounterMenu
-              key="subcounter"
-              project={project}
-              setShowMenu={setShowMenu}
-            />
-          ) : (
-            <Notes key="notes" />
-          )}
-        </ToolbarMenuContent>
+      <ToolbarButton
+        id={"subcounter"}
+        onClick={() => handleMenu("subcounter")}
+        className="ml-1 data-[state=open]:bg-foreground/5 data-[state=open]:text-foreground"
+        data-state={
+          showMenu && menuContent === "subcounter" ? "open" : "closed"
+        }
+        aria-haspopup
+        aria-expanded={menuContent === "subcounter" ? "true" : "false"}
+      >
+        <span className="sr-only">Subcounter</span>
+        <Asterisk />
+      </ToolbarButton>
+      <ToolbarButton
+        id={"notes"}
+        onClick={() => handleMenu("notes")}
+        className="data-[state=open]:bg-foreground/5 data-[state=open]:text-foreground"
+        data-state={showMenu && menuContent === "notes" ? "open" : "closed"}
+        aria-haspopup
+        aria-expanded={menuContent === "notes" ? "true" : "false"}
+      >
+        <span className="sr-only">Notes</span>
+        <NotepadText />
+      </ToolbarButton>
+      <ToolbarMenu open={showMenu}>
+        {menuContent === "subcounter" ? (
+          <SubCounterMenu
+            key="subcounter"
+            project={project}
+            setShowMenu={setShowMenu}
+          />
+        ) : (
+          <Notes key="notes" />
+        )}
       </ToolbarMenu>
     </>
   );

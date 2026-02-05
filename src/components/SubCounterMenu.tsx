@@ -7,7 +7,6 @@ import { Button } from "./ui/Button";
 import { FormError } from "./ui/Form";
 import { NumberSpinner } from "./ui/NumberSpinner";
 import { Switch } from "./ui/Switch";
-import { ToolbarMenuDescription, ToolbarMenuTitle } from "./ui/ToolbarMenu";
 
 const initalState: ActionResponse = {
   success: false,
@@ -53,13 +52,7 @@ export function SubCounterMenu({
   return (
     <form className="grid gap-6" key={formKey} action={formAction}>
       <div className="mb-1 flex items-baseline justify-between">
-        <ToolbarMenuTitle className="text-lg font-medium">
-          Subcounter
-        </ToolbarMenuTitle>
-        <ToolbarMenuDescription>
-          Set up a subcounter by selecting a starting row and an interval. The
-          subcounter automatically tracks its repeats based on your settings.
-        </ToolbarMenuDescription>
+        <h1 className="text-lg font-medium">Subcounter</h1>
         <Switch
           aria-label="Subcounter notification"
           id="active"
@@ -113,7 +106,7 @@ export function SubCounterMenu({
           disabled={pending}
           type="submit"
           variant="ghost"
-          className="mt-2 justify-self-end p-0 text-base text-blue-400 hover:bg-transparent hover:text-blue-400/80 focus-visible:text-blue-300 focus-visible:ring-transparent focus-visible:outline-none disabled:opacity-100 dark:text-blue-300 dark:hover:bg-transparent"
+          className="mt-2 justify-self-end p-0 text-base text-blue-300/90 hover:bg-transparent hover:text-blue-300 focus-visible:text-blue-300 focus-visible:ring-transparent focus-visible:outline-none disabled:opacity-100"
         >
           save changes
         </Button>
