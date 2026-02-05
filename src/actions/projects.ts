@@ -21,7 +21,7 @@ const ProjectSchema = z.object({
     .min(1, "Project name cannot be empty or only whitespace")
     .max(30, "Project name cannot be longer than 30 characters"),
   needleSize: z.string().nullable(),
-  count: z.number().gte(1),
+  count: z.number().gte(1).lte(99),
   direction: z.union([z.literal(1), z.literal(-1)]),
   status: z.enum(["wip", "finished"]),
 });
@@ -68,8 +68,6 @@ export async function updateProject(
 ): Promise<ActionResponse & { project?: Project }> {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
-
-  // await mockDelay(1000);
 
   const project = await getProjectById(projectId, user.id);
   if (!project) notFound();
@@ -126,16 +124,4 @@ export async function deleteProject(
     success: true,
     message: "Project deleted successfully",
   };
-}
-
-export async function getProject(params: Promise<{ id: string }>) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
-
-  const awaitedParams = await params;
-  const { id } = awaitedParams;
-  const project = await getProjectById(parseInt(id), user.id);
-  if (!project) notFound();
-
-  return project;
 }

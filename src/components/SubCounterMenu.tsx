@@ -7,7 +7,7 @@ import { Button } from "./ui/Button";
 import { FormError } from "./ui/Form";
 import { NumberSpinner } from "./ui/NumberSpinner";
 import { Switch } from "./ui/Switch";
-import { ToolbarMenuTitle } from "./ui/ToolbarMenu";
+import { ToolbarMenuDescription, ToolbarMenuTitle } from "./ui/ToolbarMenu";
 
 const initalState: ActionResponse = {
   success: false,
@@ -56,6 +56,10 @@ export function SubCounterMenu({
         <ToolbarMenuTitle className="text-lg font-medium">
           Subcounter
         </ToolbarMenuTitle>
+        <ToolbarMenuDescription>
+          Set up a subcounter by selecting a starting row and an interval. The
+          subcounter automatically tracks its repeats based on your settings.
+        </ToolbarMenuDescription>
         <Switch
           aria-label="Subcounter notification"
           id="active"
@@ -65,14 +69,14 @@ export function SubCounterMenu({
       </div>
 
       <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-        <div className="grid gap-3">
-          <label className="text-sm" htmlFor="startRow">
+        <div className="grid gap-2">
+          <label htmlFor="startRow" className="ml-1">
             Start row:
           </label>
           <NumberSpinner
             min={1}
             max={99}
-            defaultValue={project.count}
+            defaultValue={project.subCounter.startRow}
             id="startRow"
             name="startRow"
             accessibleName="start row"
@@ -80,14 +84,14 @@ export function SubCounterMenu({
           />
         </div>
 
-        <div className="grid gap-3">
-          <label className="text-sm" htmlFor="interval">
+        <div className="grid gap-2">
+          <label htmlFor="interval" className="ml-1">
             Row interval:
           </label>
           <NumberSpinner
             min={1}
             max={99}
-            defaultValue={1}
+            defaultValue={project.subCounter.interval}
             id="interval"
             name="interval"
             accessibleName="row interval"
@@ -97,9 +101,8 @@ export function SubCounterMenu({
 
         <Button
           type="button"
-          size="small"
           variant="ghost"
-          className="mt-2 w-fit p-0 text-muted-foreground hover:bg-background hover:text-foreground/80 focus-visible:text-foreground focus-visible:ring-transparent focus-visible:outline-none active:text-foreground"
+          className="mt-2 w-fit p-0 text-base text-muted-foreground hover:bg-transparent hover:text-foreground/80 focus-visible:text-foreground focus-visible:ring-transparent focus-visible:outline-none active:text-foreground dark:hover:bg-transparent"
           onClick={() => setFormKey((prev) => prev + 1)}
         >
           <IterationCw className="size-4" />
@@ -109,9 +112,8 @@ export function SubCounterMenu({
         <Button
           disabled={pending}
           type="submit"
-          size="small"
           variant="ghost"
-          className="mt-2 justify-self-end p-0 text-blue-300/80 hover:bg-background hover:text-blue-300 focus-visible:text-blue-300 focus-visible:ring-transparent focus-visible:outline-none disabled:opacity-100"
+          className="mt-2 justify-self-end p-0 text-base text-blue-400 hover:bg-transparent hover:text-blue-400/80 focus-visible:text-blue-300 focus-visible:ring-transparent focus-visible:outline-none disabled:opacity-100 dark:text-blue-300 dark:hover:bg-transparent"
         >
           save changes
         </Button>

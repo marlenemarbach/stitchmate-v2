@@ -1,6 +1,8 @@
+"use server";
+
 import { redirect } from "next/navigation";
+import { CountProvider } from "@/contexts/CountContext";
 import { CountDirectionProvider } from "@/contexts/CountDirectionContext";
-import { SubCounterProvider } from "@/contexts/SubCounterContext";
 import { getCurrentUser, getProjectById } from "@/lib/dal";
 import { CountDirection } from "@/lib/types";
 import { CountDirectionToggle } from "./CountDirectionToggle";
@@ -21,32 +23,27 @@ export async function CounterWithToolbar(props: {
   return (
     <>
       <h1 className="text-xl font-medium text-balance">{project.name}</h1>
-      <SubCounterProvider
-        initialState={{
-          count: project.count,
-          state: project.subCounter.active ? "on" : "off",
-        }}
+      <CountDirectionProvider
+        initialDirection={project.direction as CountDirection}
       >
-        <CountDirectionProvider
-          initialDirection={project.direction as CountDirection}
-        >
-          <div className="relative mt-24 place-self-center">
+        <div className="relative mt-[16vh] place-self-center">
+          <CountProvider count={project.count}>
             <SubCounter
-              className="-translate-x-18 translate-y-8"
+              className="absolute top-0 right-0 translate-x-[75%] -translate-y-[80%]"
               subCounter={project.subCounter}
             />
             <Counter project={project} />
-          </div>
-          <Toolbar
-            className="absolute bottom-12 left-1/2 mt-auto -translate-x-1/2"
-            aria-label="Counter settings"
-            loop
-          >
-            <CountDirectionToggle projectId={project.id} />
-            <CounterMenu project={project} />
-          </Toolbar>
-        </CountDirectionProvider>
-      </SubCounterProvider>
+          </CountProvider>
+        </div>
+        <Toolbar
+          className="absolute bottom-8 left-1/2 mt-auto -translate-x-1/2"
+          aria-label="Counter settings"
+          loop
+        >
+          <CountDirectionToggle projectId={project.id} />
+          <CounterMenu project={project} />
+        </Toolbar>
+      </CountDirectionProvider>
     </>
   );
 }
