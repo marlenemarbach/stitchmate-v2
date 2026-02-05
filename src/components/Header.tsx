@@ -5,7 +5,7 @@ export function Header({
   className,
 }: React.ComponentPropsWithoutRef<"header">) {
   return (
-    <header className={cn("flex items-center justify-between p-3", className)}>
+    <header className={cn("flex items-center justify-between p-4", className)}>
       {children}
     </header>
   );
