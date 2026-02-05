@@ -59,7 +59,7 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
           return <ProjectListItem key={project.id} project={project} />;
         })}
       </div>
-      <div className="my-12 grid sm:my-10 sm:hidden sm:gap-3">
+      <div className="my-14 grid sm:my-10 sm:hidden sm:gap-3">
         {allProjects.map((project) => {
           return <DragListItem key={project.id} project={project} />;
         })}
