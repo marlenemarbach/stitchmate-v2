@@ -14,7 +14,7 @@ import {
 type DeleteProjectProps = {
   project: Project;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function DeleteProjectDialog({
@@ -33,16 +33,16 @@ export function DeleteProjectDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen} modal>
-      <DialogContent open={open}>
-        <DialogClose />
+      <DialogContent>
+        <DialogClose onClick={() => setOpen(false)} />
         <DialogTitle className="sr-only">Delete Project</DialogTitle>
-        <p className="mt-6 flex items-center gap-2 text-balance">
-          <CircleAlert className="size-4 text-destructive" />
-          {`Are you sure you want to delete ${project.name}?`}
+        <p className="mt-6 flex items-baseline gap-2">
+          <CircleAlert className="size-5 translate-y-1 text-destructive" />
+          {`Are you sure you want to delete "${project.name}"?`}
         </p>
-        <DialogFooter>
+        <DialogFooter className="border-none">
           <Button
-            className="col-span-3 col-start-6 w-fit place-self-end"
+            className="col-span-3 col-start-6 w-[4.75rem] place-self-end"
             variant="secondary"
             onClick={() => setOpen(false)}
           >
@@ -51,7 +51,7 @@ export function DeleteProjectDialog({
           <Button
             type="submit"
             variant="destructive"
-            className="w-fit place-self-end"
+            className="w-[4.75rem] place-self-end"
             onClick={() => handleDelete()}
           >
             delete

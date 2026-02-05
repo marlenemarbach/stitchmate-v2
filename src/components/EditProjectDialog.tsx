@@ -25,18 +25,20 @@ const initialState: ActionResponse = {
 type EditProjectProps = {
   project: Project;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children?: React.ReactNode;
 };
 
 export function EditProjectDialog({
   project,
   open,
   setOpen,
+  children,
 }: EditProjectProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
-    async (prev: ActionResponse, formData: FormData) => {
+    async (_: ActionResponse, formData: FormData) => {
       try {
         const data = {
           name: formData.get("title"),
@@ -50,7 +52,7 @@ export function EditProjectDialog({
         return result;
       } catch (error) {
         console.error("update project error: ", error);
-        toast.error("An error ocurred while updating your project.");
+        toast.error("Something went wrong while updating your project.");
         return {
           success: false,
           message: "An error occured.",
@@ -61,26 +63,15 @@ export function EditProjectDialog({
     initialState,
   );
 
-  // TODO:prevent auto text selection
-  function handleFocusInput(e: Event) {
-    e.preventDefault();
-    const input = inputRef.current;
-
-    if (input) {
-      input.focus();
-      const length = input.value.length;
-      input.setSelectionRange(length, length);
-    }
-  }
-
   return (
-    <Dialog open={open} onOpenChange={setOpen} modal>
-      <DialogContent
-        forceMount
-        open={open}
-        onOpenAutoFocus={(e) => handleFocusInput(e)}
-      >
-        <DialogClose />
+    <Dialog open={open} onOpenChange={setOpen}>
+      {children}
+      <DialogContent className="top-auto bottom-[-10%] sm:top-1/2 sm:bottom-auto">
+        <DialogClose
+          onClick={() => {
+            setOpen(false);
+          }}
+        />
         <DialogTitle>Edit project</DialogTitle>
         <form action={formAction} autoComplete="off">
           <FormField>
@@ -89,7 +80,7 @@ export function EditProjectDialog({
             </label>
             <Input
               defaultValue={project.name}
-              className="mb-6 border-none pl-0 text-lg font-medium focus-visible:ring-transparent focus-visible:outline-none"
+              className="mb-6 border-none pl-0 text-xl font-medium focus-visible:ring-transparent focus-visible:outline-none"
               id="title"
               name="title"
               disabled={pending}
@@ -108,26 +99,28 @@ export function EditProjectDialog({
             className="max-w-[21rem] grid-cols-3 items-center"
             name="status"
           >
-            <label className="text-sm text-muted-foreground">Status:</label>
-            <RadioItem value="wip">
+            <label className="text-sm font-medium text-neutral-500 dark:text-muted-foreground">
+              Status:
+            </label>
+            <RadioItem value="wip" className="w-fit pr-3">
               <StatusBadge status="wip" />
               wip
             </RadioItem>
-            <RadioItem value="finished">
+            <RadioItem value="finished" className="w-fit pr-3">
               <StatusBadge status="finished" />
               finished
             </RadioItem>
           </RadioGroup>
           {state.error && <FormError>{state.message}</FormError>}
-          <DialogFooter>
+          <DialogFooter className="items-end">
             <Button
-              className="col-span-3 col-start-6 w-fit place-self-end text-sm"
+              className="w-[4.75rem] text-sm"
               variant="secondary"
               onClick={() => setOpen(false)}
             >
               cancel
             </Button>
-            <Button className="w-fit place-self-end text-sm" type="submit">
+            <Button className="w-[4.75rem] text-sm" type="submit">
               save
             </Button>
           </DialogFooter>

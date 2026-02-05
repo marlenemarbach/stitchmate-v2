@@ -38,12 +38,12 @@ export function ProjectListItem({ project }: { project: Project }) {
   return (
     <>
       <div
-        className="grid w-3xl max-w-3xl grid-cols-12 items-center gap-2 py-2 pr-2 pl-4 hover:bg-foreground/5 data-[state=active]:bg-foreground/5 sm:rounded-xl"
+        className="grid w-3xl max-w-3xl grid-cols-12 items-center gap-2 py-2 pr-2 pl-4 focus-within:bg-foreground/5 hover:bg-foreground/5 data-[state=active]:bg-foreground/5 sm:rounded-xl"
         data-state={showMenu ? "active" : "inactive"}
       >
         <Link
           href={`/projects/${project.id}`}
-          className="col-span-12 grid cursor-default grid-cols-subgrid grid-rows-2 gap-y-1 sm:col-span-11 sm:grid-rows-1"
+          className="col-span-12 grid cursor-default grid-cols-subgrid grid-rows-2 gap-y-1 focus-visible:outline-none sm:col-span-11 sm:grid-rows-1"
         >
           <h3 className="col-span-12 font-medium sm:col-span-7">
             {project.name}
@@ -56,14 +56,15 @@ export function ProjectListItem({ project }: { project: Project }) {
         <DropdownMenu open={showMenu} onOpenChange={setShowMenu}>
           <DropdownMenuTrigger>
             <Button
+              data-state={showMenu ? "active" : "inactive"}
               variant="ghost"
               size="icon"
-              className="hidden place-self-end text-muted-foreground hover:bg-transparent hover:text-foreground sm:flex dark:hover:bg-transparent"
+              className="place-self-end text-muted-foreground hover:bg-transparent hover:text-foreground focus-visible:text-foreground data-[state=active]:text-foreground sm:flex dark:hover:bg-transparent"
             >
               <Ellipsis />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" loop>
             <DropdownMenuItem onSelect={() => setShowEditDialog(true)}>
               <Pencil />
               <span className="col-start-2">Edit...</span>
