@@ -28,7 +28,7 @@ export function SignOutButton({
       disabled={isPending || disabled}
       className={className}
     >
-      <LogOut className="size-5" />
+      <LogOut className="size-5 translate-x-[1px]" />
     </Button>
   );
 }
