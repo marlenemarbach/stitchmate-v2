@@ -60,7 +60,7 @@ export function DropdownMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "grid h-8 cursor-default grid-cols-[1rem_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -104,10 +104,7 @@ export function DropdownMenuLabel({
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>) {
   return (
     <DropdownMenuPrimitive.Label
-      className={cn(
-        "my-1 ml-2 text-xs font-medium text-muted-foreground",
-        className,
-      )}
+      className={cn("my-1 ml-2 text-xs text-muted-foreground", className)}
       {...props}
     >
       {children}
@@ -135,7 +132,7 @@ export function DropdownMenuRadioItem({
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cn(
-        "grid h-8 cursor-default grid-cols-[1rem_1fr_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
