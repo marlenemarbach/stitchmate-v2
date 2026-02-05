@@ -1,4 +1,5 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function DropdownMenu({
@@ -40,7 +41,7 @@ export function DropdownMenuContent({
     <DropdownMenuPortal>
       <DropdownMenuPrimitive.Content
         className={cn(
-          "grid min-w-40 gap-1 rounded-xl bg-zinc-800 p-2 text-sm drop-shadow drop-shadow-background",
+          "grid min-w-40 rounded-lg bg-neutral-50 p-1 text-sm text-neutral-600 drop-shadow-sm dark:border dark:border-neutral-700/80 dark:bg-neutral-800 dark:text-foreground dark:drop-shadow-background",
           className,
         )}
         {...props}
@@ -59,7 +60,7 @@ export function DropdownMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "grid grid-cols-[1rem_1fr] items-center gap-1 rounded-lg px-2 py-1 text-sm hover:bg-foreground/10 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -75,7 +76,10 @@ export function DropdownMenuSeparator({
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>) {
   return (
     <DropdownMenuPrimitive.Separator
-      className={cn("-mx-2 h-[1px] bg-border", className)}
+      className={cn(
+        "-mx-1 my-1 h-[1px] bg-border dark:bg-neutral-700/80",
+        className,
+      )}
       {...props}
     />
   );
@@ -87,7 +91,7 @@ export function DropdownMenuGroup({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Group>) {
   return (
-    <DropdownMenuPrimitive.Group className={cn("", className)} {...props}>
+    <DropdownMenuPrimitive.Group className={className} {...props}>
       {children}
     </DropdownMenuPrimitive.Group>
   );
@@ -100,7 +104,10 @@ export function DropdownMenuLabel({
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>) {
   return (
     <DropdownMenuPrimitive.Label
-      className={cn("text-xs text-muted-foreground", className)}
+      className={cn(
+        "my-1 ml-2 text-xs font-medium text-muted-foreground",
+        className,
+      )}
       {...props}
     >
       {children}
@@ -114,7 +121,7 @@ export function DropdownMenuRadioGroup({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioGroup>) {
   return (
-    <DropdownMenuPrimitive.RadioGroup className={cn("", className)} {...props}>
+    <DropdownMenuPrimitive.RadioGroup className={className} {...props}>
       {children}
     </DropdownMenuPrimitive.RadioGroup>
   );
@@ -128,13 +135,13 @@ export function DropdownMenuRadioItem({
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cn(
-        "grid grid-cols-[1rem_1fr] items-center gap-1 rounded-lg px-2 py-1 text-sm hover:bg-foreground/10",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
     >
-      <DropdownMenuRadioIndicator forceMount />
       {children}
+      <DropdownMenuRadioIndicator forceMount />
     </DropdownMenuPrimitive.RadioItem>
   );
 }
@@ -146,14 +153,12 @@ export function DropdownMenuRadioIndicator({
   return (
     <DropdownMenuPrimitive.ItemIndicator
       className={cn(
-        "pointer-events-none text-transparent data-[state=checked]:text-muted-foreground",
+        "pointer-events-none justify-self-end text-transparent data-[state=checked]:text-muted-foreground",
         className,
       )}
       {...props}
     >
-      <svg height="6" width="6" xmlns="http://www.w3.org/2000/svg">
-        <circle r="3" cx="3" cy="3" fill="currentColor" />
-      </svg>
+      <Check className="size-5" />
     </DropdownMenuPrimitive.ItemIndicator>
   );
 }
