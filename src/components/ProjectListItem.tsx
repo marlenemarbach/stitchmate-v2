@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { toast } from "sonner";
 import { updateProject } from "@/actions/projects";
 import { type Project, ProjectStatus } from "@/lib/types";
 import { calculateTimeSince } from "@/lib/utils";
@@ -26,9 +27,14 @@ export function ProjectListItem({ project }: { project: Project }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
-  function handleStatusChange(newStatus: ProjectStatus) {
-    updateProject({ status: newStatus }, project.id);
+  async function handleStatusChange(newStatus: ProjectStatus) {
+    try {
+      await updateProject({ status: newStatus }, project.id);
+    } catch (e) {
+      toast.error(`Something went wrong updating "${project.name}".`);
+    }
   }
+
   return (
     <>
       <div
