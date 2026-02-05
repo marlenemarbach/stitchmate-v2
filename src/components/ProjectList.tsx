@@ -40,7 +40,7 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
     <>
       <div className="sticky top-16 z-1 grid w-full gap-4 bg-background mask-b-from-85% mask-b-to-95% pr-1 pb-3 sm:gap-6 sm:pt-10 sm:pr-2 sm:pl-4">
         <div className="flex w-full items-center justify-between">
-          <h1 className="text-xl font-medium">My Projects</h1>
+          <h1 className="ml-2 text-xl font-medium">My Projects</h1>
           <CreateProjectDialog>
             <DialogTrigger asChild>
               <Button className="my-2 w-fit">
