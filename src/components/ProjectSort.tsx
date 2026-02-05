@@ -1,72 +1,72 @@
 "use client";
 
+import { use } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { Button } from "./ui/Button";
+import { Project } from "@/lib/types";
+import { OrderButton } from "./OrderButton";
 
-type Order = "asc" | "desc";
-
-export function ProjectSort({
-  updatedOrder,
-  statusOrder,
-}: {
-  updatedOrder?: Order;
-  statusOrder?: Order;
-}) {
+export function ProjectSort({ projects }: { projects: Promise<Project[]> }) {
   const searchParams = useSearchParams();
+
+  const statusOrder = searchParams.get("statusOrder");
+  const updatedOrder = searchParams.get("updatedOrder");
+  const nameOrder = searchParams.get("nameOrder");
+
   const pathName = usePathname();
   const { replace } = useRouter();
 
-  function toggleOrder(order: string) {
-    const params = new URLSearchParams(searchParams);
+  const currentProjects = use(projects);
 
-    if (order === "updatedOrder") {
-      if (!updatedOrder || updatedOrder === "desc") {
-        params.set("updatedOrder", "asc");
-      } else {
-        params.set("updatedOrder", "desc");
-      }
+  function toggleOrder(param: "statusOrder" | "updatedOrder" | "nameOrder") {
+    const params = new URLSearchParams(searchParams);
+    const currentValue = params.get(param);
+
+    switch (param) {
+      case "updatedOrder":
+        params.delete("nameOrder");
+        params.delete("statusOrder");
+        break;
+      case "statusOrder":
+        params.delete("nameOrder");
+        break;
+      case "nameOrder":
+        params.delete("statusOrder");
+        params.delete("updatedOrder");
+        break;
     }
-    if (order === "statusOrder") {
-      if (!statusOrder || statusOrder === "desc") {
-        params.set("statusOrder", "asc");
-      } else {
-        params.set("statusOrder", "desc");
-      }
-    }
+
+    params.set(param, currentValue === "asc" ? "desc" : "asc");
     replace(`${pathName}?${params.toString()}`);
   }
 
-  return (
-    <div className="mb-1 grid w-full grid-cols-12 items-center gap-2 text-muted-foreground">
-      <span className="col-span-7 text-sm">Name</span>
-      <Button
-        className="col-span-2 w-fit -translate-x-4 hover:text-foreground"
-        size="small"
-        variant="ghost"
-        onClick={() => toggleOrder("statusOrder")}
-      >
-        Status
-        {statusOrder !== "desc" ? (
-          <ArrowUp className="size-4" />
-        ) : (
-          <ArrowDown className="size-4" />
-        )}
-      </Button>
+  if (currentProjects.length) {
+    return (
+      <div className="flex w-full items-center gap-2 border-b border-border px-4 text-muted-foreground sm:mb-3 sm:grid sm:grid-cols-12 sm:px-0 sm:pb-2">
+        <OrderButton
+          className="sm:col-span-7 sm:-translate-x-3"
+          order={nameOrder}
+          onClick={() => toggleOrder("nameOrder")}
+        >
+          Name
+        </OrderButton>
 
-      <Button
-        className="w-fit -translate-x-3 hover:text-foreground"
-        size="small"
-        variant="ghost"
-        onClick={() => toggleOrder("updatedOrder")}
-      >
-        Last knit
-        {updatedOrder !== "desc" ? (
-          <ArrowUp className="size-4" />
-        ) : (
-          <ArrowDown className="size-4" />
-        )}
-      </Button>
-    </div>
-  );
+        <OrderButton
+          className="sm:-translate-x-4"
+          order={statusOrder}
+          onClick={() => toggleOrder("statusOrder")}
+        >
+          Status
+        </OrderButton>
+
+        <OrderButton
+          className="sm:-translate-x-4"
+          order={updatedOrder}
+          onClick={() => toggleOrder("updatedOrder")}
+          defaultOrder={!nameOrder ? "desc" : undefined}
+        >
+          Last knit
+        </OrderButton>
+      </div>
+    );
+  }
 }

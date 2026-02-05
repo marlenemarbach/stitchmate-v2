@@ -7,7 +7,8 @@ import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
-import { ProjectWithSubCounter, SubCounter } from "./types";
+import { ProjectOrderParams, generateOrderByClause } from "./helper";
+import { ProjectOrder, ProjectWithSubCounter, SubCounter } from "./types";
 
 /* --------------------------------------------------------------------------
  *  User
@@ -40,23 +41,9 @@ export async function getUserByEmail(email: string) {
 
 export async function getProjectsByUserId(
   userId: string,
-  order: { updatedAt?: "desc" | "asc"; status?: "desc" | "asc" },
+  order: ProjectOrderParams,
 ) {
-  const orderByClause = [];
-
-  if (order.status) {
-    const statusOrder =
-      order.status === "asc"
-        ? asc(projects["status"])
-        : desc(projects["status"]);
-    orderByClause.push(statusOrder);
-  }
-
-  const updatedAtOrder =
-    order.updatedAt === "asc"
-      ? asc(projects["updatedAt"])
-      : desc(projects["updatedAt"]);
-  orderByClause.push(updatedAtOrder);
+  const orderByClause = generateOrderByClause(order);
 
   const result = await db.query.projects.findMany({
     where: eq(projects.userId, userId),
