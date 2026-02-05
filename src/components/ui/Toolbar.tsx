@@ -10,7 +10,7 @@ export function Toolbar({
   return (
     <ToolbarPrimitive.Root
       className={cn(
-        "relative flex w-fit items-center gap-1 rounded-full border border-border bg-popup p-1 text-popup-foreground",
+        "relative flex w-fit items-center gap-2 rounded-full border border-border bg-popup p-1 drop-shadow-xs dark:border-border",
         className,
       )}
       {...props}
@@ -28,7 +28,8 @@ export function ToolbarToggleGroup({
   return (
     <ToolbarPrimitive.ToolbarToggleGroup
       className={cn(
-        "flex items-center gap-1 rounded-full bg-zinc-800 p-1 has-[:focus-visible]:ring-[1.5px] has-[:focus-visible]:ring-ring has-[:focus-visible]:outline-none",
+        "flex items-center gap-1 rounded-full border border-border bg-popup p-1 drop-shadow-xs",
+        "has-[:focus-visible]:bg-foreground/5 has-[:focus-visible]:outline-none",
         className,
       )}
       {...props}
@@ -46,7 +47,8 @@ export function ToolbarToggleItem({
   return (
     <ToolbarPrimitive.ToolbarToggleItem
       className={cn(
-        "flex size-7 items-center justify-center rounded-full border-none transition-colors duration-150 ease-out hover:bg-primary/5 focus-visible:outline-none data-[state=active]:bg-primary data-[state=active]:text-primary-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors duration-150 ease-in-out hover:bg-foreground/5 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "focus-visible:outline-none data-[state=active]:bg-ultramarine-800/80 data-[state=active]:text-neutral-50 dark:data-[state=active]:bg-neutral-100 dark:data-[state=active]:text-neutral-900",
         className,
       )}
       {...props}
@@ -64,7 +66,8 @@ export function ToolbarButton({
   return (
     <ToolbarPrimitive.ToolbarButton
       className={cn(
-        "flex size-9 items-center justify-center rounded-full transition-colors duration-150 ease-out hover:bg-foreground/10 focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        "mr-1 flex size-10 items-center justify-center rounded-full border border-border bg-popup text-muted-foreground drop-shadow-xs transition-colors duration-150 ease-out hover:bg-foreground/5 hover:text-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5",
+        "focus-visible:bg-foreground/5 focus-visible:outline-none",
         className,
       )}
       {...props}

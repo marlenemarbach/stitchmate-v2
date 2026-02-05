@@ -1,30 +1,31 @@
 "use client";
 
+import { createContext, use } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
+const DialogContext = createContext<boolean | null | undefined>(null);
+
 export function Dialog({
   children,
+  open,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>;
+  return (
+    <DialogPrimitive.Root {...props}>
+      <DialogContext value={open}>{children}</DialogContext>
+    </DialogPrimitive.Root>
+  );
 }
 
-// necessary to pass open prop to use exit animation
 export function DialogContent({
   className,
-  open,
   children,
   ...props
-}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-  open: boolean;
-}) {
-  // Only render portal on client-side to avoid SSR errors
-  // if (typeof document === "undefined") {
-  //   return null;
-  // }
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {}) {
+  const open = use(DialogContext);
 
   return (
     <AnimatePresence>
@@ -32,7 +33,7 @@ export function DialogContent({
         <DialogPrimitive.Portal forceMount>
           <DialogPrimitive.Overlay key={"dialogOverlay"} asChild>
             <motion.div
-              className="fixed inset-0 isolate z-50 bg-black/50"
+              className="fixed inset-0 isolate z-50 bg-black/30 dark:bg-black/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -41,20 +42,18 @@ export function DialogContent({
           <DialogPrimitive.Content forceMount {...props} asChild>
             <motion.div
               className={cn(
-                "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw_-_2rem)] -translate-1/2 gap-3 rounded-xl bg-background px-6 pt-6 shadow-popup sm:w-lg",
+                "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw_-_2rem)] -translate-1/2 gap-3 rounded-xl bg-popup px-6 pt-6 sm:w-lg dark:border dark:border-neutral-700/50",
                 className,
               )}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                transition: { ease: "easeOut", duration: 0.3 },
               }}
               exit={{
                 opacity: 0,
-                scale: 0.9,
-                transition: { ease: "easeIn", duration: 0.2 },
               }}
+              transition={{ ease: "easeOut", duration: 0.2 }}
               key="dialogContent"
             >
               {children}
@@ -83,7 +82,7 @@ export function DialogTitle({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
-    <DialogPrimitive.Title className={className} {...props}>
+    <DialogPrimitive.Title className={cn("font-medium", className)} {...props}>
       {children}
     </DialogPrimitive.Title>
   );
@@ -97,7 +96,7 @@ export function DialogFooter({
   return (
     <div
       className={cn(
-        "-mx-6 mt-4 flex items-center justify-end gap-4 rounded-b-xl border-t border-border p-6 py-4",
+        "-mx-6 mt-4 flex items-center justify-end gap-4 rounded-b-xl border-t border-border p-6 py-4 inset-shadow-[0_2px_4px_-2px_rgba(0,0,0,0.05)] dark:border-neutral-700/50",
         className,
       )}
       {...props}
@@ -113,7 +112,7 @@ export function DialogClose({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>) {
   return (
     <DialogPrimitive.Close
-      className="150ms absolute top-6 right-6 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 text-muted-foreground transition-colors ease-out focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none"
+      className="150ms absolute top-6 right-6 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 text-muted-foreground transition-colors ease-out hover:text-foreground focus-visible:text-foreground focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:outline-none"
       {...props}
     >
       <X className="size-4" />

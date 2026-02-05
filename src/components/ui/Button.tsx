@@ -3,20 +3,21 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "flex items-center disabled:opacity-50 justify-center gap-2 whitespace-nowrap rounded-full transition-[color,background-color,transform] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-ring focus-visible:ring-[1.5px] ease-out duration-250 active:scale-99",
+  "flex items-center disabled:opacity-50 justify-center gap-2 whitespace-nowrap rounded-full transition-[color,background-color,transform] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none  ease-[ease] duration-150 active:scale-[0.997]",
   {
     variants: {
       variant: {
-        primary: "bg-indigo-400/55 font-medium hover:bg-indigo-400/65",
-        secondary: "border border-border/50 bg-zinc-800/50 hover:bg-zinc-800",
-        accent: "text-foreground/90 bg-secondary/60 hover:bg-secondary/40",
-        ghost: "hover:bg-foreground/10 p-0 rounded-full",
+        primary:
+          "dark:bg-ultramarine-300/90 font-medium dark:hover:bg-ultramarine-300 dark:focus-visible:bg-ultramarine-300 bg-ultramarine-300 hover:bg-ultramarine-300/90 focus-visible:bg-ultramarine-300/90 text-neutral-100 shadow-xs",
+        secondary:
+          "font-medium border border-border hover:bg-neutral-200 dark:bg-zinc-800/50 dark:hover:bg-zinc-800 shadow-xs focus-visible:bg-neutral-200",
+        ghost: "hover:bg-foreground/5 rounded-full",
         destructive:
-          "bg-destructive/60 border border-destructive hover:bg-destructive/70",
+          "dark:bg-destructive/30 dark:border dark:border-destructive dark:hover:bg-destructive/70 bg-destructive/80 text-white hover:bg-destructive font-medium",
       },
       size: {
         default: "h-9 px-4 py-2 text-sm",
-        small: "h-8 py-1 px-3 gap-1 text-sm",
+        small: "h-8 py-1 px-3 gap-1 sm:text-sm",
         large: "h-11 text-base",
         icon: "w-8 h-8 p-2",
       },

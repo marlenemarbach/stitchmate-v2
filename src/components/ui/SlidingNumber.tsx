@@ -19,7 +19,7 @@ export function SlidingNumber({
   return (
     <div
       className={cn(
-        "pointer-events-none relative h-9 overflow-hidden bg-zinc-800 mask-y-from-80% mask-y-to-100%",
+        "pointer-events-none relative h-10 overflow-hidden bg-inherit mask-y-from-80% mask-y-to-100%",
         className,
       )}
       {...props}
@@ -53,7 +53,7 @@ function SlidingNumberItem({
   return (
     <motion.span
       className={cn(
-        "absolute flex h-9 w-full items-center justify-center",
+        "absolute flex h-10 w-full items-center justify-center text-lg",
         className,
       )}
       initial={{ y: previousPosition }}

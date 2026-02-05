@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SlidingNumber } from "./SlidingNumber";
 
@@ -32,21 +32,20 @@ export function NumberSpinner({
   return (
     <NumberSpinnerRoot min={min} max={max} defaultValue={defaultValue}>
       <NumberSpinnerContainer className={className}>
+        <NumberSpinnerButton
+          direction={-1}
+          title={`Decrement ${accessibleName}`}
+        >
+          <Minus strokeWidth={3} />
+        </NumberSpinnerButton>
+
         <NumberSpinnerInput {...props} />
-        <div className="grid h-full py-1">
-          <NumberSpinnerButton
-            direction={1}
-            title={`Increment ${accessibleName}`}
-          >
-            <ChevronUp strokeWidth={3} />
-          </NumberSpinnerButton>
-          <NumberSpinnerButton
-            direction={-1}
-            title={`Decrement ${accessibleName}`}
-          >
-            <ChevronDown strokeWidth={3} />
-          </NumberSpinnerButton>
-        </div>
+        <NumberSpinnerButton
+          direction={1}
+          title={`Increment ${accessibleName}`}
+        >
+          <Plus strokeWidth={3} />
+        </NumberSpinnerButton>
       </NumberSpinnerContainer>
     </NumberSpinnerRoot>
   );
@@ -129,7 +128,7 @@ function NumberSpinnerContainer({
   return (
     <div
       className={cn(
-        "group flex items-center rounded-lg border border-border/50 bg-zinc-800 data-[mode=input]:focus-within:ring-[1.5px] data-[mode=input]:focus-within:ring-ring data-[mode=input]:focus-within:outline-none",
+        "group flex items-center rounded-lg border border-border bg-neutral-50 drop-shadow-xs dark:bg-popup",
         className,
       )}
       data-mode={mode}
@@ -164,7 +163,7 @@ function NumberSpinnerInput({
   return (
     <div
       className={cn(
-        "relative ml-1 h-9 min-w-10 flex-1 focus-visible:outline-none",
+        "relative ml-1 h-10 min-w-10 flex-1 focus-visible:outline-none",
         className,
       )}
       tabIndex={0}
@@ -176,7 +175,7 @@ function NumberSpinnerInput({
       }}
     >
       <input
-        className="[&::-webkit-outer-spin-button]:appearance-none] [&::-webkit-inner-spin-button]:appearance-none] absolute top-1/2 left-1/2 h-4 w-[80%] -translate-1/2 text-center text-foreground opacity-100 [-moz-appearance:textfield] focus-visible:outline-none data-[state=hidden]:opacity-0"
+        className="[&::-webkit-outer-spin-button]:appearance-none] [&::-webkit-inner-spin-button]:appearance-none] absolute top-1/2 left-1/2 h-4 h-full w-[80%] -translate-1/2 text-center text-lg text-foreground opacity-100 [-moz-appearance:textfield] focus-visible:outline-none data-[state=hidden]:opacity-0"
         data-state={mode === "input" ? "visible" : "hidden"}
         value={inputValue}
         onChange={(e) => {
@@ -224,7 +223,7 @@ function NumberSpinnerButton({
   return (
     <button
       className={cn(
-        "h-full rounded pr-2 pl-1 text-muted-foreground transition-[color,transform] duration-150 ease-out hover:text-foreground active:scale-98 [&_svg:not([class*='size-'])]:size-3",
+        "h-full rounded px-4 text-muted-foreground transition-[color,transform] duration-150 ease-out hover:text-foreground active:scale-98 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       tabIndex={-1}
