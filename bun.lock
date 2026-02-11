@@ -17,7 +17,7 @@
         "lucide-react": "^0.555.0",
         "motion": "^12.23.22",
         "nanoid": "^5.1.6",
-        "next": "^16.1.6",
+        "next": "16.1.6",
         "react": "19.2.0",
         "react-dom": "19.2.0",
         "react-use-measure": "^2.1.7",
