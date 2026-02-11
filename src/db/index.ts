@@ -1,12 +1,7 @@
-import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import * as schema from "./schema";
 
-const client = createClient({
-  url: process.env.DB_FILE_NAME!,
-});
-
-export const db = drizzle(client, {
+export const db = drizzle(process.env.DB_FILE_NAME!, {
   schema,
   casing: "snake_case",
 });
