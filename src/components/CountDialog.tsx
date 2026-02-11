@@ -2,6 +2,7 @@ import { useActionState, useState } from "react";
 import { IterationCw } from "lucide-react";
 import { updateProject } from "@/actions/projects";
 import { ActionResponse } from "@/actions/types";
+import { useCount } from "@/contexts/CountContext";
 import { type ProjectWithSubCounter } from "@/lib/types";
 import { Button } from "./ui/Button";
 import {
@@ -30,10 +31,12 @@ export function CountDialog({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { count } = useCount();
+
   // temporary solution, force the form to rerender to control input value
   const [formKey, setFormKey] = useState(project.count);
 
-  const [value, setValue] = useState(project.count);
+  const [formValue, setFormValue] = useState(count);
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (_, formData: FormData) => {
@@ -43,7 +46,6 @@ export function CountDialog({
         };
 
         const result = await updateProject(data, project.id);
-
         if (result.success) setOpen(false);
 
         return result;
@@ -75,7 +77,7 @@ export function CountDialog({
                 className="max-w-34"
                 min={1}
                 max={99}
-                defaultValue={value}
+                defaultValue={formValue}
                 id="count"
                 name="count"
                 accessibleName="count"
@@ -88,7 +90,7 @@ export function CountDialog({
                 className="w-fit p-0 text-base text-muted-foreground hover:bg-transparent hover:text-foreground/80 focus-visible:text-foreground focus-visible:ring-transparent focus-visible:outline-none active:text-foreground dark:hover:bg-transparent"
                 onClick={() => {
                   setFormKey(1);
-                  setValue(1);
+                  setFormValue(1);
                 }}
               >
                 <IterationCw className="size-4" />

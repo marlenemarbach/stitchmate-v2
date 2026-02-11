@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, ChevronsUpDown, Minus, Plus } from "lucide-react";
+import { ChevronRight, ChevronsUpDown } from "lucide-react";
 import { toast } from "sonner";
 import { updateSubCounter } from "@/actions/subCounter";
 import { ProjectWithSubCounter } from "@/lib/types";
@@ -14,7 +14,6 @@ import {
   PopoverMenuItem,
   PopoverMenuTrigger,
 } from "./ui/PopoverMenu";
-import { RadioSwitch, RadioSwitchItem } from "./ui/RadioSwitch";
 import { Switch } from "./ui/Switch";
 
 export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
@@ -63,7 +62,7 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
             >
               Count
               <span className="flex items-center gap-2">
-                <span className="text-foreground/80">40</span>
+                <span className="text-foreground/80">{project.count}</span>
                 <ChevronRight className="text-foreground/80" />
               </span>
             </button>
