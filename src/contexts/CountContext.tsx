@@ -29,8 +29,8 @@ export function CountProvider({
   const contextValue = useMemo(() => {
     function updateCount(direction: 1 | -1, projectId: number) {
       startTransition(async () => {
-        setOptimisticCount(direction);
         try {
+          setOptimisticCount(direction);
           await updateProject({ count: count + direction }, projectId);
         } catch (e) {
           console.error("Update project error:", e);

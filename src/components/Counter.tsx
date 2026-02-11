@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { startTransition, useEffect } from "react";
 import { animate, useMotionValue } from "motion/react";
 import { useCount } from "@/contexts/CountContext";
 import { useCountDirection } from "@/contexts/CountDirectionContext";
@@ -18,13 +18,16 @@ export function Counter({ project }: { project: Project }) {
   const [direction] = useCountDirection();
   const { count, updateCount } = useCount();
 
-  const handleCount = useThrottle(() => {
-    if (count + direction < 1 || count + direction > 99) return;
-    updateCount(direction, project.id);
-  }, 300);
+  // const handleCount = useThrottle(() => {
+  //   if (count + direction < 1 || count + direction > 99) return;
+  //   updateCount(direction, project.id);
+  // }, 300);
 
   return (
-    <button onClick={handleCount} className="relative h-fit w-fit">
+    <button
+      onClick={() => updateCount(direction, project.id)}
+      className="relative h-fit w-fit"
+    >
       <Cover>
         <TopButton count={count} direction={direction} />
         <Gears count={count} />
