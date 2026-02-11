@@ -2,7 +2,7 @@
 
 import { cache } from "react";
 import { connection } from "next/server";
-import { and, asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
@@ -117,6 +117,20 @@ export async function updateProjectById(
   return result[0];
 }
 
+export async function updateProjectCountById(
+  direction: 1 | -1,
+  projectId: number,
+  userId: string,
+) {
+  const result = await db
+    .update(projects)
+    .set({
+      count: sql`${projects.count} + ${direction}`,
+    })
+    .where(and(eq(projects.id, projectId), eq(projects.userId, userId)));
+
+  return result;
+}
 /* --------------------------------------------------------------------------
  * Subcounter
  * ------------------------------------------------------------------------*/

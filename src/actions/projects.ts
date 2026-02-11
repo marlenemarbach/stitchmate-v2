@@ -9,6 +9,7 @@ import {
   getCurrentUser,
   getProjectById,
   updateProjectById,
+  updateProjectCountById,
 } from "@/lib/dal";
 import { Project, ProjectWithSubCounter } from "@/lib/types";
 import { ActionResponse } from "./types";
@@ -61,16 +62,35 @@ export async function createProject(data: {
   };
 }
 
+export async function updateProjectCount(
+  direction: 1 | -1,
+  projectId: number,
+): Promise<ActionResponse & { project?: Project }> {
+  if (direction !== 1 && direction !== -1)
+    return {
+      success: false,
+      message: "invalid direction",
+      error: "invalid direction",
+    };
+
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const result = await updateProjectCountById(direction, projectId, user.id);
+  if (!result) notFound();
+
+  revalidatePath("projects");
+
+  return {
+    success: true,
+    message: "update successful",
+  };
+}
+
 export async function updateProject(
   data: Partial<ProjectData>,
   projectId: number,
 ): Promise<ActionResponse & { project?: Project }> {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
-
-  const project = await getProjectById(projectId, user.id);
-  if (!project) notFound();
-
   const validationResult = ProjectSchema.partial().safeParse(data);
 
   if (!validationResult.success) {
@@ -80,6 +100,12 @@ export async function updateProject(
       errors: z.flattenError(validationResult.error).fieldErrors,
     };
   }
+
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const project = await getProjectById(projectId, user.id);
+  if (!project) notFound();
 
   const updatedProject = await updateProjectById(
     validationResult.data,
