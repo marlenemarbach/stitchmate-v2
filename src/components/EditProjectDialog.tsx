@@ -3,7 +3,6 @@ import { toast } from "sonner";
 import { Project } from "@/lib/types";
 import { ProjectData, updateProject } from "../actions/projects";
 import { ActionResponse } from "../actions/types";
-import { StatusBadge } from "./StatusBadge";
 import { Button } from "./ui/Button";
 import {
   Dialog,
@@ -15,6 +14,7 @@ import {
 import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
 import { RadioGroup, RadioItem } from "./ui/RadioGroup";
+import { StatusBadge } from "./ui/StatusBadge";
 
 const initialState: ActionResponse = {
   success: false,
@@ -31,10 +31,10 @@ type EditProjectProps = {
 
 export function EditProjectDialog({
   project,
+  children,
   open,
   setOpen,
-  children,
-}: EditProjectProps) {
+}: React.PropsWithChildren & EditProjectProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
@@ -67,11 +67,7 @@ export function EditProjectDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       {children}
       <DialogContent className="top-auto bottom-[-10%] sm:top-1/2 sm:bottom-auto">
-        <DialogClose
-          onClick={() => {
-            setOpen(false);
-          }}
-        />
+        <DialogClose />
         <DialogTitle>Edit project</DialogTitle>
         <form action={formAction} autoComplete="off">
           <FormField>

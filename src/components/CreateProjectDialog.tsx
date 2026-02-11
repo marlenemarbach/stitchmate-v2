@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 import { ProjectData, createProject } from "../actions/projects";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
@@ -12,6 +13,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogTitle,
+  DialogTrigger,
 } from "./ui/Dialog";
 import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
@@ -22,7 +24,7 @@ const initialState: ActionResponse = {
   error: undefined,
 };
 
-export function CreateProjectDialog({ children }: React.PropsWithChildren) {
+export function CreateProjectDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -54,8 +56,14 @@ export function CreateProjectDialog({ children }: React.PropsWithChildren) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {children}
-      <DialogContent className="bottom-[-10%] sm:top-[28%] sm:bottom-auto sm:w-lg">
+      <DialogTrigger asChild>
+        <Button variant="secondary" className="border-popup">
+          <Plus className="stroke-3" />
+          Add Project
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="">
         <DialogClose />
         <DialogTitle>New Project:</DialogTitle>
         <DialogDescription>Enter a name for your project.</DialogDescription>

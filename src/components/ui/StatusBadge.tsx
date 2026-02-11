@@ -14,14 +14,14 @@ export function StatusBadge({
       {status === "wip" ? (
         <CircleDotDashed
           className={cn(
-            "size-5 text-orange-500 sm:size-5 dark:text-orange-200",
+            "size-4 text-orange-500 sm:size-5 dark:text-orange-200",
             className,
           )}
         />
       ) : (
         <CircleCheck
           className={cn(
-            "size-5 text-green-500 sm:size-5 dark:text-green-200",
+            "size-4 text-green-500 sm:size-5 dark:text-green-200",
             className,
           )}
         />

@@ -37,10 +37,10 @@ export function DeleteProjectDialog({
         <DialogClose onClick={() => setOpen(false)} />
         <DialogTitle className="sr-only">Delete Project</DialogTitle>
         <p className="mt-6 flex items-baseline gap-2">
-          <CircleAlert className="size-5 translate-y-1 text-destructive" />
+          <CircleAlert className="size-5 translate-y-1" />
           {`Are you sure you want to delete "${project.name}"?`}
         </p>
-        <DialogFooter className="border-none">
+        <DialogFooter>
           <Button
             className="col-span-3 col-start-6 w-[4.75rem] place-self-end"
             variant="secondary"

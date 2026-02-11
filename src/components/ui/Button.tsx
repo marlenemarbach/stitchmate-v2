@@ -2,18 +2,18 @@ import Link from "next/link";
 import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export const buttonVariants = cva(
-  "flex items-center disabled:opacity-50 justify-center gap-2 whitespace-nowrap rounded-full transition-[color,background-color,transform] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none  ease-[ease] duration-150 active:scale-[0.997]",
+const buttonVariants = cva(
+  "flex focus-visible:ring-[1.5px] focus-visible:ring-ring items-center disabled:opacity-50 justify-center gap-2 whitespace-nowrap rounded-full transition-[color,background-color] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none  ease-[ease] duration-150 ",
   {
     variants: {
       variant: {
         primary:
-          "dark:bg-ultramarine-300/90 font-medium dark:hover:bg-ultramarine-300 dark:focus-visible:bg-ultramarine-300 bg-ultramarine-300 hover:bg-ultramarine-300/90 focus-visible:bg-ultramarine-300/90 text-neutral-100 shadow-xs",
+          "font-medium  bg-teal-400/65 hover:bg-teal-400/80 text-neutral-100 shadow-xs",
         secondary:
-          "font-medium border border-border hover:bg-neutral-200 dark:bg-zinc-800/50 dark:hover:bg-zinc-800 shadow-xs focus-visible:bg-neutral-200",
+          "font-medium border border-border bg-foreground/10 hover:bg-foreground/13 shadow-xs",
         ghost: "hover:bg-foreground/5 rounded-full",
         destructive:
-          "dark:bg-destructive/30 dark:border dark:border-destructive dark:hover:bg-destructive/70 bg-destructive/80 text-white hover:bg-destructive font-medium",
+          "text-red-400 font-medium border border-border bg-foreground/10 hover:bg-foreground/13 shadow-xs",
       },
       size: {
         default: "h-9 px-4 py-2 text-sm",

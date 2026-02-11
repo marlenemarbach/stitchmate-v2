@@ -45,7 +45,7 @@ export default async function ProjectsPage(props: {
         </div>
       </Header>
 
-      <main className="m-auto min-h-screen w-[calc(100vw_-_2rem)] max-w-3xl">
+      <main className="m-auto min-h-screen w-screen max-w-3xl">
         <ProjectList projects={projects} />
       </main>
     </>

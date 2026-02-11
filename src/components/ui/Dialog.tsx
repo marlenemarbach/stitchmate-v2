@@ -3,18 +3,19 @@
 import { createContext, use } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
+// import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
-const DialogContext = createContext<boolean | null | undefined>(null);
+const DialogContext = createContext<boolean | undefined | null>(null);
 
 export function Dialog({
-  children,
   open,
+  children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>) {
   return (
-    <DialogPrimitive.Root {...props}>
+    <DialogPrimitive.Root open={open} {...props}>
       <DialogContext value={open}>{children}</DialogContext>
     </DialogPrimitive.Root>
   );
@@ -26,39 +27,39 @@ export function DialogContent({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {}) {
   const open = use(DialogContext);
+  // const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
     <AnimatePresence>
       {open && (
         <DialogPrimitive.Portal forceMount>
-          <DialogPrimitive.Overlay key={"dialogOverlay"} asChild>
-            <motion.div
-              className="fixed inset-0 isolate z-50 bg-black/30 dark:bg-black/50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-          </DialogPrimitive.Overlay>
-          <DialogPrimitive.Content forceMount {...props} asChild>
-            <motion.div
-              className={cn(
-                "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw_-_2rem)] -translate-1/2 gap-3 rounded-xl bg-popup px-6 pt-6 sm:w-lg dark:border dark:border-neutral-700/50",
-                className,
-              )}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-              exit={{
-                opacity: 0,
-              }}
-              transition={{ ease: "easeOut", duration: 0.2 }}
-              key="dialogContent"
-            >
-              {children}
-            </motion.div>
-          </DialogPrimitive.Content>
+          <MotionConfig
+            transition={{ type: "spring", duration: 0.35, bounce: 0 }}
+          >
+            <DialogPrimitive.Overlay key={"dialogOverlay"} asChild>
+              <motion.div
+                key="dialogOverlay"
+                className="fixed inset-0 isolate z-50 bg-black/30 dark:bg-black/50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              />
+            </DialogPrimitive.Overlay>
+            <DialogPrimitive.Content {...props} asChild>
+              <motion.div
+                key="dialogContent"
+                className={cn(
+                  "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw-2rem)] -translate-1/2 gap-3 rounded-xl px-6 pt-6 border-dialog sm:w-lg",
+                  className,
+                )}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+              >
+                {children}
+              </motion.div>
+            </DialogPrimitive.Content>
+          </MotionConfig>
         </DialogPrimitive.Portal>
       )}
     </AnimatePresence>
@@ -70,9 +71,7 @@ export function DialogTrigger({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Trigger>) {
   return (
-    <DialogPrimitive.Trigger {...props} asChild>
-      {children}
-    </DialogPrimitive.Trigger>
+    <DialogPrimitive.Trigger {...props}>{children}</DialogPrimitive.Trigger>
   );
 }
 
