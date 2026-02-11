@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dmSans.variable}`}>
-      <body className="flex min-h-screen w-screen flex-col bg-background font-display text-foreground">
+      <body className="flex min-h-dvh w-screen flex-col bg-background font-display text-foreground">
         <Suspense>{children}</Suspense>
         <Toaster
           toastOptions={{

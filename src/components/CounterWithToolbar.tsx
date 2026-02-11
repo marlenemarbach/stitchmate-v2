@@ -35,14 +35,15 @@ export async function CounterWithToolbar(props: {
             <Counter project={project} />
           </CountProvider>
         </div>
-        <Toolbar
-          className="absolute bottom-8 left-1/2 mt-auto -translate-x-1/2"
-          aria-label="Counter settings"
-          loop
-        >
-          <CountDirectionToggle projectId={project.id} />
-          <CounterMenu project={project} />
-        </Toolbar>
+        <CounterMenu project={project} />
+        {/* <Toolbar */}
+        {/*   className="absolute bottom-8 left-1/2 mt-auto -translate-x-1/2" */}
+        {/*   aria-label="Counter settings" */}
+        {/*   loop */}
+        {/* > */}
+        {/*   <CountDirectionToggle projectId={project.id} /> */}
+        {/*   <CounterMenu project={project} /> */}
+        {/* </Toolbar> */}
       </CountDirectionProvider>
     </>
   );

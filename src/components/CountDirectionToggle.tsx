@@ -2,9 +2,9 @@
 
 import { startTransition } from "react";
 import { Minus, Plus } from "lucide-react";
-import { ToolbarToggleGroup, ToolbarToggleItem } from "@/components/ui/Toolbar";
 import { useCountDirection } from "@/contexts/CountDirectionContext";
 import { updateProject } from "../actions/projects";
+import { RadioSwitch, RadioSwitchItem } from "./ui/RadioSwitch";
 
 export function CountDirectionToggle({ projectId }: { projectId: number }) {
   const [direction, toggleDirection] = useCountDirection();
@@ -27,28 +27,16 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
   }
 
   return (
-    <>
-      <ToolbarToggleGroup
-        type="single"
-        defaultValue={direction === 1 ? "up" : "down"}
-        onValueChange={(value) => handleUpdateDirection(value)}
-        aria-label="Counting direction"
-      >
-        <ToolbarToggleItem
-          data-state={direction === 1 ? "active" : "inactive"}
-          value="up"
-          aria-label="Up"
-        >
-          <Plus className="size-4" />
-        </ToolbarToggleItem>
-        <ToolbarToggleItem
-          data-state={direction === -1 ? "active" : "inactive"}
-          value="down"
-          aria-label="Down"
-        >
-          <Minus className="size-4" />
-        </ToolbarToggleItem>
-      </ToolbarToggleGroup>
-    </>
+    <RadioSwitch
+      defaultValue="up"
+      onValueChange={(value) => handleUpdateDirection(value)}
+    >
+      <RadioSwitchItem value="up">
+        <Plus />
+      </RadioSwitchItem>
+      <RadioSwitchItem value="down">
+        <Minus />
+      </RadioSwitchItem>
+    </RadioSwitch>
   );
 }

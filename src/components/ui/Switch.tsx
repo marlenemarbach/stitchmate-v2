@@ -1,71 +1,57 @@
 import { useState } from "react";
-import { cn } from "@/lib/utils";
-
-export type SwitchProps = {
-  defaultChecked: boolean;
-  onCheckedChange?: (checked: boolean) => void;
-  name?: string;
-  textLabel?: boolean;
-};
+import { motion } from "motion/react";
+import { cn } from "../../lib/utils";
 
 export function Switch({
+  defaultActive = false,
+  onSwitchChange,
   className,
-  name,
-  defaultChecked = false,
-  onCheckedChange,
-  textLabel = true,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & SwitchProps) {
-  const [enabled, setEnabled] = useState(defaultChecked);
+}: React.ComponentPropsWithoutRef<"button"> & {
+  defaultActive?: boolean;
+  onSwitchChange?: (active: boolean) => void;
+}) {
+  const [active, setActive] = useState(defaultActive);
 
   return (
-    <div className="flex items-center gap-2">
-      <input
-        type="hidden"
-        name={name}
-        value={enabled ? "on" : "off"}
-        defaultChecked={defaultChecked}
-      />
-      {textLabel && <SwitchTextLabel enabled={enabled} />}
-      <div
-        tabIndex={0}
-        role="switch"
-        aria-checked={enabled}
-        data-state={enabled ? "on" : "off"}
+    <button
+      role="switch"
+      className={cn(
+        "flex items-center gap-2 rounded-full p-2 hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none",
+        className,
+      )}
+      onClick={() => {
+        const nextActive = !active;
+        setActive(nextActive);
+        onSwitchChange?.(nextActive);
+      }}
+      aria-checked={active ? "true" : "false"}
+      data-state={active ? "on" : "off"}
+      {...props}
+    >
+      <span
+        aria-hidden
+        className="text-sm tracking-wide text-foreground/80 uppercase"
+      >
+        {active ? "on" : "off"}
+      </span>
+      <span
         className={cn(
-          "group relative grid aspect-44/24 h-6 grid-cols-2 items-center justify-center rounded-full bg-neutral-400 p-1 inset-shadow-xs inset-shadow-background/20 transition-[color,box-shadow] duration-150 ease-out focus-visible:ring-[1.5px] focus-visible:ring-foreground focus-visible:outline-none data-[state=on]:bg-green-500",
+          "flex aspect-5/3 h-6 items-center justify-start rounded-full bg-foreground/15 py-0.5 pr-0.5 inset-shadow-sm transition-colors duration-200 ease-initial data-[state=on]:justify-end data-[state=on]:bg-green-400",
           className,
         )}
-        onClick={() => {
-          setEnabled((prev) => !prev);
-          onCheckedChange?.(!enabled);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === " " || e.key === "Enter") {
-            e.preventDefault();
-            setEnabled((prev) => !prev);
-            onCheckedChange?.(!enabled);
-          }
-        }}
-        {...props}
+        data-state={active ? "on" : "off"}
       >
-        <span className="absolute left-[2px] z-10 aspect-square h-[calc(100%-4px)] rounded-full bg-background drop-shadow-sm drop-shadow-background/20 transition-transform duration-200 ease-[cubic-bezier(.05,1.03,.82,.99)] group-data-[state=on]:translate-x-[100%] dark:bg-zinc-100"></span>
-      </div>
-    </div>
-  );
-}
-
-function SwitchTextLabel({ enabled }: { enabled: boolean }) {
-  if (enabled) {
-    return (
-      <span className="translate-y-[2px] text-sm tracking-wider uppercase sm:translate-y-0">
-        On
+        <motion.span
+          layout
+          className="aspect-square h-full rounded-full bg-neutral-100 drop-shadow-sm"
+          transition={{
+            type: "spring",
+            visualDuration: 0.1,
+            bounce: 0.2,
+          }}
+        />
       </span>
-    );
-  }
-  return (
-    <span className="translate-y-[2px] text-sm tracking-wider uppercase sm:translate-y-0">
-      Off
-    </span>
+    </button>
   );
 }

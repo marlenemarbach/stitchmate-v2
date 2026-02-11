@@ -4,8 +4,8 @@ import Link from "next/link";
 import { type Project } from "@/lib/types";
 import { calculateTimeSince } from "@/lib/utils";
 import { ProjectListMenu } from "./ProjectListMenu";
-import { StatusBadge } from "./StatusBadge";
 import { DataListItem } from "./ui/DataList";
+import { StatusBadge } from "./ui/StatusBadge";
 
 export function ProjectListItem({ project }: { project: Project }) {
   return (

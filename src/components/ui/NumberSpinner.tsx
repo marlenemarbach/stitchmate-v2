@@ -128,7 +128,7 @@ function NumberSpinnerContainer({
   return (
     <div
       className={cn(
-        "group flex items-center rounded-lg border border-border bg-neutral-50 drop-shadow-xs dark:bg-popup",
+        "group flex items-center rounded-full border border-border bg-neutral-50 drop-shadow-xs dark:bg-popup",
         className,
       )}
       data-mode={mode}
@@ -163,7 +163,7 @@ function NumberSpinnerInput({
   return (
     <div
       className={cn(
-        "relative ml-1 h-10 min-w-10 flex-1 focus-visible:outline-none",
+        "relative h-10 min-w-10 flex-1 focus-visible:outline-none",
         className,
       )}
       tabIndex={0}
