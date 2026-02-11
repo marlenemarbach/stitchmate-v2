@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  startTransition,
-  use,
-  useMemo,
-  useOptimistic,
-} from "react";
+import { createContext, startTransition, use, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { updateProject } from "@/actions/projects";
 
@@ -21,16 +15,13 @@ export function CountProvider({
 }: React.PropsWithChildren & {
   count: number;
 }) {
-  const [optimisticCount, setOptimisticCount] = useOptimistic(
-    count,
-    (current, direction: number) => current + direction,
-  );
+  const [currentCount, setCurrentCount] = useState(count);
 
   const contextValue = useMemo(() => {
     function updateCount(direction: 1 | -1, projectId: number) {
+      setCurrentCount((prev) => prev + direction);
       startTransition(async () => {
         try {
-          setOptimisticCount(direction);
           await updateProject({ count: count + direction }, projectId);
         } catch (e) {
           console.error("Update project error:", e);
@@ -42,10 +33,10 @@ export function CountProvider({
     }
 
     return {
-      count: optimisticCount,
+      count: currentCount,
       updateCount,
     };
-  }, [optimisticCount, setOptimisticCount, count]);
+  }, [currentCount, count]);
 
   return <CountContext value={contextValue}>{children}</CountContext>;
 }
