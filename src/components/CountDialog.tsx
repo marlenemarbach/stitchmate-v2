@@ -1,4 +1,4 @@
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { IterationCw } from "lucide-react";
 import { updateProject } from "@/actions/projects";
 import { ActionResponse } from "@/actions/types";
@@ -34,8 +34,6 @@ export function CountDialog({
   const { count } = useCount();
 
   // temporary solution, force the form to rerender to control input value
-  const [formKey, setFormKey] = useState(project.count);
-
   const [formValue, setFormValue] = useState(count);
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
@@ -61,13 +59,17 @@ export function CountDialog({
     initalState,
   );
 
+  useEffect(() => {
+    setFormValue(count);
+  }, [count]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogClose />
         <DialogTitle>Rowcounter</DialogTitle>
         <DialogDescription>Set your current row count.</DialogDescription>
-        <form key={formKey} className="mt-2" action={formAction}>
+        <form key={formValue} className="mt-2" action={formAction}>
           <div className="grid gap-3">
             <label htmlFor="count" className="ml-2">
               Count
@@ -89,7 +91,6 @@ export function CountDialog({
                 variant="ghost"
                 className="w-fit p-0 text-base text-muted-foreground hover:bg-transparent hover:text-foreground/80 focus-visible:text-foreground focus-visible:ring-transparent focus-visible:outline-none active:text-foreground dark:hover:bg-transparent"
                 onClick={() => {
-                  setFormKey(1);
                   setFormValue(1);
                 }}
               >
@@ -103,7 +104,10 @@ export function CountDialog({
           <DialogFooter className="mt-6">
             <Button
               className="ml-auto w-[4.75rem]"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setFormValue(count);
+                setOpen(false);
+              }}
               variant="secondary"
               disabled={pending}
             >

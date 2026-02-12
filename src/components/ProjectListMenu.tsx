@@ -25,8 +25,6 @@ export function ProjectListMenu({ project }: { project: Project }) {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  console.log("showMenu", showMenu, "showEdit", showEditDialog);
-
   async function handleStatusChange(newStatus: ProjectStatus) {
     try {
       await updateProject({ status: newStatus }, project.id);

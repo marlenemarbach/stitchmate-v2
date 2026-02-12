@@ -20,8 +20,6 @@ export function SubCounter({
     subCounter.interval,
   );
 
-  console.log("progress", progress);
-
   return (
     <AnimatePresence>
       {subCounter.active && (

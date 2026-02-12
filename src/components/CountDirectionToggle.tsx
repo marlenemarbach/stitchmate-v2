@@ -11,7 +11,6 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
 
   function handleUpdateDirection(newDirection: string) {
     const numDirection = newDirection === "up" ? 1 : -1;
-    if (direction === numDirection) return;
 
     // optimistic update via context. In this case we don't want to revert to the previous value if the operation fails.
     toggleDirection();
@@ -28,7 +27,7 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
 
   return (
     <RadioSwitch
-      defaultValue="up"
+      defaultValue={direction === 1 ? "up" : "down"}
       onValueChange={(value) => handleUpdateDirection(value)}
     >
       <RadioSwitchItem value="up">
