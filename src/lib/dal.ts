@@ -125,12 +125,13 @@ export async function updateProjectCountById(
   const result = await db
     .update(projects)
     .set({
-      count: sql`${projects.count} + ${direction}`,
+      count: sql`max(min(${projects.count} + ${direction}, 99), 1)`,
     })
     .where(and(eq(projects.id, projectId), eq(projects.userId, userId)));
 
   return result;
 }
+
 /* --------------------------------------------------------------------------
  * Subcounter
  * ------------------------------------------------------------------------*/
