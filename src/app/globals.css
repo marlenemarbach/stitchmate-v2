@@ -1,33 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(98% 0 0);
-  --foreground: oklch(30% 0 0);
-  --popup: oklch(98.5% 0 0);
+  --background: oklch(20.5% 0 0);
+  --foreground: oklch(97% 0 0);
+  --popup: oklch(26.9% 0 0);
   --muted: oklch(97% 0 0 / 14%);
-  --muted-foreground: oklch(66% 0 0);
-  --destructive: oklch(57.7% 0.245 27.325);
-  --border: oklch(92.2% 0 0);
+  --muted-foreground: oklch(70.8% 0 0);
+  --destructive: oklch(70.4% 0.191 22.216);
+  --border: oklch(34.4% 0.006 286.033);
   --input: oklch(1 0 0 / 8%);
-  --ring: oklch(66.15% 0.166 270.91);
+  --ring: oklch(87% 0 0);
   --counter: oklch(0.254 0.058 277.9);
   --counter-foreground: oklch(0.568 0.113 277.3);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(20.5% 0 0);
-    --foreground: oklch(97% 0 0);
-    --popup: oklch(26.9% 0 0);
-    --muted: oklch(97% 0 0 / 14%);
-    --muted-foreground: oklch(70.8% 0 0);
-    --destructive: oklch(70.4% 0.191 22.216);
-    --border: oklch(34.4% 0.006 286.033);
-    --input: oklch(1 0 0 / 8%);
-    --ring: oklch(87% 0 0);
-    --counter: oklch(0.254 0.058 277.9);
-    --counter-foreground: oklch(0.568 0.113 277.3);
-  }
 }
 
 @theme inline {
