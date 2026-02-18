@@ -1,12 +1,18 @@
-"use client";
-
 import { startTransition } from "react";
 import { Minus, Plus } from "lucide-react";
 import { useCountDirection } from "@/contexts/CountDirectionContext";
 import { updateProject } from "../actions/projects";
 import { RadioSwitch, RadioSwitchItem } from "./ui/RadioSwitch";
 
-export function CountDirectionToggle({ projectId }: { projectId: number }) {
+type CountDirectionToggleProps = {
+  projectId: number;
+  onDirectionChange?: () => void;
+};
+
+export function CountDirectionToggle({
+  projectId,
+  onDirectionChange,
+}: CountDirectionToggleProps) {
   const [direction, toggleDirection] = useCountDirection();
 
   function handleUpdateDirection(newDirection: string) {
@@ -14,7 +20,6 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
 
     // optimistic update via context. In this case we don't want to revert to the previous value if the operation fails.
     toggleDirection();
-
     startTransition(async () => {
       try {
         await updateProject({ direction: numDirection }, projectId);
@@ -23,17 +28,20 @@ export function CountDirectionToggle({ projectId }: { projectId: number }) {
         console.error("UpdateProject error:", e);
       }
     });
+
+    onDirectionChange?.();
   }
 
   return (
     <RadioSwitch
+      className="h-fit py-1"
       defaultValue={direction === 1 ? "up" : "down"}
       onValueChange={(value) => handleUpdateDirection(value)}
     >
-      <RadioSwitchItem value="up">
+      <RadioSwitchItem value="up" className="size-7">
         <Plus />
       </RadioSwitchItem>
-      <RadioSwitchItem value="down">
+      <RadioSwitchItem value="down" className="size-7">
         <Minus />
       </RadioSwitchItem>
     </RadioSwitch>

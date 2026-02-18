@@ -36,29 +36,34 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
       <PopoverMenu open={showMenu} onOpenChange={setShowMenu}>
         <PopoverMenuTrigger
           aria-label="expand menu"
-          className="fixed bottom-10 left-1/2 flex size-11 items-center justify-center border-popup bg-popup focus-visible:outline-none sm:bottom-14"
+          className="fixed bottom-10 left-1/2 flex size-12 items-center justify-center border-gradient focus-visible:outline-none sm:bottom-14"
         >
           <ChevronsUpDown />
         </PopoverMenuTrigger>
         <PopoverMenuContent
           side="top"
-          sideOffset={-44}
-          className="w-xs max-w-[calc(screen-1rem)]"
+          sideOffset={-48}
+          className="w-xs max-w-[calc(100vw-1rem)]"
         >
           <PopoverMenuItem
-            className="pr-0"
+            className="pr-1 font-medium"
             onSelect={(e) => e.preventDefault()}
           >
             Countdirection
-            <CountDirectionToggle projectId={project.id} />
+            <CountDirectionToggle
+              projectId={project.id}
+              onDirectionChange={() => {
+                setTimeout(() => setShowMenu(false), 400);
+              }}
+            />
           </PopoverMenuItem>
-          <PopoverMenuItem asChild className="pr-1">
+          <PopoverMenuItem asChild className="pr-1 font-medium">
             <button
               onClick={() => {
                 setShowMenu(false);
                 setShowCountDialog(true);
               }}
-              className="flex w-full items-center justify-between pr-1"
+              className="flex w-full items-center justify-between"
             >
               Count
               <span className="flex items-center gap-2">
@@ -68,7 +73,7 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
             </button>
           </PopoverMenuItem>
           <PopoverMenuItem
-            className="relative pr-1"
+            className="relative pr-1 font-medium"
             onSelect={(e) => e.preventDefault()}
             asChild
           >
@@ -85,7 +90,10 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
             <span className="absolute top-0 right-7 flex items-center">
               <Switch
                 defaultActive={project.subCounter.active}
-                onSwitchChange={(active) => toggleSubcounter(active)}
+                onSwitchChange={(active) => {
+                  toggleSubcounter(active);
+                  setTimeout(() => setShowMenu(false), 400);
+                }}
               />
             </span>
           </PopoverMenuItem>

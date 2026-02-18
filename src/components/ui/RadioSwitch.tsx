@@ -1,5 +1,4 @@
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-// import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
 
 export function RadioSwitch({
@@ -10,7 +9,7 @@ export function RadioSwitch({
   return (
     <RadioGroupPrimitive.Root
       className={cn(
-        "flex items-center rounded-full p-2 has-hover:bg-foreground/5",
+        "flex items-center gap-2 rounded-full bg-foreground/5 p-2 has-hover:bg-foreground/5",
         className,
       )}
       {...props}
@@ -28,7 +27,7 @@ export function RadioSwitchItem({
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        "flex h-6 w-8 items-center justify-center bg-foreground/15 transition-colors duration-250 ease-[ease] first:rounded-l-full last:rounded-r-full data-[state=checked]:bg-neutral-100 data-[state=checked]:text-neutral-800 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-3 [&_svg:not([class*='size-'])]:size-3",
+        "flex aspect-square h-full items-center justify-center rounded-full transition-colors duration-250 ease-[ease] hover:bg-foreground/7 data-[state=checked]:bg-neutral-100 data-[state=checked]:text-neutral-800 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:stroke-3 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

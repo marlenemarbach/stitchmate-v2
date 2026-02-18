@@ -50,11 +50,11 @@ export function PopoverMenuContent({
   const open = use(PopoverMenuContext);
 
   const closedBorder =
-    "inset(calc(100% - 2.75rem) calc(50% - 1.375rem) 0 calc(50% - 1.375rem) round 1.5rem)";
+    "inset(calc(100% - 3rem) calc(50% - 1.5rem) 0 calc(50% - 1.5rem) round 1.5rem)";
   const openBorder = "inset(0 round 1.5rem)";
 
   const closedContent =
-    "inset(calc(100% - 2.75rem) calc(50% - 1.375rem) 0 calc(50% - 1.375rem) round calc(1.5rem - 1px))";
+    "inset(calc(100% - 3rem) calc(50% - 1.5rem) 0 calc(50% - 1.5rem) round calc(1.5rem - 1px))";
   const openContent = "inset(1px round calc(1.5rem - 1px))";
 
   return (
@@ -79,12 +79,11 @@ export function PopoverMenuContent({
               }}
               transition={{
                 type: "spring",
-                damping: 54,
-                stiffness: 1000,
-                mass: 1.3,
+                visualDuration: 0.2,
+                bounce: 0.12,
               }}
               className={cn(
-                "h-full w-full bg-[linear-gradient(...)]",
+                "h-full w-full bg-[linear-gradient(in_oklch_165deg,#404040_0%,#262626_25%,#262626_75%,#404040_100%)]",
                 className,
               )}
             >
@@ -98,11 +97,10 @@ export function PopoverMenuContent({
                 }}
                 transition={{
                   type: "spring",
-                  damping: 54,
-                  stiffness: 1000,
-                  mass: 1.3,
+                  visualDuration: 0.2,
+                  bounce: 0.12,
                 }}
-                className="grid h-full w-full gap-2 bg-popup px-2 py-3"
+                className="grid h-full w-full gap-1 bg-popup px-2 py-3"
               >
                 {children}
               </motion.div>
@@ -122,18 +120,28 @@ export function PopoverMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "flex h-10 items-center justify-between rounded-3xl px-3 focus-within:bg-foreground/5 hover:bg-foreground/5 hover:outline-none focus-visible:bg-foreground/5 focus-visible:outline-none",
+        "flex h-11 items-center justify-between rounded-3xl px-3 focus-within:bg-foreground/5 hover:bg-foreground/5 hover:outline-none focus-visible:bg-foreground/5 focus-visible:outline-none",
         className,
       )}
       {...props}
       asChild
     >
       <motion.div
-        initial={{ filter: "blur(3px)" }}
+        initial={{ filter: "blur(3px)", opacity: 0 }}
         animate={{
           filter: "blur(0)",
+          opacity: 1,
+          transition: { filter: { delay: 0.1 } },
         }}
-        exit={{ filter: "blur(3px)" }}
+        exit={{
+          filter: "blur(3px)",
+          opacity: 0,
+        }}
+        transition={{
+          delay: 0.2,
+          ease: "easeOut",
+          duration: 0.15,
+        }}
       >
         {children}
       </motion.div>
