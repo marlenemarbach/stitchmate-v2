@@ -1,6 +1,6 @@
 import { defineConfig } from "drizzle-kit";
 
-export default defineConfig({
+const devConfig = defineConfig({
   out: "./drizzle",
   schema: "./src/db/schema.ts",
   dialect: "turso",
@@ -10,3 +10,16 @@ export default defineConfig({
     authToken: process.env.TURSO_AUTH_TOKEN!,
   },
 });
+
+const prodConfig = defineConfig({
+  out: "./drizzle",
+  schema: "./src/db/schema.ts",
+  dialect: "turso",
+  casing: "snake_case",
+  dbCredentials: {
+    url: process.env.TURSO_CONNECTION_URL!,
+    authToken: process.env.TURSO_AUTH_TOKEN!,
+  },
+});
+
+export default Bun.env.NODE_ENV === "development" ? devConfig : prodConfig;
