@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import * as z from "zod";
 import {
+  createGuestUser,
   createSession,
   createUser,
   deleteSession,
@@ -114,6 +115,27 @@ export async function signIn(formData: FormData): Promise<ActionResponse> {
   return {
     success: false,
     message: "Failed to login",
+    error: "failed",
+  };
+}
+
+export async function signInAsGuest(): Promise<ActionResponse> {
+  const guestUser = await createGuestUser();
+  if (!guestUser) {
+    return {
+      success: false,
+      message: "Failed to create guest account",
+      error: "failed",
+    };
+  }
+
+  const success = await createSession(guestUser.userId);
+  if (success) {
+    return { success: true, message: "Signed in as guest" };
+  }
+  return {
+    success: false,
+    message: "Failed to create session",
     error: "failed",
   };
 }
