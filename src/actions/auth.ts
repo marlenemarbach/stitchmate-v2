@@ -88,6 +88,15 @@ export async function signIn(formData: FormData): Promise<ActionResponse> {
     };
   }
 
+  if (user.role === "guest") {
+    return {
+      success: false,
+      message:
+        "Guest accounts cannot log in. Please sign up for a full account.",
+      error: "Guest login rejected",
+    };
+  }
+
   const verifiedPassword = await verifyPassword(password, user.password);
   if (!verifiedPassword) {
     return {
