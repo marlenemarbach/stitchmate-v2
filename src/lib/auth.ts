@@ -1,7 +1,6 @@
 import "server-only";
 import { cache } from "react";
 import { cookies } from "next/headers";
-// import { connection } from "next/server";
 import * as jose from "jose";
 import { nanoid } from "nanoid";
 import { db } from "@/db";
@@ -41,6 +40,24 @@ export async function createUser(
       id,
       email,
       password: hashedPassword,
+    })
+    .returning({ userId: users.id });
+  return result[0];
+}
+
+const GUEST_EMAIL = "guest@stitchmate.xyz";
+
+export async function createGuestUser(): Promise<{ userId: string } | null> {
+  const id = nanoid();
+  const randomPassword = await hashPassword(nanoid());
+
+  const result = await db
+    .insert(users)
+    .values({
+      id,
+      email: GUEST_EMAIL,
+      password: randomPassword,
+      role: "guest",
     })
     .returning({ userId: users.id });
   return result[0];
@@ -102,8 +119,6 @@ export async function createSession(userId: string): Promise<boolean> {
 }
 
 export const getSession = cache(async () => {
-  // await connection();
-
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token")?.value;
 
