@@ -157,7 +157,7 @@ export function SpinButtonLabel({
   const { id } = useSpinButton();
 
   return (
-    <label className={cn("sr-only", className)} htmlFor={id} {...props}>
+    <label className={cn("", className)} htmlFor={id} {...props}>
       {children}
     </label>
   );
