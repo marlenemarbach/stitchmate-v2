@@ -13,7 +13,15 @@ import {
   DialogTitle,
 } from "./ui/Dialog";
 import { FormError } from "./ui/Form";
-import { NumberSpinner } from "./ui/NumberSpinner";
+import {
+  SpinButton,
+  SpinButtonDecrement,
+  SpinButtonError,
+  SpinButtonField,
+  SpinButtonGroup,
+  SpinButtonIncrement,
+  SpinButtonLabel,
+} from "./ui/SpinButton";
 
 const initalState: ActionResponse = {
   success: false,
@@ -30,8 +38,17 @@ export function SubCounterDialog({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  //  forces the form to rerender via key change, to keep input states internal
-  const [formKey, setFormKey] = useState(1);
+  const [interval, setInterval] = useState(
+    project.subCounter.interval.toString(),
+  );
+  const [startRow, setStartRow] = useState(
+    project.subCounter.startRow.toString(),
+  );
+
+  function handleReset() {
+    setInterval("1");
+    setStartRow(project.count.toString());
+  }
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (_, formData: FormData) => {
@@ -39,7 +56,7 @@ export function SubCounterDialog({
         const data = {
           startRow: Number(formData.get("startRow")),
           interval: Number(formData.get("interval")),
-          active: formData.get("active") === "on",
+          active: true,
         };
         const result = await updateSubCounter(project.id, data);
 
@@ -67,38 +84,42 @@ export function SubCounterDialog({
           Configure a subcounter to track repetive tasks along with your main
           counter.
         </DialogDescription>
-        <form className="mt-2" key={formKey} action={formAction}>
+        <form className="mt-2" action={formAction}>
           <div className="grid grid-cols-2">
             <div className="grid gap-3">
-              <label htmlFor="startRow" className="ml-2">
-                Start row:
-              </label>
-              <NumberSpinner
-                className="max-w-34"
+              <SpinButton
+                value={startRow}
+                onValueChange={setStartRow}
+                id="startRow"
                 min={1}
                 max={99}
-                defaultValue={project.subCounter.startRow}
-                id="startRow"
-                name="startRow"
-                accessibleName="start row"
-                required
-              />
+              >
+                <SpinButtonLabel>Start row:</SpinButtonLabel>
+                <SpinButtonGroup>
+                  <SpinButtonDecrement title="decrement current count by 1" />
+                  <SpinButtonField name="startRow" />
+                  <SpinButtonIncrement title="increment current count by 1" />
+                </SpinButtonGroup>
+                <SpinButtonError />
+              </SpinButton>
             </div>
 
             <div className="grid gap-3">
-              <label htmlFor="interval" className="ml-2">
-                Row interval:
-              </label>
-              <NumberSpinner
-                className="max-w-34"
+              <SpinButton
+                id="interval"
                 min={1}
                 max={99}
-                defaultValue={project.subCounter.interval}
-                id="interval"
-                name="interval"
-                accessibleName="row interval"
-                required
-              />
+                value={interval}
+                onValueChange={setInterval}
+              >
+                <SpinButtonLabel>Row interval:</SpinButtonLabel>
+                <SpinButtonGroup>
+                  <SpinButtonDecrement title="decrement current count by 1" />
+                  <SpinButtonField name="interval" />
+                  <SpinButtonIncrement title="increment current count by 1" />
+                </SpinButtonGroup>
+                <SpinButtonError />
+              </SpinButton>
             </div>
             {state.errors && <FormError>{state.message}</FormError>}
           </div>
@@ -107,7 +128,7 @@ export function SubCounterDialog({
               type="button"
               variant="ghost"
               className="w-fit p-0 text-base text-muted-foreground hover:bg-transparent hover:text-foreground/80 focus-visible:text-foreground focus-visible:ring-transparent focus-visible:outline-none active:text-foreground dark:hover:bg-transparent"
-              onClick={() => setFormKey((prev) => prev + 1)}
+              onClick={handleReset}
             >
               <IterationCw className="size-4" />
               reset
