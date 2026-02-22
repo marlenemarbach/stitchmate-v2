@@ -32,7 +32,7 @@ export function DialogContent({
   return (
     <AnimatePresence>
       {open && (
-        <DialogPrimitive.Portal forceMount>
+        <DialogPrimitive.Portal>
           <MotionConfig
             transition={{ type: "spring", duration: 0.35, bounce: 0 }}
           >
