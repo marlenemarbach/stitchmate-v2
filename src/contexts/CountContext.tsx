@@ -52,7 +52,7 @@ export function CountProvider({
 
 export function useCount() {
   const ctx = use(CountContext);
-  if (!ctx) throw new Error("Must be used within SubCounterProvider");
+  if (!ctx) throw new Error("Must be used within CountProvider");
 
   return ctx;
 }
