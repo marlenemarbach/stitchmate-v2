@@ -2,13 +2,13 @@
 
 import { cache } from "react";
 import { connection } from "next/server";
-import { and, asc, desc, eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
 import { ProjectOrderParams, generateOrderByClause } from "./helper";
-import { ProjectOrder, ProjectWithSubCounter, SubCounter } from "./types";
+import { ProjectWithSubCounter, SubCounter } from "./types";
 
 /* --------------------------------------------------------------------------
  *  User

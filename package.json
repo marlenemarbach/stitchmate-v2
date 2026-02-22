@@ -8,7 +8,8 @@
     "start": "bun run --bun next start",
     "lint": "eslint",
     "test": "NODE_ENV=test bun test",
-    "migrate": "bunx --bun drizzle-kit generate && bunx --bun drizzle-kit migrate"
+    "migrate": "bunx --bun drizzle-kit generate && bunx --bun drizzle-kit migrate",
+    "cleanup:guests": "bun run scripts/cleanupExpiredGuestUsers.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
