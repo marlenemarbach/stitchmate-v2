@@ -1,7 +1,5 @@
-"use client";
-
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 type NumberCarouselProps = {
   value: number;
@@ -19,7 +17,7 @@ export function SlidingNumber({
   return (
     <div
       className={cn(
-        "pointer-events-none relative h-10 overflow-hidden bg-inherit mask-y-from-80% mask-y-to-100%",
+        "pointer-events-none relative inset-0 overflow-hidden bg-inherit mask-y-from-80% mask-y-to-100%",
         className,
       )}
       {...props}
@@ -47,13 +45,13 @@ function SlidingNumberItem({
   index: number;
 }) {
   const previousIndex = index + direction;
-  const previousPosition = previousIndex * 36 - 36;
-  const currentPosition = index * 36 - 36;
+  const previousPosition = previousIndex * 42 - 42;
+  const currentPosition = index * 42 - 42;
 
   return (
     <motion.span
       className={cn(
-        "absolute flex h-10 w-full items-center justify-center text-lg",
+        "absolute inset-0 flex items-center justify-center text-lg",
         className,
       )}
       initial={{ y: previousPosition }}
