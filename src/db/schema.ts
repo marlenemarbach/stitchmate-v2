@@ -1,18 +1,34 @@
 import { relations, sql } from "drizzle-orm";
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  integer,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 
-export const users = sqliteTable("users", {
-  id: text().primaryKey(),
-  email: text().notNull().unique(),
-  password: text().notNull(),
-  createdAt: text()
-    .notNull()
-    .default(sql`(current_timestamp)`),
-  updatedAt: text()
-    .notNull()
-    .default(sql`(current_timestamp)`)
-    .$onUpdate(() => sql`(current_timestamp)`),
-});
+export const users = sqliteTable(
+  "users",
+  {
+    id: text().primaryKey(),
+    role: text({ enum: ["user", "guest"] })
+      .default("user")
+      .notNull(),
+    email: text().notNull(),
+    password: text().notNull(),
+    createdAt: text()
+      .notNull()
+      .default(sql`(current_timestamp)`),
+    updatedAt: text()
+      .notNull()
+      .default(sql`(current_timestamp)`)
+      .$onUpdate(() => sql`(current_timestamp)`),
+  },
+  (table) => [
+    uniqueIndex("users_email_unique")
+      .on(table.email)
+      .where(sql`role IS NOT 'guest'`),
+  ],
+);
 
 export const userRelations = relations(users, ({ many }) => ({
   projects: many(projects),
