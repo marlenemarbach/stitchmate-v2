@@ -7,10 +7,11 @@ import {
   createSession,
   createUser,
   deleteSession,
+  getSession,
   hashPassword,
   verifyPassword,
 } from "@/lib/auth";
-import { getUserByEmail } from "@/lib/dal";
+import { getCurrentUser, getUserByEmail, upgradeUser } from "@/lib/dal";
 import { type ActionResponse } from "./types";
 
 const AuthSchema = z.object({
@@ -128,7 +129,6 @@ export async function signInAsGuest(): Promise<ActionResponse> {
       error: "failed",
     };
   }
-
   const success = await createSession(guestUser.userId);
   if (success) {
     return { success: true, message: "Signed in as guest" };
@@ -138,6 +138,44 @@ export async function signInAsGuest(): Promise<ActionResponse> {
     message: "Failed to create session",
     error: "failed",
   };
+}
+
+export async function upgradeGuestAccount(
+  formData: FormData,
+): Promise<ActionResponse> {
+  const user = await getCurrentUser();
+  if (!user) {
+    return {
+      success: false,
+      message: "Not authenticated",
+      error: "unauthorized",
+    };
+  }
+
+  if (user.role !== "guest") {
+    return {
+      success: false,
+      message: "Only guest accounts can be upgraded",
+      error: "invalid role",
+    };
+  }
+
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const existingUser = await getUserByEmail(email);
+  if (existingUser) {
+    return {
+      success: false,
+      message: "Email already in use",
+      error: "email_taken",
+    };
+  }
+
+  const hashedPassword = await hashPassword(password);
+  await upgradeUser(email, hashedPassword, user.id);
+
+  return { success: true, message: "Account upgraded successfully" };
 }
 
 export async function signOut(): Promise<void> {
