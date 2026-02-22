@@ -38,7 +38,7 @@ export const projects = sqliteTable("projects", {
   id: integer().primaryKey({ autoIncrement: true }),
   userId: text()
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   count: integer().notNull().default(1),
   direction: integer().notNull().default(1),
   name: text({ length: 30 }).notNull(),
@@ -67,7 +67,7 @@ export const subCounters = sqliteTable("sub_counters", {
   projectId: integer()
     .notNull()
     .unique()
-    .references(() => projects.id),
+    .references(() => projects.id, { onDelete: "cascade" }),
   interval: integer().notNull().default(2),
   createdAt: text()
     .notNull()
