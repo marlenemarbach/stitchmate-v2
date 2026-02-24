@@ -4,7 +4,8 @@ import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { Link } from "@/components/ui/Link";
-import { signUp } from "../actions/auth";
+import { User } from "@/lib/types";
+import { signUp, upgradeGuestAccount } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
 import { FormError, FormField } from "./ui/Form";
@@ -16,13 +17,18 @@ const initialState: ActionResponse = {
   error: undefined,
 };
 
-export function SignupForm() {
+export function SignupForm({ user }: { user: User | null }) {
   const router = useRouter();
 
   const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
     async (prev: ActionResponse, formData: FormData) => {
       try {
-        const result = await signUp(formData);
+        let result;
+        if (user && user.role === "guest") {
+          result = await upgradeGuestAccount(formData);
+        } else {
+          result = await signUp(formData);
+        }
         if (result.success) {
           console.log("Account created successfully");
           router.push("/");
