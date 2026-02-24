@@ -35,17 +35,6 @@ export async function getUserByEmail(email: string) {
   return user || null;
 }
 
-export async function upgradeUser(
-  email: string,
-  hashedPassword: string,
-  userId: string,
-) {
-  await db
-    .update(users)
-    .set({ email, password: hashedPassword, role: "user" })
-    .where(eq(users.id, userId));
-}
-
 /* --------------------------------------------------------------------------
  *  Projects
  * ------------------------------------------------------------------------*/

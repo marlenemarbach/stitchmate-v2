@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { cookies } from "next/headers";
+import { eq } from "drizzle-orm";
 import * as jose from "jose";
 import { nanoid } from "nanoid";
 import { db } from "@/db";
@@ -42,6 +43,21 @@ export async function createUser(
       password: hashedPassword,
     })
     .returning({ userId: users.id });
+  return result[0];
+}
+
+export async function upgradeUser(
+  email: string,
+  password: string,
+  userId: string,
+) {
+  const hashedPassword = await hashPassword(password);
+
+  const result = await db
+    .update(users)
+    .set({ email, password: hashedPassword, role: "user" })
+    .where(eq(users.id, userId))
+    .returning();
   return result[0];
 }
 
