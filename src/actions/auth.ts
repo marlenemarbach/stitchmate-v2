@@ -8,9 +8,10 @@ import {
   createUser,
   deleteSession,
   hashPassword,
+  upgradeUser,
   verifyPassword,
 } from "@/lib/auth";
-import { getCurrentUser, getUserByEmail, upgradeUser } from "@/lib/dal";
+import { getCurrentUser, getUserByEmail } from "@/lib/dal";
 import { mockDelay } from "@/lib/utils";
 import { type ActionResponse } from "./types";
 
@@ -160,20 +161,32 @@ export async function upgradeGuestAccount(
     };
   }
 
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const validatedFields = AuthSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-  const existingUser = await getUserByEmail(email);
-  if (existingUser) {
+  if (!validatedFields.success) {
     return {
       success: false,
-      message: "Email already in use",
-      error: "email_taken",
+      message: "Validation failed",
+      errors: z.flattenError(validatedFields.error).fieldErrors,
     };
   }
 
-  const hashedPassword = await hashPassword(password);
-  await upgradeUser(email, hashedPassword, user.id);
+  const { email, password } = validatedFields.data;
+
+  const existingUser = await getUserByEmail(email);
+
+  if (existingUser) {
+    return {
+      success: false,
+      message: "A User with this email already exists",
+      errors: { email: ["A user with this email already exists"] },
+    };
+  }
+
+  await upgradeUser(email, password, user.id);
 
   return { success: true, message: "Account upgraded successfully" };
 }
