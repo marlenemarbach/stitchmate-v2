@@ -1,5 +1,4 @@
 import { use } from "react";
-import { Boxes } from "lucide-react";
 import { Project } from "@/lib/types";
 import { CreateProjectDialog } from "./CreateProjectDialog";
 import { ProjectListItem } from "./ProjectListItem";
@@ -30,8 +29,7 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
       {!allProjects.length ? (
         <div className="m-auto flex h-screen max-w-xs flex-col items-center justify-center gap-6">
           <div className="flex items-end gap-3">
-            <Boxes className="size-8 stroke-1 text-foreground/70" />
-            <p className="text-muted-foreground">No projects yet.</p>
+            <p className="text-muted-foreground">No projects</p>
           </div>
         </div>
       ) : (
