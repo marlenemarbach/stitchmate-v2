@@ -23,15 +23,7 @@ export default function RootLayout({
     <html lang="en" className={`${dmSans.variable}`}>
       <body className="flex min-h-dvh w-screen flex-col bg-background font-display text-foreground">
         <Suspense>{children}</Suspense>
-        <Toaster
-          toastOptions={{
-            style: {
-              background: "var(--popup)",
-              color: "var(--foreground)",
-              borderColor: "var(--border)",
-            },
-          }}
-        />
+        <Toaster />
       </body>
     </html>
   );

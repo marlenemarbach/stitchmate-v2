@@ -31,14 +31,8 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
         <div className="m-auto flex h-screen max-w-xs flex-col items-center justify-center gap-6">
           <div className="flex items-end gap-3">
             <Boxes className="size-8 stroke-1 text-foreground/70" />
-            <h1 className="text-md text-center text-xl font-medium">
-              Projects
-            </h1>
+            <p className="text-muted-foreground">No projects yet.</p>
           </div>
-
-          <p className="text-center text-balance text-muted-foreground">
-            No projects yet.
-          </p>
         </div>
       ) : (
         <DataListContent className="mt-42 sm:mt-51">

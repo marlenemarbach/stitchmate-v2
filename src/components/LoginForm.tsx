@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "@/components/ui/Link";
-import { signIn } from "../actions/auth";
+import { signIn, signInAsGuest } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
 import { Button } from "./ui/Button";
 import { FormError, FormField } from "./ui/Form";
@@ -18,25 +19,46 @@ const initialState: ActionResponse = {
 
 export function LoginForm() {
   const router = useRouter();
-  const [state, formAction, pending] = useActionState<ActionResponse, FormData>(
-    async (prev: ActionResponse, formData: FormData) => {
+  const [state, formAction, signInPending] = useActionState<
+    ActionResponse,
+    FormData
+  >(async (_, formData: FormData) => {
+    try {
+      const result = await signIn(formData);
+      if (result.success) {
+        router.push("/projects");
+      }
+      return result;
+    } catch (error) {
+      console.error("Sign in error", error);
+      return {
+        success: false,
+        message: "An error occured while signin in",
+        error: "Failed to sign in",
+      };
+    }
+  }, initialState);
+
+  const [guestError, setGuestError] = useState("");
+  const [guestLoginPending, startTransition] = useTransition();
+
+  function handleSignInAsGuest() {
+    startTransition(async () => {
       try {
-        const result = await signIn(formData);
+        const result = await signInAsGuest();
         if (result.success) {
           router.push("/projects");
+        } else {
+          setGuestError(result.message);
         }
-        return result;
-      } catch (error) {
-        console.error("Sign in error", error);
-        return {
-          success: false,
-          message: "An error occured while signin in",
-          error: "Failed to sign in",
-        };
+      } catch (err) {
+        console.error(err);
+        setGuestError("An error occured creating a guest account.");
       }
-    },
-    initialState,
-  );
+    });
+  }
+
+  const pending = guestLoginPending || signInPending;
 
   return (
     <motion.div
@@ -95,13 +117,27 @@ export function LoginForm() {
           </FormError>
         )}
       </form>
-      <p className="grid text-center text-muted-foreground">
+      <p
+        className="grid text-center text-muted-foreground data-[state=disabled]:pointer-events-none"
+        data-state={pending ? "disabled" : "enabled"}
+      >
         <span>No account?</span>
         <span>
           <Link href="/signup">Sign up</Link> or{" "}
-          <Link href="/signup">explore as a guest</Link>{" "}
+          <button
+            className="text-neutral-600 decoration-neutral-400 decoration-[1.5px] underline-offset-2 hover:underline focus-visible:underline focus-visible:outline-none dark:text-neutral-300 dark:decoration-muted-foreground/60"
+            onClick={handleSignInAsGuest}
+          >
+            explore as a guest
+          </button>
         </span>
       </p>
+      {guestError && (
+        <FormError className="text-center text-sm text-destructive">
+          {guestError}
+        </FormError>
+      )}
+      {pending && <Loader className="animate-spin text-muted-foreground" />}
     </motion.div>
   );
 }

@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
-import { SignOutButton } from "@/components/SignOutButton";
 import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
 
 export default async function ProjectsPage(props: {
@@ -38,11 +37,11 @@ export default async function ProjectsPage(props: {
 
   return (
     <>
-      <Header className="fixed top-0 z-2 w-full bg-background sm:border-b sm:border-border">
+      <Header
+        isGuest={user.role === "guest"}
+        className="fixed top-0 z-2 w-full bg-background sm:border-b sm:border-border"
+      >
         <h1 className="pl-2">S</h1>
-        <div className="flex items-center gap-4">
-          <SignOutButton className="justify-self-end" />
-        </div>
       </Header>
 
       <main className="m-auto min-h-screen w-screen max-w-3xl">

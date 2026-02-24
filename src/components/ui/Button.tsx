@@ -2,7 +2,7 @@ import Link from "next/link";
 import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   "flex focus-visible:ring-[1.5px] focus-visible:ring-ring items-center disabled:opacity-50 justify-center gap-2 whitespace-nowrap rounded-full transition-[color,background-color] disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none  ease-[ease] duration-150 ",
   {
     variants: {

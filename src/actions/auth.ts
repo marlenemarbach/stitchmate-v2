@@ -7,11 +7,11 @@ import {
   createSession,
   createUser,
   deleteSession,
-  getSession,
   hashPassword,
   verifyPassword,
 } from "@/lib/auth";
 import { getCurrentUser, getUserByEmail, upgradeUser } from "@/lib/dal";
+import { mockDelay } from "@/lib/utils";
 import { type ActionResponse } from "./types";
 
 const AuthSchema = z.object({

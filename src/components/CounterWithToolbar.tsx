@@ -1,23 +1,17 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { CountProvider } from "@/contexts/CountContext";
 import { CountDirectionProvider } from "@/contexts/CountDirectionContext";
-import { getCurrentUser, getProjectById } from "@/lib/dal";
-import { CountDirection } from "@/lib/types";
+import { CountDirection, ProjectWithSubCounter } from "@/lib/types";
 import { Counter } from "./Counter";
 import { CounterMenu } from "./CounterMenu";
 import { SubCounter } from "./SubCounter";
 
-export async function CounterWithToolbar(props: {
-  urlParams: Promise<{ id: string }>;
+export async function CounterWithToolbar({
+  project,
+}: {
+  project: ProjectWithSubCounter;
 }) {
-  const user = await getCurrentUser();
-  if (!user) redirect("/login");
-
-  const urlParams = await props.urlParams;
-  const project = await getProjectById(parseInt(urlParams.id), user.id);
-
   return (
     <>
       <h1 className="text-xl font-medium text-balance">{project.name}</h1>
