@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { DM_Sans } from "next/font/google";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="flex min-h-dvh w-screen flex-col bg-background font-display text-foreground">
         <Suspense>{children}</Suspense>
         <Toaster />
+        <Footer />
       </body>
     </html>
   );
