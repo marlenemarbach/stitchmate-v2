@@ -57,7 +57,7 @@ export function CreateProjectDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="border-popup">
+        <Button variant="secondary">
           <Plus className="stroke-3" />
           Add Project
         </Button>
@@ -73,7 +73,7 @@ export function CreateProjectDialog() {
               Title:
             </label>
             <Input
-              className="border-none pl-0 text-lg font-medium focus-visible:ring-transparent focus-visible:outline-none"
+              className="border-none pl-0 text-lg font-medium focus-visible:ring-transparent focus-visible:outline-none dark:bg-transparent"
               id="title"
               name="title"
               type="text"
@@ -98,7 +98,10 @@ export function CreateProjectDialog() {
             >
               cancel
             </Button>
-            <Button className="w-[4.75rem] place-self-end" type="submit">
+            <Button
+              className="w-[4.75rem] place-self-end dark:border dark:border-popup"
+              type="submit"
+            >
               save
             </Button>
           </DialogFooter>

@@ -47,7 +47,7 @@ export function DialogContent({
               <motion.div
                 key="dialogContent"
                 className={cn(
-                  "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw-2rem)] -translate-1/2 gap-3 rounded-xl px-6 pt-6 border-dialog sm:w-lg",
+                  "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw-2rem)] -translate-1/2 gap-3 rounded-xl border border-border bg-popup px-6 pt-6 sm:w-lg",
                   className,
                 )}
                 initial={{ opacity: 0, scale: 0.97 }}

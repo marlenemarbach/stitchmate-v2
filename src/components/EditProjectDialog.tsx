@@ -76,7 +76,7 @@ export function EditProjectDialog({
             </label>
             <Input
               defaultValue={project.name}
-              className="mb-6 border-none pl-0 text-xl font-medium focus-visible:ring-transparent focus-visible:outline-none"
+              className="mb-6 border-none pl-0 text-xl font-medium focus-visible:ring-transparent focus-visible:outline-none dark:bg-transparent"
               id="title"
               name="title"
               disabled={pending}
@@ -116,7 +116,10 @@ export function EditProjectDialog({
             >
               cancel
             </Button>
-            <Button className="w-[4.75rem] text-sm" type="submit">
+            <Button
+              className="w-[4.75rem] text-sm dark:border dark:border-popup"
+              type="submit"
+            >
               save
             </Button>
           </DialogFooter>

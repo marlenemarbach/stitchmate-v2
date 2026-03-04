@@ -6,13 +6,6 @@ import { cn } from "@/lib/utils";
 
 const MenuContext = createContext<boolean | null | undefined>(null);
 
-function useMenu() {
-  const ctx = use(MenuContext);
-  // if (!ctx) throw new Error(" Must be a child of DropdownMenu");
-
-  return ctx;
-}
-
 export function DropdownMenu({
   children,
   open,
@@ -62,7 +55,10 @@ export function DropdownMenuContent({
               style={{
                 transformOrigin: `top ${side === "left" ? "right" : "left"}`,
               }}
-              className={cn("rounded-3xl border-popup p-1", className)}
+              className={cn(
+                "rounded-xl border border-border bg-popup p-1",
+                className,
+              )}
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.97 }}
