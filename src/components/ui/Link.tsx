@@ -10,7 +10,7 @@ export function Link({
   return (
     <NextLink
       className={cn(
-        "cursor-default rounded text-neutral-600 decoration-neutral-400 decoration-[1.5px] underline-offset-2 hover:underline focus-visible:underline focus-visible:outline-none dark:text-neutral-300 dark:decoration-muted-foreground/60",
+        "cursor-default rounded text-neutral-600 focus-visible:text-foreground focus-visible:outline-none dark:text-neutral-300 hover:dark:text-foreground",
         className,
       )}
       href={href}
