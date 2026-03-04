@@ -3,7 +3,7 @@
 :root {
   --background: oklch(20.5% 0 0);
   --foreground: oklch(97% 0 0);
-  --popup: oklch(26.9% 0 0);
+  --popup: oklch(23.5% 0 0);
   --muted: oklch(97% 0 0 / 14%);
   --muted-foreground: oklch(70.8% 0 0);
   --destructive: oklch(70.4% 0.191 22.216);
@@ -52,7 +52,7 @@
   --font-display: "DM Sans", sans-serif;
 }
 
-@utility border-popup {
+@utility border-gradient-popup {
   border: 1px solid transparent;
   background:
     linear-gradient(var(--popup), var(--popup)) padding-box,
