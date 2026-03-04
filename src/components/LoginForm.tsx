@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { Link } from "@/components/ui/Link";
 import { signIn, signInAsGuest } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
+import { Logo } from "./svg/Logo";
 import { Button } from "./ui/Button";
 import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
@@ -66,12 +67,12 @@ export function LoginForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <p className="text-2xl font-black text-orange-400/90">S</p>
+      <Logo />
       <h1 className="mb-4 text-center text-xl font-medium">
         Log in to Stitchmate
       </h1>
 
-      <form className="grid w-full gap-3" action={formAction}>
+      <form className="grid w-full gap-6" action={formAction}>
         <FormField>
           <label htmlFor="email">Email</label>
           <Input
@@ -105,6 +106,7 @@ export function LoginForm() {
         </FormField>
         <Button
           className="mt-3 h-11 w-full"
+          variant="accent"
           size="large"
           disabled={pending}
           type="submit"
@@ -125,10 +127,10 @@ export function LoginForm() {
         <span>
           <Link href="/signup">Sign up</Link> or{" "}
           <button
-            className="text-neutral-600 decoration-neutral-400 decoration-[1.5px] underline-offset-2 hover:underline focus-visible:underline focus-visible:outline-none dark:text-neutral-300 dark:decoration-muted-foreground/60"
+            className="cursor-default rounded text-neutral-600 focus-visible:text-foreground focus-visible:outline-none dark:text-neutral-300 hover:dark:text-foreground"
             onClick={handleSignInAsGuest}
           >
-            explore as a guest
+            continue as guest
           </button>
         </span>
       </p>

@@ -7,6 +7,7 @@ import { Link } from "@/components/ui/Link";
 import { User } from "@/lib/types";
 import { signUp, upgradeGuestAccount } from "../actions/auth";
 import { ActionResponse } from "../actions/types";
+import { Logo } from "./svg/Logo";
 import { Button } from "./ui/Button";
 import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
@@ -51,9 +52,12 @@ export function SignupForm({ user }: { user: User | null }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <h2 className="mb-4 text-center text-xl font-medium">Create Account</h2>
+      <Logo />
+      <h1 className="mb-4 text-center text-xl font-medium">
+        Sign up for Stitchmate
+      </h1>
 
-      <form className="grid w-full gap-4" action={formAction}>
+      <form className="grid w-full gap-6" action={formAction}>
         <FormField>
           <label htmlFor="email">Enter your email</label>
           <Input
@@ -84,7 +88,12 @@ export function SignupForm({ user }: { user: User | null }) {
           />
           <FormError id="password-error">{state?.errors?.password}</FormError>
         </FormField>
-        <Button type="submit" size="large" className="mt-3 w-full">
+        <Button
+          type="submit"
+          variant="accent"
+          size="large"
+          className="mt-3 w-full"
+        >
           Create Account
         </Button>
         {state?.error && (
@@ -93,10 +102,10 @@ export function SignupForm({ user }: { user: User | null }) {
           </FormError>
         )}
       </form>
-      <div className="flex items-center justify-center gap-2 text-muted-foreground">
+      <p className="flex items-center justify-center gap-2 text-muted-foreground">
         Have an account?
         <Link href="/login">Login here</Link>
-      </div>
+      </p>
     </motion.div>
   );
 }
