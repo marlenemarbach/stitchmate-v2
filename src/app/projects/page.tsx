@@ -40,11 +40,9 @@ export default async function ProjectsPage(props: {
       <Header
         isGuest={user.role === "guest"}
         className="fixed top-0 z-2 w-full bg-background sm:border-b sm:border-border"
-      >
-        <h1 className="pl-2">S</h1>
-      </Header>
+      />
 
-      <main className="m-auto min-h-screen w-screen max-w-3xl">
+      <main className="mx-auto mb-auto w-screen max-w-3xl">
         <ProjectList projects={projects} />
       </main>
     </>

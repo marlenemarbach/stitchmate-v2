@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { LogOut } from "lucide-react";
 import { signOut } from "../actions/auth";
 import { Button } from "./ui/Button";
 
@@ -22,13 +21,13 @@ export function SignOutButton({
 
   return (
     <Button
-      variant="ghost"
-      size="icon"
+      variant="secondary"
+      size="small"
       onClick={handleSignOut}
       disabled={isPending || disabled}
       className={className}
     >
-      <LogOut className="size-5 translate-x-[1px]" />
+      Logout
     </Button>
   );
 }
