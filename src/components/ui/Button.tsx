@@ -8,9 +8,9 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "font-medium  bg-teal-400/65 hover:bg-teal-400/80 text-neutral-100 shadow-xs",
+          "font-medium  bg-neutral-100/90 hover:bg-neutral-100 text-background shadow-xs",
         secondary:
-          "font-medium border border-border bg-foreground/10 hover:bg-foreground/13 shadow-xs",
+          "font-medium border border-border bg-foreground/5 hover:bg-foreground/8 shadow-xs",
         accent: "font-medium bg-accent/90 hover:bg-accent",
         ghost: "hover:bg-foreground/5 rounded-full",
         destructive:
