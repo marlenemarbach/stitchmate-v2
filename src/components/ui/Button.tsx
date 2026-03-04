@@ -11,6 +11,7 @@ export const buttonVariants = cva(
           "font-medium  bg-teal-400/65 hover:bg-teal-400/80 text-neutral-100 shadow-xs",
         secondary:
           "font-medium border border-border bg-foreground/10 hover:bg-foreground/13 shadow-xs",
+        accent: "font-medium bg-accent/90 hover:bg-accent",
         ghost: "hover:bg-foreground/5 rounded-full",
         destructive:
           "text-red-400 font-medium border border-border bg-foreground/10 hover:bg-foreground/13 shadow-xs",
