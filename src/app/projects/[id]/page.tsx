@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { CounterTitle } from "@/components/CounterTitle";
 import { CounterWithToolbar } from "@/components/CounterWithToolbar";
 import { Header } from "@/components/Header";
 import { getCurrentUser, getProjectById } from "@/lib/dal";
@@ -20,6 +21,7 @@ export default async function Project({
         className="flex justify-between border-b border-border"
         isGuest={user.role === "guest"}
       />
+      <CounterTitle projectName={project.name} />
       <main className="grid px-6 pt-4">
         <CounterWithToolbar project={project} />
       </main>

@@ -14,7 +14,6 @@ export async function CounterWithToolbar({
 }) {
   return (
     <>
-      <h1 className="text-xl font-medium text-balance">{project.name}</h1>
       <CountDirectionProvider
         initialDirection={project.direction as CountDirection}
       >
