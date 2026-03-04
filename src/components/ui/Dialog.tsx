@@ -4,7 +4,6 @@ import { createContext, use } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
-// import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 const DialogContext = createContext<boolean | undefined | null>(null);
@@ -27,12 +26,11 @@ export function DialogContent({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {}) {
   const open = use(DialogContext);
-  // const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
     <AnimatePresence>
       {open && (
-        <DialogPrimitive.Portal>
+        <DialogPrimitive.Portal forceMount>
           <MotionConfig
             transition={{ type: "spring", duration: 0.35, bounce: 0 }}
           >
