@@ -16,8 +16,6 @@ export function Counter({ project }: { project: Project }) {
   const [direction] = useCountDirection();
   const { count, updateCount } = useCount();
 
-  console.log(count, project.count);
-
   return (
     <button
       onClick={() => updateCount(direction, project.id)}
