@@ -66,12 +66,12 @@ export function SubCounterCircle({
     >
       <path
         d="M16 8C20.4183 8 24 11.5817 24 16C24 20.4183 20.4183 24 16 24C11.5817 24 8 20.4183 8 16C8 11.5817 11.5817 8 16 8Z"
-        className="stroke-ultramarine-200/60 dark:stroke-ultramarine-200/40"
+        className="stroke-foreground/10"
         strokeWidth="2"
       />
       {pathLength > 0 && (
         <motion.path
-          className="stroke-ultramarine-300 drop-shadow-xs"
+          className="stroke-subcounter drop-shadow-xs"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: pathLength }}
           d="M16 8C20.4183 8 24 11.5817 24 16C24 20.4183 20.4183 24 16 24C11.5817 24 8 20.4183 8 16C8 11.5817 11.5817 8 16 8Z"
