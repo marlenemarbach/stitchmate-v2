@@ -13,13 +13,13 @@
   --accent: oklch(0.4074 0.0511 355.02);
   --accent-foreground: oklch(99% 0 0);
   --destructive: oklch(70.4% 0.191 22.216);
-  --border: oklch(34.4% 0.006 286.033);
+  --border: oklch(28% 0.006 286.033);
   --input: oklch(1 0 0 / 8%);
   --ring: oklch(87% 0 0);
   --counter: oklch(26% 0 0);
   --counter-inner: oklch(0.4386 0 129.63);
   --counter-button: oklch(24% 0 0);
-  --subcounter: oklch(0.6849 0.0692 354.99);
+  --subcounter: oklch(0.7379 0.0114 316.48);
 }
 
 @theme inline {
