@@ -36,7 +36,7 @@ export function CounterMenu({ project }: { project: ProjectWithSubCounter }) {
       <PopoverMenu open={showMenu} onOpenChange={setShowMenu}>
         <PopoverMenuTrigger
           aria-label="expand menu"
-          className="fixed bottom-10 left-1/2 flex size-12 items-center justify-center border-gradient focus-visible:outline-none sm:bottom-14"
+          className="fixed bottom-18 left-1/2 flex size-12 items-center justify-center border-gradient focus-visible:outline-none"
         >
           <ChevronsUpDown />
         </PopoverMenuTrigger>

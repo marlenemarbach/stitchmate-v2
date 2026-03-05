@@ -10,14 +10,16 @@
   --border: oklch(34.4% 0.006 286.033);
   --input: oklch(1 0 0 / 8%);
   --ring: oklch(87% 0 0);
-  --counter: oklch(0.254 0.058 277.9);
-  --counter-foreground: oklch(0.568 0.113 277.3);
   --primary: oklch(0.4098 0.0416 355.91);
   --primary-foreground: oklch(97% 0 0);
   --secondary: oklch(0.4098 0.0416 355.91);
   --secondary-foreground: oklch(97% 0 0);
   --accent: oklch(0.4074 0.0511 355.02);
   --accent-foreground: oklch(99% 0 0);
+
+  --counter: oklch(26% 0 0);
+  --counter-inner: oklch(0.4386 0 129.63);
+  --counter-button: oklch(24% 0 0);
 }
 
 @theme inline {
@@ -30,10 +32,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-counter: var(--counter);
-  --color-counter-foreground: var(--counter-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
+  --color-counter: var(--counter);
+  --color-counter-inner: var(--counter-inner);
+  --color-counter-button: var(--counter-button);
 
   --color-ultramarine-50: oklch(94.27% 0.026 276.4);
   --color-ultramarine-100: oklch(88.68% 0.051 274.26);
@@ -50,6 +54,33 @@
 
 @theme {
   --font-display: "DM Sans", sans-serif;
+}
+
+@utility button-reflection {
+  background: conic-gradient(
+    from 90deg,
+    rgba(102, 102, 102, 1) 0deg,
+    rgba(38, 38, 38, 1) 148.846deg,
+    rgba(102, 102, 102, 1) 188.064deg,
+    rgba(38, 38, 38, 1) 228.749deg,
+    rgba(102, 102, 102, 1) 258.685deg,
+    rgba(102, 102, 102, 1) 360deg
+  );
+}
+
+@utility shell-reflection {
+  background: conic-gradient(
+    from 90deg,
+    rgba(102, 102, 102, 1) 0deg,
+    rgba(38, 38, 38, 1) 36.739deg,
+    rgba(102, 102, 102, 1) 69.6157deg,
+    rgba(38, 38, 38, 1) 148.846deg,
+    rgba(102, 102, 102, 1) 184.044deg,
+    rgba(38, 38, 38, 1) 202.592deg,
+    rgba(102, 102, 102, 1) 258.685deg,
+    rgba(38, 38, 38, 1) 330.795deg,
+    rgba(102, 102, 102, 1) 360deg
+  );
 }
 
 @utility border-gradient-popup {
