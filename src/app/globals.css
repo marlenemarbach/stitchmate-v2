@@ -6,20 +6,20 @@
   --popup: oklch(23.5% 0 0);
   --muted: oklch(97% 0 0 / 14%);
   --muted-foreground: oklch(70.8% 0 0);
-  --destructive: oklch(70.4% 0.191 22.216);
-  --border: oklch(34.4% 0.006 286.033);
-  --input: oklch(1 0 0 / 8%);
-  --ring: oklch(87% 0 0);
   --primary: oklch(0.4098 0.0416 355.91);
   --primary-foreground: oklch(97% 0 0);
   --secondary: oklch(0.4098 0.0416 355.91);
   --secondary-foreground: oklch(97% 0 0);
   --accent: oklch(0.4074 0.0511 355.02);
   --accent-foreground: oklch(99% 0 0);
-
+  --destructive: oklch(70.4% 0.191 22.216);
+  --border: oklch(34.4% 0.006 286.033);
+  --input: oklch(1 0 0 / 8%);
+  --ring: oklch(87% 0 0);
   --counter: oklch(26% 0 0);
   --counter-inner: oklch(0.4386 0 129.63);
   --counter-button: oklch(24% 0 0);
+  --subcounter: oklch(0.6849 0.0692 354.99);
 }
 
 @theme inline {
@@ -38,18 +38,7 @@
   --color-counter: var(--counter);
   --color-counter-inner: var(--counter-inner);
   --color-counter-button: var(--counter-button);
-
-  --color-ultramarine-50: oklch(94.27% 0.026 276.4);
-  --color-ultramarine-100: oklch(88.68% 0.051 274.26);
-  --color-ultramarine-200: oklch(77.16% 0.108 273.15);
-  --color-ultramarine-300: oklch(66.15% 0.166 270.91);
-  --color-ultramarine-400: oklch(56.07% 0.223 267.56);
-  --color-ultramarine-500: oklch(48.15% 0.269 264.64);
-  --color-ultramarine-600: oklch(41.06% 0.226 264.74);
-  --color-ultramarine-700: oklch(33.55% 0.18 265.04);
-  --color-ultramarine-800: oklch(0.2573 0.0911 265.29);
-  --color-ultramarine-900: oklch(17.51% 0.074 265.45);
-  --color-ultramarine-950: oklch(14.77% 0.057 264.8);
+  --color-subcounter: var(--subcounter);
 }
 
 @theme {
@@ -83,20 +72,6 @@
   );
 }
 
-@utility border-gradient-popup {
-  border: 1px solid transparent;
-  background:
-    linear-gradient(var(--popup), var(--popup)) padding-box,
-    linear-gradient(
-        in oklch 165deg,
-        #404040 0%,
-        #262626 25%,
-        #262626 75%,
-        #404040 100%
-      )
-      border-box;
-}
-
 @utility border-gradient {
   border: 1px solid transparent;
   background:
@@ -107,33 +82,6 @@
         oklch(0.23 0 0) 100%
       )
       padding-box,
-    linear-gradient(
-        in oklch 165deg,
-        #404040 0%,
-        #262626 25%,
-        #262626 75%,
-        #404040 100%
-      )
-      border-box;
-}
-
-button.border-popup:hover {
-  background:
-    linear-gradient(oklch(28% 0 0), oklch(28% 0 0)) padding-box,
-    linear-gradient(
-        in oklch 165deg,
-        #404040 0%,
-        #262626 25%,
-        #262626 75%,
-        #404040 100%
-      )
-      border-box;
-}
-
-@utility border-dialog {
-  border: 1px solid transparent;
-  background:
-    linear-gradient(oklch(23.5% 0 0), oklch(23.5% 0 0)) padding-box,
     linear-gradient(
         in oklch 165deg,
         #404040 0%,
