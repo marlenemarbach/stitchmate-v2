@@ -1,9 +1,10 @@
 # Stitchmate
-Stitchmate is a project organization and row-counting tool designed specifically for knitters. It replaces traditional paper notes with a sleek, digital journal that lives wherever you knit.
 
-Each project features a counter designed to mimic the satisfying interaction of a physical click counter. No matter how many projects you have, Stitchmate remembers exactly where you left off. An automatic sub-counter tracks pattern repeats effortlessly so you can focus on your stitches, not the math.
+Stitchmate is a project organization and row-counting tool designed for knitters. It replaces traditional paper notes with a sleek, digital journal that lives wherever you knit.
 
-The UI is kept intentionally simple to get you started within seconds, then stays out of the way while you craft.
+Each project features a counter designed to mimic the satisfying interaction of a physical click counter. No matter how many projects you have, Stitchmate remembers exactly where you left off. An automatic sub-counter tracks pattern repeats so you can focus on your stitches, not the math.
+
+The UI is kept intentionally minimal to get you started within seconds, then stays out of the way while you craft.
 
 The project is under active development and frequently updated. You can view the live version at [stitchmate.xyz](https://www.stitchmate.xyz).
 A guest login is available, allowing you to explore the full functionality before signing up. 
