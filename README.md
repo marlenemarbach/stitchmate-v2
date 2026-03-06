@@ -1,17 +1,16 @@
-# Stitchmate v2
-Stitchmate is a multitasking app for knitters and crocheters. It organises multible row counters for each project and tracks increase, decrease and short rows automatically. 
+# Stitchmate
+Stitchmate is a streamlined project organization and row-counting tool designed specifically for knitters. It replaces traditional paper notes with a sleek, digital journal that lives wherever you knit.
 
-## Tech Stack
+Each project features a dedicated counter designed to mimic the satisfying tactile interaction of a physical click counter. No matter how many projects you have, Stitchmate remembers exactly where you left off. An automatic sub-counter tracks pattern repeats effortlessly so you can focus on your stitches, not the math.
 
-- **Framework**: [Next.js 15](https://nextjs.org) with App Router
-- **Runtime**: [Bun](https://bun.sh)
-- **Database**: SQLite with [libSQL](https://github.com/tursodatabase/libsql-client-ts)
-- **ORM**: [Drizzle ORM](https://orm.drizzle.team)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Animations**: [Motion](https://motion.dev)
-- **Validation**: [Zod](https://zod.dev)
-- **Testing**: bun, React Testing Library, Happy DOM
-- **Styling**: Tailwind CSS
+The UI is kept intentionally simple to get you started within seconds, then stays out of the way while you craft.
+
+The project is under active development and frequently updated. You can view the live version at stitchmate.xyz.
+A guest login is available, allowing you to explore the full functionality before signing up. 
+
+The project is written in Typescript and Next.js and deployed via Vercel. It utilizes a cloud-hosted database on Turso. To setup a local development environment, please follow the instructions below.
+
+All design concepts are custom-crafted with Figma. Components feature Radix Primitives for enhanced accessibility. CSS and Interactions are realised using Tailwind CSS and Motion.
 
 ## Getting Started
 
