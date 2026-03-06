@@ -19,7 +19,7 @@ export function Header({
       )}
     >
       <Link href="/projects" className="cursor-default">
-        <Logo className="h-5" />
+        <Logo className="h-[1.125rem]" />
       </Link>
       <div className="flex items-center gap-4">
         {isGuest ? <SignUpButton /> : <SignOutButton />}

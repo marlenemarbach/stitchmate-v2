@@ -16,24 +16,24 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
   return (
     <DataList>
       <DataListHeader className="top-14">
-        <div className="flex w-full items-center justify-between pr-4 pl-4 sm:pr-0">
-          <h1 className="text-xl font-medium">My Projects</h1>
+        <div className="flex w-full items-center justify-between">
+          <h1 className="text-lg font-medium">My Projects</h1>
           <CreateProjectDialog />
         </div>
         {allProjects.length > 0 && (
-          <DataColumnHeader className="pb-2">
+          <DataColumnHeader className="mx-auto pb-2">
             <ProjectOrderButtons />
           </DataColumnHeader>
         )}
       </DataListHeader>
       {!allProjects.length ? (
-        <div className="m-auto flex h-screen max-w-xs flex-col items-center justify-center gap-6">
+        <div className="flex max-w-xs flex-1 flex-col items-center justify-center gap-6 self-center justify-self-center">
           <div className="flex items-end gap-3">
             <p className="text-muted-foreground">No projects</p>
           </div>
         </div>
       ) : (
-        <DataListContent className="mt-42 sm:mt-51">
+        <DataListContent className="mx-auto mt-42 sm:mt-51">
           {allProjects.map((project) => {
             return <ProjectListItem key={project.id} project={project} />;
           })}

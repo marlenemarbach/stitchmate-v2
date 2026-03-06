@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
+// import { ProjectListPagination } from "@/components/ProjectListPagination";
 import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
 
 export default async function ProjectsPage(props: {
@@ -42,8 +43,9 @@ export default async function ProjectsPage(props: {
         className="fixed top-0 z-2 w-full bg-background sm:border-b sm:border-border"
       />
 
-      <main className="mx-auto mb-auto w-screen max-w-3xl">
+      <main className="flex w-screen flex-1 flex-col">
         <ProjectList projects={projects} />
+        {/* <ProjectListPagination pageCount={10} /> */}
       </main>
     </>
   );

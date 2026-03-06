@@ -57,7 +57,7 @@ export function CreateProjectDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary">
+        <Button size="small">
           <Plus className="stroke-3" />
           Add Project
         </Button>

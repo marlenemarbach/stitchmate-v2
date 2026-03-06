@@ -1,4 +1,5 @@
 import { VariantProps } from "class-variance-authority";
+import { X } from "lucide-react";
 import { toast as sonnerToast } from "sonner";
 import { Button, buttonVariants } from "./Button";
 
@@ -36,27 +37,37 @@ export function customToast(toast: Omit<ToastProps, "dismissFn">) {
 
 function Toast({ description, title, buttons, dismissFn }: ToastProps) {
   return (
-    <div className="grid w-[22.25rem] gap-2 rounded-2xl border border-border bg-popup p-4 drop-shadow-lg">
-      {title && <h4>{title}</h4>}
-      <p className="text-sm text-muted-foreground">{description}</p>
-      <div className="mt-2 flex items-center justify-end gap-3">
-        {buttons?.map((button, index) => {
-          return (
-            <Button
-              key={index}
-              className={button.className}
-              variant={button.variant}
-              size={button.size}
-              onClick={() => {
-                button.onClick?.();
-                dismissFn();
-              }}
-            >
-              {button.label}
-            </Button>
-          );
-        })}
-      </div>
+    <div className="relative grid w-[22.25rem] gap-2 rounded-2xl border border-border bg-popup p-4 drop-shadow-lg">
+      {title && <h4 className="text-sm">{title}</h4>}
+      <button
+        className="absolute top-2 right-2 flex items-center justify-center p-2 text-muted-foreground hover:text-foreground"
+        onClick={() => {
+          dismissFn();
+        }}
+      >
+        <X className="size-3" />
+      </button>
+      <p className="text-sm leading-5 text-muted-foreground">{description}</p>
+      {buttons && (
+        <div className="mt-2 flex items-center justify-end gap-3">
+          {buttons?.map((button, index) => {
+            return (
+              <Button
+                key={index}
+                className={button.className}
+                variant={button.variant}
+                size={button.size}
+                onClick={() => {
+                  button.onClick?.();
+                  dismissFn();
+                }}
+              >
+                {button.label}
+              </Button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

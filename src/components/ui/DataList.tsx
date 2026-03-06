@@ -5,7 +5,9 @@ export function DataList({
   className,
 }: React.PropsWithChildren & { className?: string }) {
   return (
-    <div className={cn("grid w-screen max-w-3xl", className)}>{children}</div>
+    <div className={cn("flex w-screen flex-1 flex-col", className)}>
+      {children}
+    </div>
   );
 }
 
@@ -17,7 +19,7 @@ export function DataListHeader({
     <>
       <div
         className={cn(
-          "fixed z-1 mx-auto flex h-34 w-screen max-w-3xl flex-col items-start gap-6 bg-background mask-b-from-78% mask-b-to-90% pt-2 sm:h-41 sm:pt-8",
+          "fixed left-0 z-1 flex h-34 w-full flex-col items-start gap-6 bg-background mask-b-from-78% mask-b-to-90% px-4 pt-2 sm:h-41 sm:pt-4",
           className,
         )}
       >
@@ -33,9 +35,7 @@ export function DataColumnHeader({
 }: React.PropsWithChildren & { className?: string }) {
   return (
     <>
-      <div className={cn("w-full border-b border-border", className)}>
-        {children}
-      </div>
+      <div className={cn("w-full max-w-3xl", className)}>{children}</div>
     </>
   );
 }
@@ -45,7 +45,9 @@ export function DataListContent({
   className,
 }: React.PropsWithChildren & { className?: string }) {
   return (
-    <div className={cn("mt-6 grid w-full sm:gap-1", className)}>{children}</div>
+    <div className={cn("mt-6 grid w-full max-w-3xl sm:gap-1", className)}>
+      {children}
+    </div>
   );
 }
 

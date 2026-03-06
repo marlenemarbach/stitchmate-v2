@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(20.5% 0 0);
+  --background: oklch(0.1776 0 0);
   --foreground: oklch(97% 0 0);
-  --popup: oklch(23.5% 0 0);
+  --popup: oklch(0.2241 0.0041 308.26);
   --muted: oklch(97% 0 0 / 14%);
   --muted-foreground: oklch(70.8% 0 0);
   --primary: oklch(0.4098 0.0416 355.91);
