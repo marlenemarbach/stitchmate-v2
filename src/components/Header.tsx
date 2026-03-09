@@ -14,7 +14,7 @@ export function Header({
   return (
     <header
       className={cn(
-        "flex h-14 items-center justify-between px-4 opacity-95",
+        "flex items-center justify-between bg-background px-4 py-3",
         className,
       )}
     >

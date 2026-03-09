@@ -40,7 +40,7 @@ export default async function ProjectsPage(props: {
     <>
       <Header
         isGuest={user.role === "guest"}
-        className="fixed top-0 z-2 w-full bg-background sm:border-b sm:border-border"
+        className="fixed top-0 w-full bg-background sm:border-b sm:border-border sm:pb-[calc(0.75rem-1px)]"
       />
 
       <main className="flex w-screen flex-1 flex-col">

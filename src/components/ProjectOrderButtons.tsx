@@ -1,14 +1,14 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { OrderButton } from "./ui/OrderButton";
+import { DataListColumnTitle, Order } from "./ui/DataList";
 
 export function ProjectOrderButtons() {
   const searchParams = useSearchParams();
 
-  const statusOrder = searchParams.get("statusOrder");
-  const updatedOrder = searchParams.get("updatedOrder");
-  const nameOrder = searchParams.get("nameOrder");
+  const statusOrder = searchParams.get("statusOrder") as Order;
+  const updatedOrder = searchParams.get("updatedOrder") as Order;
+  const nameOrder = searchParams.get("nameOrder") as Order;
 
   const pathName = usePathname();
   const { replace } = useRouter();
@@ -34,29 +34,33 @@ export function ProjectOrderButtons() {
     params.set(param, currentValue === "asc" ? "desc" : "asc");
     replace(`${pathName}?${params.toString()}`);
   }
+
   return (
-    <div className="grid grid-cols-4 items-start gap-2 px-4 sm:grid-cols-6">
-      <OrderButton
-        order={nameOrder}
+    <>
+      <DataListColumnTitle
         className="sm:col-span-3"
-        onClick={() => toggleOrder("nameOrder")}
+        isActive={nameOrder !== undefined}
+        order={nameOrder}
+        onOrderChange={() => toggleOrder("nameOrder")}
       >
         Name
-      </OrderButton>
+      </DataListColumnTitle>
 
-      <OrderButton
+      <DataListColumnTitle
+        isActive={statusOrder !== undefined}
         order={statusOrder}
-        onClick={() => toggleOrder("statusOrder")}
+        onOrderChange={() => toggleOrder("statusOrder")}
       >
         Status
-      </OrderButton>
+      </DataListColumnTitle>
 
-      <OrderButton
+      <DataListColumnTitle
+        isActive={updatedOrder !== undefined}
         order={updatedOrder ?? "desc"}
-        onClick={() => toggleOrder("updatedOrder")}
+        onOrderChange={() => toggleOrder("updatedOrder")}
       >
         Last knit
-      </OrderButton>
-    </div>
+      </DataListColumnTitle>
+    </>
   );
 }

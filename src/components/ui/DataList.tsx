@@ -1,11 +1,15 @@
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { Button } from "./Button";
 
 export function DataList({
   children,
   className,
 }: React.PropsWithChildren & { className?: string }) {
   return (
-    <div className={cn("flex w-screen flex-1 flex-col", className)}>
+    <div
+      className={cn("flex w-screen flex-1 flex-col items-center", className)}
+    >
       {children}
     </div>
   );
@@ -19,7 +23,7 @@ export function DataListHeader({
     <>
       <div
         className={cn(
-          "fixed left-0 z-1 flex h-34 w-full flex-col items-start gap-6 bg-background mask-b-from-78% mask-b-to-90% px-4 pt-2 sm:h-41 sm:pt-4",
+          "grid w-full grid-cols-4 items-start gap-2 bg-background mask-b-from-80% mask-b-to-90% px-4 py-2 sm:grid-cols-6",
           className,
         )}
       >
@@ -29,14 +33,49 @@ export function DataListHeader({
   );
 }
 
-export function DataColumnHeader({
-  children,
+export type Order = "asc" | "desc";
+
+type DataListColumnTitleProps = {
+  isActive: boolean;
+  order?: Order;
+  onOrderChange?: (order: Order) => void;
+};
+
+export function DataListColumnTitle({
   className,
-}: React.PropsWithChildren & { className?: string }) {
+  children,
+  isActive,
+  order,
+  onOrderChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof Button> & DataListColumnTitleProps) {
+  const isAsc = order === "asc";
+  const isDesc = order === "desc";
+
+  function handleChange() {
+    if (!order || order === "asc") onOrderChange?.("desc");
+    else onOrderChange?.("asc");
+  }
+
   return (
-    <>
-      <div className={cn("w-full max-w-3xl", className)}>{children}</div>
-    </>
+    <Button
+      className={cn(
+        "group w-fit -translate-x-3 gap-1 pr-2 font-medium text-muted-foreground transition-colors duration-150 ease-[ease] hover:text-foreground",
+        className,
+      )}
+      size="small"
+      variant="ghost"
+      data-state={isActive ? "active" : "inactive"}
+      {...props}
+      onClick={handleChange}
+    >
+      {children}
+      {!order && (
+        <ArrowDown className="opacity-0 transition-opacity duration-150 ease-[ease] group-hover:opacity-100" />
+      )}
+      {isDesc && <ArrowDown className="size-4" />}
+      {isAsc && <ArrowUp className="size-4" />}
+    </Button>
   );
 }
 
@@ -45,7 +84,7 @@ export function DataListContent({
   className,
 }: React.PropsWithChildren & { className?: string }) {
   return (
-    <div className={cn("mt-6 grid w-full max-w-3xl sm:gap-1", className)}>
+    <div className={cn("grid w-full max-w-3xl sm:gap-1", className)}>
       {children}
     </div>
   );
