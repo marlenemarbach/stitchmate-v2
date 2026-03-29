@@ -1,12 +1,9 @@
 "use client";
 
-import { createContext, use } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { cn } from "@/lib/utils";
-
-const DialogContext = createContext<boolean | undefined | null>(null);
 
 export function Dialog({
   open,
@@ -15,7 +12,17 @@ export function Dialog({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>) {
   return (
     <DialogPrimitive.Root open={open} {...props}>
-      <DialogContext value={open}>{children}</DialogContext>
+      <AnimatePresence>
+        {open && (
+          <DialogPrimitive.Portal forceMount>
+            <MotionConfig
+              transition={{ type: "spring", duration: 0.35, bounce: 0 }}
+            >
+              {children}
+            </MotionConfig>
+          </DialogPrimitive.Portal>
+        )}
+      </AnimatePresence>
     </DialogPrimitive.Root>
   );
 }
@@ -25,7 +32,34 @@ export function DialogContent({
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {}) {
-  const open = use(DialogContext);
+  return (
+    <>
+      <DialogPrimitive.Overlay key={"dialogOverlay"} asChild>
+        <motion.div
+          key="dialogOverlay"
+          className="fixed inset-0 isolate z-50 bg-black/30 dark:bg-black/50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        />
+      </DialogPrimitive.Overlay>
+      <DialogPrimitive.Content {...props} asChild>
+        <motion.div
+          key="dialogContent"
+          className={cn(
+            "fixed top-1/2 left-1/2 z-50 grid w-[calc(100vw-2rem)] -translate-1/2 gap-3 rounded-xl border border-border bg-popup px-6 pt-6 sm:w-lg",
+            className,
+          )}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+        >
+          {children}
+        </motion.div>
+      </DialogPrimitive.Content>
+    </>
+  );
+}
 
   return (
     <AnimatePresence>
