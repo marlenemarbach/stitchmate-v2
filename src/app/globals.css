@@ -16,10 +16,16 @@
   --border: oklch(28% 0.006 286.033);
   --input: oklch(1 0 0 / 8%);
   --ring: oklch(87% 0 0);
+
   --counter: oklch(26% 0 0);
   --counter-inner: oklch(0.4386 0 129.63);
   --counter-button: oklch(24% 0 0);
   --subcounter: oklch(0.7379 0.0114 316.48);
+
+  --completed: oklch(0.6264 0.0478 287.8);
+  --wip: oklch(0.7831 0.0832 41.43);
+  --planned: oklch(0.8519 0.0225 42.55);
+  --frogged: oklch(0.7379 0.0114 316.48);
 }
 
 @theme inline {
@@ -39,6 +45,11 @@
   --color-counter-inner: var(--counter-inner);
   --color-counter-button: var(--counter-button);
   --color-subcounter: var(--subcounter);
+
+  --color-completed: var(--completed);
+  --color-wip: var(--wip);
+  --color-planned: var(--planned);
+  --color-frogged: var(--frogged);
 }
 
 @theme {
@@ -90,6 +101,87 @@
         #404040 100%
       )
       border-box;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    translate: 0 100%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0%;
+  }
+}
+
+@keyframes drawer-out {
+  from {
+    opacity: 1;
+    translate: 0 0%;
+  }
+  to {
+    opacity: 0;
+    translate: 0 100%;
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@utility animate-dialog-in {
+  animation: dialog-in 250ms cubic-bezier(0.52, 1.23, 0.75, 0.97) forwards;
+}
+@utility animate-dialog-out {
+  animation: dialog-out 150ms cubic-bezier(0.36, 0, 0.66, 0) forwards;
+}
+@utility animate-drawer-in {
+  animation: drawer-in 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@utility animate-drawer-out {
+  animation: drawer-out 200ms cubic-bezier(0.36, 0, 0.66, 0) both;
+}
+@utility animate-overlay-in {
+  animation: overlay-in 200ms ease forwards;
+}
+@utility animate-overlay-out {
+  animation: overlay-out 150ms ease forwards;
 }
 
 * {
