@@ -28,8 +28,6 @@ export function ProjectListItem({ project }: { project: Project }) {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  console.log(showEditDialog);
-
   const [isPending, startTransition] = useTransition();
 
   function updateProjectStatus(newStatus: ProjectStatus) {
