@@ -1,4 +1,4 @@
-import { createContext, use } from "react";
+import { createContext, use, useState } from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -6,14 +6,20 @@ import { cn } from "@/lib/utils";
 
 const MenuContext = createContext<boolean | null | undefined>(null);
 
-export function DropdownMenu({
-  children,
-  open,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>) {
+export function DropdownMenu(
+  props: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>,
+) {
+  const [show, setShow] = useState(props.defaultOpen ?? props.open);
+
   return (
-    <DropdownMenuPrimitive.Root open={open} {...props}>
-      <MenuContext value={open}>{children}</MenuContext>
+    <DropdownMenuPrimitive.Root
+      onOpenChange={(open) => {
+        setShow(open);
+        props.onOpenChange?.(open);
+      }}
+      {...props}
+    >
+      <MenuContext value={show}>{props.children}</MenuContext>
     </DropdownMenuPrimitive.Root>
   );
 }
@@ -33,11 +39,10 @@ export function DropdownMenuContent({
   className,
   children,
   side = "left",
+  sideOffset = 4,
+  align = "start",
   ...props
-}: Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
-  "side" | "sideOffset" | "align"
-> & { side?: "left" | "right" }) {
+}: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>) {
   const open = use(MenuContext);
 
   return (
@@ -46,8 +51,8 @@ export function DropdownMenuContent({
         <DropdownMenuPrimitive.Portal forceMount>
           <DropdownMenuPrimitive.Content
             side={side}
-            align="start"
-            sideOffset={4}
+            align={align}
+            sideOffset={sideOffset}
             {...props}
             asChild
           >
@@ -56,7 +61,7 @@ export function DropdownMenuContent({
                 transformOrigin: `top ${side === "left" ? "right" : "left"}`,
               }}
               className={cn(
-                "rounded-xl border border-border bg-popup p-1",
+                "min-w-48 rounded-xl border border-border bg-popup p-1",
                 className,
               )}
               initial={{ opacity: 0, scale: 0.97 }}
@@ -85,7 +90,7 @@ export function DropdownMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "grid h-9 cursor-default grid-cols-[1rem_1fr] items-center gap-2 rounded-full px-3 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr_1rem] items-center gap-3 rounded-lg px-2 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -157,13 +162,12 @@ export function DropdownMenuRadioItem({
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cn(
-        "grid h-8 cursor-default grid-cols-[1rem_1fr_1fr] items-center gap-2 rounded-lg px-2 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+        "grid h-8 cursor-default grid-cols-[1rem_1fr_3rem] items-center gap-3 rounded-lg px-2 text-sm hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
     >
       {children}
-      <DropdownMenuRadioIndicator forceMount />
     </DropdownMenuPrimitive.RadioItem>
   );
 }
@@ -180,7 +184,7 @@ export function DropdownMenuRadioIndicator({
       )}
       {...props}
     >
-      <Check className="size-5" />
+      <Check className="size-4" />
     </DropdownMenuPrimitive.ItemIndicator>
   );
 }
