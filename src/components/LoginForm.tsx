@@ -1,8 +1,7 @@
 "use client";
 
-import { useActionState, useState, useTransition } from "react";
+import { startTransition, useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "@/components/ui/Link";
 import { signIn, signInAsGuest } from "../actions/auth";
@@ -19,48 +18,64 @@ const initialState: ActionResponse = {
   error: undefined,
 };
 
+type UserActionPayload = {
+  type: "USER";
+  formData: FormData;
+};
+
+type GuestActionPayload = {
+  type: "GUEST";
+};
+
+type ActionPayload = GuestActionPayload | UserActionPayload;
+
 export function LoginForm() {
   const router = useRouter();
-  const [state, formAction, signInPending] = useActionState<
-    ActionResponse,
-    FormData
-  >(async (_, formData: FormData) => {
-    try {
-      const result = await signIn(formData);
-      if (result.success) {
-        router.push("/projects");
-      }
-      return result;
-    } catch (error) {
-      console.error("Sign in error", error);
-      return {
-        success: false,
-        message: "An error occured while signin in",
-        error: "Failed to sign in",
-      };
-    }
-  }, initialState);
 
-  const [guestError, setGuestError] = useState("");
-  const [guestLoginPending, startTransition] = useTransition();
-
-  function handleSignInAsGuest() {
-    startTransition(async () => {
-      try {
-        const result = await signInAsGuest();
-        if (result.success) {
-          router.push("/projects");
-        } else {
-          setGuestError(result.message);
+  const [state, dispatchAction, pending] = useActionState(
+    async (_: ActionResponse, payload: ActionPayload) => {
+      switch (payload.type) {
+        case "USER": {
+          try {
+            const result = await signIn(payload.formData);
+            if (result.success) router.push("/projects");
+            return result;
+          } catch (e) {
+            console.error("Sign in error:", e);
+            return {
+              success: false,
+              message: "An error occured while signin in",
+              error: "Failed to sign in",
+            };
+          }
         }
-      } catch (err) {
-        console.error(err);
-        setGuestError("An error occured creating a guest account.");
+        case "GUEST": {
+          try {
+            const result = await signInAsGuest();
+            if (result.success) router.push("/projects");
+            return result;
+          } catch (e) {
+            return {
+              success: false,
+              message: "An error occured creating a guest account.",
+              error: "Failed to create guest account",
+            };
+          }
+        }
       }
-    });
+    },
+    initialState,
+  );
+
+  function handleSignInAsUser(formData: FormData) {
+    dispatchAction({ type: "USER", formData });
   }
 
-  const pending = guestLoginPending || signInPending;
+  function handleSignInAsGuest() {
+    startTransition(() => {
+      dispatchAction({ type: "GUEST" });
+    });
+  }
 
   return (
     <motion.div
@@ -73,7 +88,7 @@ export function LoginForm() {
         Log in to Stitchmate
       </h1>
 
-      <form className="grid w-full gap-6" action={formAction}>
+      <form className="grid w-full gap-6" action={handleSignInAsUser}>
         <FormField>
           <label htmlFor="email">Email</label>
           <Input
@@ -114,11 +129,6 @@ export function LoginForm() {
         >
           Login
         </Button>
-        {state?.error && (
-          <FormError className="text-center text-sm text-destructive">
-            {state.message}
-          </FormError>
-        )}
       </form>
       <p
         className="grid text-center text-muted-foreground data-[state=disabled]:pointer-events-none"
@@ -135,9 +145,9 @@ export function LoginForm() {
           </button>
         </span>
       </p>
-      {guestError && (
+      {state?.error && (
         <FormError className="text-center text-sm text-destructive">
-          {guestError}
+          {state.message}
         </FormError>
       )}
       {pending && <Spinner />}
