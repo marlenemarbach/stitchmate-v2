@@ -43,7 +43,7 @@ export default async function ProjectsPage(props: {
         className="fixed top-0 w-full bg-background sm:border-b sm:border-border sm:pb-[calc(0.75rem-1px)]"
       />
 
-      <main className="flex w-screen flex-1 flex-col">
+      <main className="flex w-screen flex-1 flex-col items-center">
         <ProjectList projects={projects} />
         {/* <ProjectListPagination pageCount={10} /> */}
       </main>
