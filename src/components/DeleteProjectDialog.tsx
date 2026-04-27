@@ -1,4 +1,4 @@
-import { CircleAlert } from "lucide-react";
+import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 import { toast } from "sonner";
 import { Project } from "@/lib/types";
 import { deleteProject } from "../actions/projects";
@@ -7,7 +7,9 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
 } from "./ui/Dialog";
 
@@ -27,19 +29,22 @@ export function DeleteProjectDialog({
       await deleteProject(project.id);
     } catch (e) {
       console.error("Delete project error:", e);
-      toast.error("An error occured deleting your project.");
+      toast.error(`An error occured deleting ${project.name}`);
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen} modal>
-      <DialogContent>
-        <DialogClose onClick={() => setOpen(false)} />
-        <DialogTitle className="sr-only">Delete Project</DialogTitle>
-        <p className="mt-6 flex items-baseline gap-2">
-          <CircleAlert className="size-5 translate-y-1" />
-          {`Are you sure you want to delete "${project.name}"?`}
-        </p>
+      <DialogContent onClick={(e) => e.stopPropagation()}>
+        <DialogHeader>
+          <DialogTitle className="sr-only">Delete Project</DialogTitle>
+          <DialogClose className="ml-auto" onClick={() => setOpen(false)} />
+        </DialogHeader>
+        <DialogDescription className="mt-3 text-lg sm:text-base">
+          <ExclamationTriangleIcon className="mr-2 inline size-5 -translate-y-0.5" />
+          {`Are you sure you want to delete `}
+          <span className="whitespace-nowrap">{`${project.name}?`}</span>
+        </DialogDescription>
         <DialogFooter>
           <Button
             className="col-span-3 col-start-6 w-[4.75rem] place-self-end"
