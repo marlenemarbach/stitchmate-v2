@@ -66,7 +66,7 @@ export function CountDialog({
       <DialogContent>
         <DialogClose />
         <DialogTitle>Row Count</DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="sr-only">
           Set your current row count or reset your counter to start from the
           beginning.
         </DialogDescription>
@@ -76,7 +76,6 @@ export function CountDialog({
               id="rowCount"
               min={1}
               max={99}
-              defaultValue={count}
               value={value}
               onValueChange={setValue}
             >
