@@ -11,6 +11,7 @@ import { Logo } from "./svg/Logo";
 import { Button } from "./ui/Button";
 import { FormError, FormField } from "./ui/Form";
 import { Input } from "./ui/Input";
+import { Spinner } from "./ui/Spinner";
 
 const initialState: ActionResponse = {
   success: false,
@@ -139,7 +140,7 @@ export function LoginForm() {
           {guestError}
         </FormError>
       )}
-      {pending && <Loader className="animate-spin text-muted-foreground" />}
+      {pending && <Spinner />}
     </motion.div>
   );
 }
