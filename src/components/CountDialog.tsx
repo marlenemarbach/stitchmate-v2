@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
 } from "./ui/Dialog";
 import { FormError } from "./ui/Form";
@@ -64,8 +65,10 @@ export function CountDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogClose />
-        <DialogTitle>Row Count</DialogTitle>
+        <DialogHeader>
+          <DialogClose />
+          <DialogTitle>Row Count</DialogTitle>
+        </DialogHeader>
         <DialogDescription className="sr-only">
           Set your current row count or reset your counter to start from the
           beginning.

@@ -18,7 +18,7 @@ export function CreateProjectDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} isDrawer>
       <DialogTrigger asChild>
         <Button size="small" className="w-8 sm:w-fit" aria-label="Add Project">
           <Plus className="stroke-3" />

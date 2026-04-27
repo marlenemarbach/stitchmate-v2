@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
 } from "./ui/Dialog";
 import { FormError } from "./ui/Form";
@@ -78,8 +79,10 @@ export function SubCounterDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogClose />
-        <DialogTitle>Subcounter</DialogTitle>
+        <DialogHeader>
+          <DialogClose />
+          <DialogTitle>Subcounter</DialogTitle>
+        </DialogHeader>
         <DialogDescription className="sr-only">
           Configure a subcounter to track repetive tasks along with your main
           counter.

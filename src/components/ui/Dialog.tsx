@@ -1,17 +1,24 @@
 "use client";
 
+import { createContext, useContext } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const DialogContext = createContext(false);
 
 export function Dialog({
   open,
   children,
+  isDrawer = false,
   ...props
-}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root>) {
+}: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Root> & {
+  isDrawer?: boolean;
+}) {
   return (
     <DialogPrimitive.Root open={open} {...props}>
-      {children}
+      <DialogContext value={isDrawer}>{children}</DialogContext>
     </DialogPrimitive.Root>
   );
 }
@@ -27,18 +34,37 @@ export function DialogOverlay({
   );
 }
 
+const dialogContentVariants = cva(
+  "fixed z-50 grid gap-3 bg-popup px-6 pt-6 w-full border border-border",
+  {
+    variants: {
+      variant: {
+        dialog:
+          "top-1/2 bottom-auto left-1/2 w-lg max-w-[calc(100vw-2rem)] -translate-1/2 animate-dialog-in rounded-xl data-[state=closed]:animate-dialog-out",
+        drawer:
+          "bottom-0 rounded-t-xl left-0 animate-drawer-in data-[state=closed]:animate-drawer-out sm:top-1/2 sm:bottom-auto sm:left-1/2 sm:w-lg sm:max-w-[calc(100vw-2rem)] sm:-translate-1/2 sm:animate-dialog-in sm:rounded-xl sm:data-[state=closed]:animate-dialog-out",
+      },
+    },
+    defaultVariants: { variant: "dialog" },
+  },
+);
+
 export function DialogContent({
   className,
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
+  const isDrawer = useContext(DialogContext);
+
+  if (isDrawer === undefined)
+    throw new Error("<DialogContent> is used outside of <Dialog>.");
+
   return (
     <DialogPrimitive.Portal>
       <DialogOverlay />
       <DialogPrimitive.Content
         className={cn(
-          "fixed bottom-0 left-0 z-50 grid w-full animate-drawer-in gap-3 rounded-t-xl border border-border bg-popup px-6 pt-6 data-[state=closed]:animate-drawer-out data-[state=open]:opacity-100",
-          "sm:top-1/2 sm:bottom-auto sm:left-1/2 sm:w-lg sm:max-w-[calc(100vw-2rem)] sm:-translate-1/2 sm:animate-dialog-in sm:rounded-xl sm:data-[state=closed]:animate-dialog-out",
+          dialogContentVariants({ variant: isDrawer ? "drawer" : "dialog" }),
           className,
         )}
         {...props}
@@ -101,15 +127,35 @@ export function DialogFooter({
     </div>
   );
 }
+
+const dialogCloseVariants = cva(
+  "flex items-center justify-center rounded-full transition-colors ease-[ease] focus-visible:text-foreground focus-visible:outline-none",
+  {
+    variants: {
+      variant: {
+        dialog:
+          "order-last size-5 bg-transparent text-muted-foreground hover:text-foreground",
+        drawer:
+          "size-9 border border-border bg-foreground/5 hover:bg-foreground/8 sm:order-last sm:size-5 sm:border-none sm:bg-transparent sm:text-muted-foreground sm:hover:bg-transparent sm:hover:text-foreground",
+      },
+    },
+    defaultVariants: { variant: "dialog" },
+  },
+);
+
 export function DialogClose({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Close>) {
+  const isDrawer = useContext(DialogContext);
+
+  if (isDrawer === undefined)
+    throw new Error("<DialogClose> is used outside of <Dialog>.");
+
   return (
     <DialogPrimitive.Close
       className={cn(
-        "flex size-9 items-center justify-center rounded-full border border-border bg-foreground/5 transition-colors ease-[ease] hover:bg-foreground/8 focus-visible:text-foreground focus-visible:outline-none",
-        "sm:order-last sm:size-5 sm:border-none sm:bg-transparent sm:text-muted-foreground sm:hover:bg-transparent sm:hover:text-foreground",
+        dialogCloseVariants({ variant: isDrawer ? "drawer" : "dialog" }),
         className,
       )}
       {...props}

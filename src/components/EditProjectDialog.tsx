@@ -16,7 +16,7 @@ export function EditProjectDialog({
   setOpen,
 }: React.PropsWithChildren & EditProjectProps) {
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)} isDrawer>
       {children}
       <DialogContent
         onClick={(e) => e.stopPropagation()}
