@@ -5,7 +5,8 @@ import { Project } from "@/lib/types";
 import { CreateProjectDialog } from "./CreateProjectDialog";
 import { ProjectListItem } from "./ProjectListItem";
 import { ProjectOrderButtons } from "./ProjectOrderButtons";
-import { Pagination } from "./ui/Pagination";
+
+// import { Pagination } from "./ui/Pagination";
 
 export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
   const allProjects = use(projects);
@@ -64,7 +65,9 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
           </div>
         )}
       </div>
-      <Pagination></Pagination>
+      {/* <Pagination> */}
+      {/**/}
+      {/* </Pagination> */}
     </>
   );
 }
