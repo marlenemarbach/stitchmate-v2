@@ -8,7 +8,7 @@ import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
 import { getSession } from "./auth";
 import { ProjectOrderParams, generateOrderByClause } from "./helper";
-import { ProjectWithSubCounter, SubCounter } from "./types";
+import { ProjectStatus, ProjectWithSubCounter, SubCounter } from "./types";
 
 /* --------------------------------------------------------------------------
  *  User
@@ -66,6 +66,7 @@ export async function getProjectById(id: number, userId: string) {
 export async function createProjectByUserId(
   userId: string,
   name: string,
+  status: ProjectStatus,
 ): Promise<ProjectWithSubCounter> {
   const result = await db.transaction(async (tx) => {
     const newProject = await tx
@@ -73,6 +74,7 @@ export async function createProjectByUserId(
       .values({
         userId,
         name,
+        status,
       })
       .returning();
 

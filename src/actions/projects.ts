@@ -11,8 +11,8 @@ import {
   updateProjectById,
   updateProjectCountById,
 } from "@/lib/dal";
-import { Project, ProjectWithSubCounter } from "@/lib/types";
-import { ActionResponse } from "./types";
+import { ProjectStatus } from "@/lib/types";
+import { ActionResponse, ProjectActionResponse } from "./types";
 
 const ProjectSchema = z.object({
   name: z
@@ -23,18 +23,22 @@ const ProjectSchema = z.object({
   needleSize: z.string().nullable(),
   count: z.number().gte(1).lte(99),
   direction: z.union([z.literal(1), z.literal(-1)]),
-  status: z.enum(["wip", "finished"]),
+  status: z.enum(["wip", "completed", "frogged", "planned"]),
 });
 
 export type ProjectData = z.infer<typeof ProjectSchema>;
 
 export async function createProject(data: {
   name: string;
-}): Promise<ActionResponse & { project?: ProjectWithSubCounter }> {
+  status: ProjectStatus;
+}): Promise<ProjectActionResponse> {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const validatedFields = ProjectSchema.pick({ name: true }).safeParse(data);
+  const validatedFields = ProjectSchema.pick({
+    name: true,
+    status: true,
+  }).safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -44,8 +48,8 @@ export async function createProject(data: {
     };
   }
 
-  const { name } = validatedFields.data;
-  const newProject = await createProjectByUserId(user.id, name);
+  const { name, status } = validatedFields.data;
+  const newProject = await createProjectByUserId(user.id, name, status);
 
   if (!newProject) {
     return {
@@ -65,7 +69,7 @@ export async function createProject(data: {
 export async function updateProjectCount(
   direction: 1 | -1,
   projectId: number,
-): Promise<ActionResponse & { project?: Project }> {
+): Promise<ProjectActionResponse> {
   if (direction !== 1 && direction !== -1)
     return {
       success: false,
@@ -90,7 +94,7 @@ export async function updateProjectCount(
 export async function updateProject(
   data: Partial<ProjectData>,
   projectId: number,
-): Promise<ActionResponse & { project?: Project }> {
+): Promise<ProjectActionResponse> {
   const validationResult = ProjectSchema.partial().safeParse(data);
 
   if (!validationResult.success) {

@@ -1,6 +1,9 @@
-import { CircleCheck, CircleDotDashed } from "lucide-react";
 import { ProjectStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { StatusCompleted } from "../svg/StatusCompleted";
+import { StatusFrogged } from "../svg/StatusFrogged";
+import { StatusPlanned } from "../svg/StatusPlanned";
+import { StatusWip } from "../svg/StatusWip";
 
 export function StatusBadge({
   status,
@@ -10,19 +13,11 @@ export function StatusBadge({
   className?: string;
 }) {
   return (
-    <span className="flex items-center">
-      {status === "wip" ? (
-        <CircleDotDashed
-          className={cn(
-            "size-4 text-orange-500 dark:text-orange-200",
-            className,
-          )}
-        />
-      ) : (
-        <CircleCheck
-          className={cn("size-4 text-green-500 dark:text-green-200", className)}
-        />
-      )}
+    <span className={cn("flex items-center", className)}>
+      {status === "wip" && <StatusWip />}
+      {status === "completed" && <StatusCompleted />}
+      {status === "frogged" && <StatusFrogged />}
+      {status === "planned" && <StatusPlanned />}
     </span>
   );
 }

@@ -49,7 +49,7 @@ export const projects = sqliteTable("projects", {
     .notNull()
     .default(sql`(current_timestamp)`)
     .$onUpdate(() => sql`(current_timestamp)`),
-  status: text({ enum: ["wip", "finished"] })
+  status: text({ enum: ["planned", "wip", "completed", "frogged"] })
     .notNull()
     .default("wip"),
 });
