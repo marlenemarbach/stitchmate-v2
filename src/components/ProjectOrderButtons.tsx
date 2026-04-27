@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DataListColumnTitle, Order } from "./ui/DataList";
+import { Order, OrderButton } from "./ui/OrderButton";
 
 export function ProjectOrderButtons() {
   const searchParams = useSearchParams();
@@ -17,19 +17,10 @@ export function ProjectOrderButtons() {
     const params = new URLSearchParams(searchParams);
     const currentValue = params.get(param);
 
-    switch (param) {
-      case "updatedOrder":
-        params.delete("nameOrder");
-        params.delete("statusOrder");
-        break;
-      case "statusOrder":
-        params.delete("nameOrder");
-        break;
-      case "nameOrder":
-        params.delete("statusOrder");
-        params.delete("updatedOrder");
-        break;
-    }
+    const orderParams = ["statusOrder", "updatedOrder", "nameOrder"].filter(
+      (p) => p !== param,
+    );
+    orderParams.forEach((p) => params.delete(p));
 
     params.set(param, currentValue === "asc" ? "desc" : "asc");
     replace(`${pathName}?${params.toString()}`);
@@ -37,30 +28,33 @@ export function ProjectOrderButtons() {
 
   return (
     <>
-      <DataListColumnTitle
-        className="sm:col-span-3"
-        isActive={nameOrder !== undefined}
+      <OrderButton
+        className="ml-1"
         order={nameOrder}
         onOrderChange={() => toggleOrder("nameOrder")}
+        aria-label={nameOrder === undefined ? "Order by Name" : nameOrder}
       >
         Name
-      </DataListColumnTitle>
+      </OrderButton>
 
-      <DataListColumnTitle
-        isActive={statusOrder !== undefined}
+      <OrderButton
+        className="sm:-translate-x-[6px]"
         order={statusOrder}
         onOrderChange={() => toggleOrder("statusOrder")}
+        aria-label={statusOrder === undefined ? "Order by Status" : statusOrder}
       >
         Status
-      </DataListColumnTitle>
+      </OrderButton>
 
-      <DataListColumnTitle
-        isActive={updatedOrder !== undefined}
-        order={updatedOrder ?? "desc"}
+      <OrderButton
+        className="sm:-translate-x-2"
+        order={updatedOrder}
+        defaultOrder="asc"
         onOrderChange={() => toggleOrder("updatedOrder")}
+        aria-label={updatedOrder === undefined ? "Order by Date" : updatedOrder}
       >
         Last knit
-      </DataListColumnTitle>
+      </OrderButton>
     </>
   );
 }
