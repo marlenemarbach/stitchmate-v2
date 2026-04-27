@@ -6,7 +6,7 @@ Each project features a counter designed to mimic the satisfying interaction of 
 
 The UI is kept intentionally minimal to get you started within seconds, then stays out of the way while you craft.
 
-The project is under active development and frequently updated. You can view the live version at [stitchmate.xyz](https://www.stitchmate.xyz).
+The project is under active development and frequently updated. You can view the live version at [stitchmate.net](https://www.stitchmate.net).
 A guest login is available, allowing you to explore the full functionality before signing up. 
 
 The project is written in Typescript and Next.js and deployed via Vercel. It utilizes a cloud-hosted database on Turso. To setup a local development environment, please follow the instructions below.
