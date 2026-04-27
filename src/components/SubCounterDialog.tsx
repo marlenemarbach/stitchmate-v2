@@ -80,7 +80,7 @@ export function SubCounterDialog({
       <DialogContent>
         <DialogClose />
         <DialogTitle>Subcounter</DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="sr-only">
           Configure a subcounter to track repetive tasks along with your main
           counter.
         </DialogDescription>
