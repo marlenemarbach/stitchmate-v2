@@ -18,7 +18,7 @@ export function FormField({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   return (
-    <div className={cn("grid gap-2 [&_label]:pl-1", className)} {...props}>
+    <div className={cn("grid gap-2", className)} {...props}>
       {children}
     </div>
   );
