@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
+import { ProjectListPagination } from "@/components/ProjectListPagination";
 // import { ProjectListPagination } from "@/components/ProjectListPagination";
 import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
 
@@ -45,7 +46,7 @@ export default async function ProjectsPage(props: {
 
       <main className="flex w-screen flex-1 flex-col items-center">
         <ProjectList projects={projects} />
-        {/* <ProjectListPagination pageCount={10} /> */}
+        <ProjectListPagination pageCount={10} />
       </main>
     </>
   );
