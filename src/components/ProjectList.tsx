@@ -6,8 +6,6 @@ import { CreateProjectDialog } from "./CreateProjectDialog";
 import { ProjectListItem } from "./ProjectListItem";
 import { ProjectOrderButtons } from "./ProjectOrderButtons";
 
-// import { Pagination } from "./ui/Pagination";
-
 export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
   const allProjects = use(projects);
 
@@ -55,7 +53,7 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
           </div>
         ) : (
           <div
-            className="col-span-2 mt-40 grid w-full grid-cols-subgrid grid-rows-2 overflow-y-auto sm:col-span-4 sm:grid-rows-1"
+            className="col-span-2 mt-40 mb-16 grid w-full grid-cols-subgrid grid-rows-2 overflow-y-auto sm:col-span-4 sm:grid-rows-1"
             ref={contentRef}
             onKeyDown={(e) => handleUpAndDownArrowKeys(e)}
           >
@@ -65,9 +63,6 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
           </div>
         )}
       </div>
-      {/* <Pagination> */}
-      {/**/}
-      {/* </Pagination> */}
     </>
   );
 }
