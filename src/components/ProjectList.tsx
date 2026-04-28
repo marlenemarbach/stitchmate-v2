@@ -53,7 +53,7 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
           </div>
         ) : (
           <div
-            className="col-span-2 mt-40 mb-16 grid w-full grid-cols-subgrid grid-rows-2 overflow-y-auto sm:col-span-4 sm:grid-rows-1"
+            className="col-span-2 mt-40 grid w-full grid-cols-subgrid grid-rows-2 overflow-y-auto sm:col-span-4 sm:mb-16 sm:grid-rows-1"
             ref={contentRef}
             onKeyDown={(e) => handleUpAndDownArrowKeys(e)}
           >
