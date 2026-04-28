@@ -12,7 +12,7 @@ export function Pagination({
       role="navigation"
       aria-label="pagination"
       className={cn(
-        "fixed bottom-0 mx-auto flex w-full justify-center border-t border-border bg-background py-3",
+        "mx-auto mt-auto flex w-full justify-center py-3 sm:fixed sm:bottom-0 sm:border-t sm:border-border sm:bg-background",
         className,
       )}
       {...props}
