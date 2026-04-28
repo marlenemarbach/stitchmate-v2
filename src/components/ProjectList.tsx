@@ -5,6 +5,7 @@ import { Project } from "@/lib/types";
 import { CreateProjectDialog } from "./CreateProjectDialog";
 import { ProjectListItem } from "./ProjectListItem";
 import { ProjectOrderButtons } from "./ProjectOrderButtons";
+import { PatternSmall } from "./svg/PatternSmall";
 
 export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
   const allProjects = use(projects);
@@ -46,10 +47,9 @@ export function ProjectList({ projects }: { projects: Promise<Project[]> }) {
 
         {/* -------------- content -------------- */}
         {!allProjects.length ? (
-          <div className="flex max-w-xs flex-1 flex-col items-center justify-center gap-6 self-center justify-self-center">
-            <div className="flex items-end gap-3">
-              <p className="text-muted-foreground">No projects</p>
-            </div>
+          <div className="col-span-4 flex h-dvh w-full flex-col items-center justify-center gap-3">
+            <PatternSmall className="w-10" />
+            <p className="text-muted-foreground">No projects yet</p>
           </div>
         ) : (
           <div
