@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LinkButton } from "./Button";
@@ -43,24 +42,23 @@ export function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 }
 
 type PaginationLinkProps = {
-  isActive?: boolean;
-} & React.ComponentPropsWithoutRef<typeof Link>;
+  disabled?: boolean;
+} & React.ComponentPropsWithoutRef<typeof LinkButton>;
 
 function PaginationLink({
   className,
-  isActive,
+  disabled,
   ...props
 }: PaginationLinkProps) {
   return (
     <LinkButton
       variant="secondary"
       size="small"
+      aria-disabled={disabled ? "true" : undefined}
       className={cn(
-        "px-1 py-0 [&_svg:not([class*='size-'])]:size-5",
+        "cursor-default px-1 py-0 aria-disabled:pointer-events-none aria-disabled:text-muted-foreground [&_svg:not([class*='size-'])]:size-5",
         className,
       )}
-      aria-current={isActive ? "page" : undefined}
-      data-active={isActive}
       {...props}
     />
   );
@@ -69,7 +67,7 @@ function PaginationLink({
 export function PaginationPrevious({
   className,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+}: PaginationLinkProps) {
   return (
     <PaginationItem>
       <PaginationLink
