@@ -2,7 +2,7 @@
 
 import { cache } from "react";
 import { connection } from "next/server";
-import { and, eq, sql } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { projects, subCounters, users } from "@/db/schema";
 import { ProjectData } from "../actions/projects";
@@ -42,13 +42,17 @@ export async function getUserByEmail(email: string) {
 export async function getProjectsByUserId(
   userId: string,
   order: ProjectOrderParams,
+  page: number,
+  pageLenght: number,
 ) {
   const orderByClause = generateOrderByClause(order);
+  const offset = (page - 1) * 20;
 
   const result = await db.query.projects.findMany({
     where: eq(projects.userId, userId),
     orderBy: orderByClause,
-    limit: 20,
+    limit: pageLenght,
+    offset,
   });
   return result;
 }
@@ -61,6 +65,18 @@ export async function getProjectById(id: number, userId: string) {
     },
   });
   return (project as ProjectWithSubCounter) || null;
+}
+
+export async function getNumberOfProjectPages(
+  userId: string,
+  pageLength: number,
+) {
+  const result = await db
+    .select({ count: count() })
+    .from(projects)
+    .where(eq(projects.userId, userId));
+
+  return Math.max(Math.ceil(result[0].count / pageLength), 1);
 }
 
 export async function createProjectByUserId(
