@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationItem,
@@ -5,14 +8,35 @@ import {
   PaginationPrevious,
 } from "./ui/Pagination";
 
-export function ProjectListPagination({ pageCount }: { pageCount: number }) {
+export function ProjectListPagination({
+  pageCount,
+  currentPage,
+}: {
+  pageCount: number;
+  currentPage: number;
+}) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  function createPageURL(pageNumber: string | number) {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  }
+
   return (
     <Pagination>
-      <PaginationPrevious href="#"></PaginationPrevious>
+      <PaginationPrevious
+        href={createPageURL(currentPage - 1)}
+        disabled={currentPage <= 1}
+      ></PaginationPrevious>
       <PaginationItem>
-        <span>20 of 42</span>
+        <span>{`${currentPage} of ${pageCount}`}</span>
       </PaginationItem>
-      <PaginationNext href="#"></PaginationNext>
+      <PaginationNext
+        disabled={currentPage >= pageCount}
+        href={createPageURL(currentPage + 1)}
+      ></PaginationNext>
     </Pagination>
   );
 }
