@@ -22,6 +22,7 @@ export function ProjectOrderButtons() {
     );
     orderParams.forEach((p) => params.delete(p));
 
+    params.set("page", "1");
     params.set(param, currentValue === "asc" ? "desc" : "asc");
     replace(`${pathName}?${params.toString()}`);
   }

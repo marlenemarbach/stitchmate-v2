@@ -3,11 +3,17 @@ import z from "zod";
 import { Header } from "@/components/Header";
 import { ProjectList } from "@/components/ProjectList";
 import { ProjectListPagination } from "@/components/ProjectListPagination";
-// import { ProjectListPagination } from "@/components/ProjectListPagination";
-import { getCurrentUser, getProjectsByUserId } from "@/lib/dal";
+import {
+  getCurrentUser,
+  getNumberOfProjectPages,
+  getProjectsByUserId,
+} from "@/lib/dal";
+
+const PAGELENGTH = 20;
 
 export default async function ProjectsPage(props: {
   searchParams?: Promise<{
+    page?: string;
     statusOrder?: "desc" | "asc";
     updatedOrder?: "desc" | "asc";
     nameOrder?: "desc" | "asc";
@@ -18,12 +24,14 @@ export default async function ProjectsPage(props: {
   if (!user) redirect("/login");
 
   const ProjectListSchema = z.object({
+    page: z.coerce.number().int().min(1).catch(1),
     updatedOrder: z.enum(["desc", "asc"]).catch("desc"),
     statusOrder: z.enum(["desc", "asc"]).optional(),
     nameOrder: z.enum(["desc", "asc"]).optional(),
   });
 
   const validatedParams = ProjectListSchema.parse({
+    page: searchParams?.page,
     updatedOrder: searchParams?.updatedOrder,
     statusOrder: searchParams?.statusOrder,
     nameOrder: searchParams?.nameOrder,
@@ -35,7 +43,17 @@ export default async function ProjectsPage(props: {
     name: validatedParams.nameOrder,
   };
 
-  const projects = getProjectsByUserId(user.id, order);
+  const projects = getProjectsByUserId(
+    user.id,
+    order,
+    validatedParams.page,
+    PAGELENGTH,
+  );
+  const pages = await getNumberOfProjectPages(user.id, PAGELENGTH);
+
+  if (validatedParams.page > pages) {
+    redirect(`/projects?page=${pages}`);
+  }
 
   return (
     <>
@@ -46,7 +64,12 @@ export default async function ProjectsPage(props: {
 
       <main className="flex w-screen flex-1 flex-col items-center">
         <ProjectList projects={projects} />
-        <ProjectListPagination pageCount={10} />
+        {pages > 1 && (
+          <ProjectListPagination
+            pageCount={pages}
+            currentPage={validatedParams.page}
+          />
+        )}
       </main>
     </>
   );
